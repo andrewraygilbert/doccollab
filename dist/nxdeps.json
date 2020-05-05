@@ -141,7 +141,7 @@
             {
               "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
               "ext": ".ts",
-              "mtime": 1588694589308.5095
+              "mtime": 1588712514904.8884
             },
             {
               "file": "libs/api-interfaces/tsconfig.json",
@@ -291,7 +291,7 @@
             {
               "file": "apps/doc-collab/src/app/app.component.html",
               "ext": ".html",
-              "mtime": 1588694589299.4004
+              "mtime": 1588715017561.1882
             },
             {
               "file": "apps/doc-collab/src/app/app.component.spec.ts",
@@ -301,7 +301,7 @@
             {
               "file": "apps/doc-collab/src/app/app.component.ts",
               "ext": ".ts",
-              "mtime": 1588694589299.7332
+              "mtime": 1588714905828.2195
             },
             {
               "file": "apps/doc-collab/src/app/app.module.ts",
@@ -608,12 +608,12 @@
             {
               "file": "apps/api/src/app/app.controller.ts",
               "ext": ".ts",
-              "mtime": 1588694589306.9143
+              "mtime": 1588712568669.4216
             },
             {
               "file": "apps/api/src/app/app.module.ts",
               "ext": ".ts",
-              "mtime": 1588711295224.32
+              "mtime": 1588712620828.436
             },
             {
               "file": "apps/api/src/app/app.service.spec.ts",
@@ -623,7 +623,7 @@
             {
               "file": "apps/api/src/app/app.service.ts",
               "ext": ".ts",
-              "mtime": 1588694589307.3728
+              "mtime": 1588712648315.5195
             },
             {
               "file": "apps/api/src/app/auth/auth.module.ts",
@@ -886,7 +886,7 @@
         "type": "npm",
         "name": "@angular/cli",
         "data": {
-          "version": "9.1.0",
+          "version": "^9.1.4",
           "files": []
         }
       },
@@ -1083,13 +1083,14 @@
           "target": "doc-collab"
         }
       ],
-      "api-interfaces": [],
-      "doc-collab": [
+      "api-interfaces": [
         {
           "type": "static",
-          "source": "doc-collab",
-          "target": "api-interfaces"
-        },
+          "source": "api-interfaces",
+          "target": "mongoose"
+        }
+      ],
+      "doc-collab": [
         {
           "type": "static",
           "source": "doc-collab",
@@ -1122,11 +1123,6 @@
         }
       ],
       "api": [
-        {
-          "type": "static",
-          "source": "api",
-          "target": "api-interfaces"
-        },
         {
           "type": "static",
           "source": "api",
@@ -1279,7 +1275,7 @@
       {
         "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
         "ext": ".ts",
-        "mtime": 1588694589308.5095
+        "mtime": 1588712514904.8884
       },
       {
         "file": "libs/api-interfaces/tsconfig.json",
@@ -1326,7 +1322,7 @@
       {
         "file": "apps/doc-collab/src/app/app.component.html",
         "ext": ".html",
-        "mtime": 1588694589299.4004
+        "mtime": 1588715017561.1882
       },
       {
         "file": "apps/doc-collab/src/app/app.component.spec.ts",
@@ -1336,7 +1332,7 @@
       {
         "file": "apps/doc-collab/src/app/app.component.ts",
         "ext": ".ts",
-        "mtime": 1588694589299.7332
+        "mtime": 1588714905828.2195
       },
       {
         "file": "apps/doc-collab/src/app/app.module.ts",
@@ -1578,12 +1574,12 @@
       {
         "file": "apps/api/src/app/app.controller.ts",
         "ext": ".ts",
-        "mtime": 1588694589306.9143
+        "mtime": 1588712568669.4216
       },
       {
         "file": "apps/api/src/app/app.module.ts",
         "ext": ".ts",
-        "mtime": 1588711295224.32
+        "mtime": 1588712620828.436
       },
       {
         "file": "apps/api/src/app/app.service.spec.ts",
@@ -1593,7 +1589,7 @@
       {
         "file": "apps/api/src/app/app.service.ts",
         "ext": ".ts",
-        "mtime": 1588694589307.3728
+        "mtime": 1588712648315.5195
       },
       {
         "file": "apps/api/src/app/auth/auth.module.ts",
