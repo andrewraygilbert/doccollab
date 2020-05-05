@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "engines": {
-    "node" : "12.x"
+    "node": "12.x"
   },
   "scripts": {
     "ng": "ng",
@@ -39,14 +39,17 @@
     "@angular/platform-browser": "^9.1.0",
     "@angular/platform-browser-dynamic": "^9.1.0",
     "@angular/router": "^9.1.0",
-    "@nestjs/common": "^6.8.3",
-    "@nestjs/core": "^6.8.3",
+    "@nestjs/common": "^7.0.0",
+    "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^6.8.3",
+    "@nestjs/platform-socket.io": "^7.0.9",
     "@nestjs/serve-static": "^2.1.0",
+    "@nestjs/websockets": "^7.0.9",
     "@nrwl/angular": "9.2.3",
+    "@types/socket.io": "^2.1.4",
     "core-js": "^2.5.4",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "~6.5.4",
+    "rxjs": "^6.5.5",
     "zone.js": "^0.10.2"
   },
   "devDependencies": {

@@ -309,9 +309,159 @@
               "mtime": 1588694589298.8914
             },
             {
+              "file": "apps/doc-collab/src/app/auth/auth.module.ts",
+              "ext": ".ts",
+              "mtime": 1588707751828.9658
+            },
+            {
+              "file": "apps/doc-collab/src/app/auth/auth.service.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588706445212.2756
+            },
+            {
+              "file": "apps/doc-collab/src/app/auth/auth.service.ts",
+              "ext": ".ts",
+              "mtime": 1588706445212.5203
+            },
+            {
+              "file": "apps/doc-collab/src/app/auth/login/login.component.css",
+              "ext": ".css",
+              "mtime": 1588706358338.5854
+            },
+            {
+              "file": "apps/doc-collab/src/app/auth/login/login.component.html",
+              "ext": ".html",
+              "mtime": 1588706358339.1104
+            },
+            {
+              "file": "apps/doc-collab/src/app/auth/login/login.component.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588706358339.539
+            },
+            {
+              "file": "apps/doc-collab/src/app/auth/login/login.component.ts",
+              "ext": ".ts",
+              "mtime": 1588706358339.7678
+            },
+            {
+              "file": "apps/doc-collab/src/app/auth/register/register.component.css",
+              "ext": ".css",
+              "mtime": 1588707180590.6382
+            },
+            {
+              "file": "apps/doc-collab/src/app/auth/register/register.component.html",
+              "ext": ".html",
+              "mtime": 1588707180590.978
+            },
+            {
+              "file": "apps/doc-collab/src/app/auth/register/register.component.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588707180591.2178
+            },
+            {
+              "file": "apps/doc-collab/src/app/auth/register/register.component.ts",
+              "ext": ".ts",
+              "mtime": 1588707180591.4294
+            },
+            {
+              "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.css",
+              "ext": ".css",
+              "mtime": 1588707647562.7393
+            },
+            {
+              "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
+              "ext": ".html",
+              "mtime": 1588707647563.0762
+            },
+            {
+              "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588707647563.3196
+            },
+            {
+              "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.ts",
+              "ext": ".ts",
+              "mtime": 1588707647563.5269
+            },
+            {
+              "file": "apps/doc-collab/src/app/dashboard/dashboard.module.ts",
+              "ext": ".ts",
+              "mtime": 1588707647563.7383
+            },
+            {
+              "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
+              "ext": ".css",
+              "mtime": 1588707668692.9219
+            },
+            {
+              "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.html",
+              "ext": ".html",
+              "mtime": 1588707668693.2334
+            },
+            {
+              "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588707668693.4573
+            },
+            {
+              "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
+              "ext": ".ts",
+              "mtime": 1588707668693.6194
+            },
+            {
+              "file": "apps/doc-collab/src/app/document/document.module.ts",
+              "ext": ".ts",
+              "mtime": 1588707668693.816
+            },
+            {
+              "file": "apps/doc-collab/src/app/socket/core-socket.service.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588707140976.7559
+            },
+            {
+              "file": "apps/doc-collab/src/app/socket/core-socket.service.ts",
+              "ext": ".ts",
+              "mtime": 1588707140976.9958
+            },
+            {
+              "file": "apps/doc-collab/src/app/socket/socket.module.ts",
+              "ext": ".ts",
+              "mtime": 1588706866004.9814
+            },
+            {
               "file": "apps/doc-collab/src/assets/.gitkeep",
               "ext": "",
               "mtime": 1588694589297.9631
+            },
+            {
+              "file": "apps/doc-collab/src/assets/scripts/bootstrap.min.js",
+              "ext": ".js",
+              "mtime": 1574944735000
+            },
+            {
+              "file": "apps/doc-collab/src/assets/scripts/bootstrap.min.js.map",
+              "ext": ".map",
+              "mtime": 1574944735000
+            },
+            {
+              "file": "apps/doc-collab/src/assets/scripts/jquery.js.map",
+              "ext": ".map",
+              "mtime": 1588698914137.7805
+            },
+            {
+              "file": "apps/doc-collab/src/assets/scripts/jquery.min.js",
+              "ext": ".js",
+              "mtime": 1588698865436.1199
+            },
+            {
+              "file": "apps/doc-collab/src/assets/stylesheets/bootstrap.min.css",
+              "ext": ".css",
+              "mtime": 1574944735000
+            },
+            {
+              "file": "apps/doc-collab/src/assets/stylesheets/bootstrap.min.css.map",
+              "ext": ".map",
+              "mtime": 1574944735000
             },
             {
               "file": "apps/doc-collab/src/environments/environment.prod.ts",
@@ -331,7 +481,7 @@
             {
               "file": "apps/doc-collab/src/index.html",
               "ext": ".html",
-              "mtime": 1588694589297.2334
+              "mtime": 1588699244097.6658
             },
             {
               "file": "apps/doc-collab/src/main.ts",
@@ -463,7 +613,7 @@
             {
               "file": "apps/api/src/app/app.module.ts",
               "ext": ".ts",
-              "mtime": 1588696276374.2273
+              "mtime": 1588708289305.0796
             },
             {
               "file": "apps/api/src/app/app.service.spec.ts",
@@ -474,6 +624,36 @@
               "file": "apps/api/src/app/app.service.ts",
               "ext": ".ts",
               "mtime": 1588694589307.3728
+            },
+            {
+              "file": "apps/api/src/app/auth/auth.module.ts",
+              "ext": ".ts",
+              "mtime": 1588705967948.1826
+            },
+            {
+              "file": "apps/api/src/app/documents/documents.module.ts",
+              "ext": ".ts",
+              "mtime": 1588707922901.5835
+            },
+            {
+              "file": "apps/api/src/app/sockets/socket-core.gateway.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588708307976.3162
+            },
+            {
+              "file": "apps/api/src/app/sockets/socket-core.gateway.ts",
+              "ext": ".ts",
+              "mtime": 1588708307976.522
+            },
+            {
+              "file": "apps/api/src/app/sockets/sockets.module.ts",
+              "ext": ".ts",
+              "mtime": 1588708307976.758
+            },
+            {
+              "file": "apps/api/src/app/users/users.module.ts",
+              "ext": ".ts",
+              "mtime": 1588707910401.8958
             },
             {
               "file": "apps/api/src/assets/.gitkeep",
@@ -586,7 +766,7 @@
         "type": "npm",
         "name": "@nestjs/common",
         "data": {
-          "version": "^6.8.3",
+          "version": "^7.0.0",
           "files": []
         }
       },
@@ -594,7 +774,7 @@
         "type": "npm",
         "name": "@nestjs/core",
         "data": {
-          "version": "^6.8.3",
+          "version": "^7.0.0",
           "files": []
         }
       },
@@ -606,6 +786,14 @@
           "files": []
         }
       },
+      "@nestjs/platform-socket.io": {
+        "type": "npm",
+        "name": "@nestjs/platform-socket.io",
+        "data": {
+          "version": "^7.0.9",
+          "files": []
+        }
+      },
       "@nestjs/serve-static": {
         "type": "npm",
         "name": "@nestjs/serve-static",
@@ -614,11 +802,27 @@
           "files": []
         }
       },
+      "@nestjs/websockets": {
+        "type": "npm",
+        "name": "@nestjs/websockets",
+        "data": {
+          "version": "^7.0.9",
+          "files": []
+        }
+      },
       "@nrwl/angular": {
         "type": "npm",
         "name": "@nrwl/angular",
         "data": {
           "version": "9.2.3",
+          "files": []
+        }
+      },
+      "@types/socket.io": {
+        "type": "npm",
+        "name": "@types/socket.io",
+        "data": {
+          "version": "^2.1.4",
           "files": []
         }
       },
@@ -642,7 +846,7 @@
         "type": "npm",
         "name": "rxjs",
         "data": {
-          "version": "~6.5.4",
+          "version": "^6.5.5",
           "files": []
         }
       },
@@ -917,6 +1121,11 @@
         {
           "type": "static",
           "source": "api",
+          "target": "@nestjs/websockets"
+        },
+        {
+          "type": "static",
+          "source": "api",
           "target": "@nestjs/core"
         }
       ],
@@ -931,8 +1140,11 @@
       "@nestjs/common": [],
       "@nestjs/core": [],
       "@nestjs/platform-express": [],
+      "@nestjs/platform-socket.io": [],
       "@nestjs/serve-static": [],
+      "@nestjs/websockets": [],
       "@nrwl/angular": [],
+      "@types/socket.io": [],
       "core-js": [],
       "reflect-metadata": [],
       "rxjs": [],
@@ -1100,9 +1312,159 @@
         "mtime": 1588694589298.8914
       },
       {
+        "file": "apps/doc-collab/src/app/auth/auth.module.ts",
+        "ext": ".ts",
+        "mtime": 1588707751828.9658
+      },
+      {
+        "file": "apps/doc-collab/src/app/auth/auth.service.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588706445212.2756
+      },
+      {
+        "file": "apps/doc-collab/src/app/auth/auth.service.ts",
+        "ext": ".ts",
+        "mtime": 1588706445212.5203
+      },
+      {
+        "file": "apps/doc-collab/src/app/auth/login/login.component.css",
+        "ext": ".css",
+        "mtime": 1588706358338.5854
+      },
+      {
+        "file": "apps/doc-collab/src/app/auth/login/login.component.html",
+        "ext": ".html",
+        "mtime": 1588706358339.1104
+      },
+      {
+        "file": "apps/doc-collab/src/app/auth/login/login.component.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588706358339.539
+      },
+      {
+        "file": "apps/doc-collab/src/app/auth/login/login.component.ts",
+        "ext": ".ts",
+        "mtime": 1588706358339.7678
+      },
+      {
+        "file": "apps/doc-collab/src/app/auth/register/register.component.css",
+        "ext": ".css",
+        "mtime": 1588707180590.6382
+      },
+      {
+        "file": "apps/doc-collab/src/app/auth/register/register.component.html",
+        "ext": ".html",
+        "mtime": 1588707180590.978
+      },
+      {
+        "file": "apps/doc-collab/src/app/auth/register/register.component.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588707180591.2178
+      },
+      {
+        "file": "apps/doc-collab/src/app/auth/register/register.component.ts",
+        "ext": ".ts",
+        "mtime": 1588707180591.4294
+      },
+      {
+        "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.css",
+        "ext": ".css",
+        "mtime": 1588707647562.7393
+      },
+      {
+        "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
+        "ext": ".html",
+        "mtime": 1588707647563.0762
+      },
+      {
+        "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588707647563.3196
+      },
+      {
+        "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.ts",
+        "ext": ".ts",
+        "mtime": 1588707647563.5269
+      },
+      {
+        "file": "apps/doc-collab/src/app/dashboard/dashboard.module.ts",
+        "ext": ".ts",
+        "mtime": 1588707647563.7383
+      },
+      {
+        "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
+        "ext": ".css",
+        "mtime": 1588707668692.9219
+      },
+      {
+        "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.html",
+        "ext": ".html",
+        "mtime": 1588707668693.2334
+      },
+      {
+        "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588707668693.4573
+      },
+      {
+        "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
+        "ext": ".ts",
+        "mtime": 1588707668693.6194
+      },
+      {
+        "file": "apps/doc-collab/src/app/document/document.module.ts",
+        "ext": ".ts",
+        "mtime": 1588707668693.816
+      },
+      {
+        "file": "apps/doc-collab/src/app/socket/core-socket.service.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588707140976.7559
+      },
+      {
+        "file": "apps/doc-collab/src/app/socket/core-socket.service.ts",
+        "ext": ".ts",
+        "mtime": 1588707140976.9958
+      },
+      {
+        "file": "apps/doc-collab/src/app/socket/socket.module.ts",
+        "ext": ".ts",
+        "mtime": 1588706866004.9814
+      },
+      {
         "file": "apps/doc-collab/src/assets/.gitkeep",
         "ext": "",
         "mtime": 1588694589297.9631
+      },
+      {
+        "file": "apps/doc-collab/src/assets/scripts/bootstrap.min.js",
+        "ext": ".js",
+        "mtime": 1574944735000
+      },
+      {
+        "file": "apps/doc-collab/src/assets/scripts/bootstrap.min.js.map",
+        "ext": ".map",
+        "mtime": 1574944735000
+      },
+      {
+        "file": "apps/doc-collab/src/assets/scripts/jquery.js.map",
+        "ext": ".map",
+        "mtime": 1588698914137.7805
+      },
+      {
+        "file": "apps/doc-collab/src/assets/scripts/jquery.min.js",
+        "ext": ".js",
+        "mtime": 1588698865436.1199
+      },
+      {
+        "file": "apps/doc-collab/src/assets/stylesheets/bootstrap.min.css",
+        "ext": ".css",
+        "mtime": 1574944735000
+      },
+      {
+        "file": "apps/doc-collab/src/assets/stylesheets/bootstrap.min.css.map",
+        "ext": ".map",
+        "mtime": 1574944735000
       },
       {
         "file": "apps/doc-collab/src/environments/environment.prod.ts",
@@ -1122,7 +1484,7 @@
       {
         "file": "apps/doc-collab/src/index.html",
         "ext": ".html",
-        "mtime": 1588694589297.2334
+        "mtime": 1588699244097.6658
       },
       {
         "file": "apps/doc-collab/src/main.ts",
@@ -1189,7 +1551,7 @@
       {
         "file": "apps/api/src/app/app.module.ts",
         "ext": ".ts",
-        "mtime": 1588696276374.2273
+        "mtime": 1588708289305.0796
       },
       {
         "file": "apps/api/src/app/app.service.spec.ts",
@@ -1200,6 +1562,36 @@
         "file": "apps/api/src/app/app.service.ts",
         "ext": ".ts",
         "mtime": 1588694589307.3728
+      },
+      {
+        "file": "apps/api/src/app/auth/auth.module.ts",
+        "ext": ".ts",
+        "mtime": 1588705967948.1826
+      },
+      {
+        "file": "apps/api/src/app/documents/documents.module.ts",
+        "ext": ".ts",
+        "mtime": 1588707922901.5835
+      },
+      {
+        "file": "apps/api/src/app/sockets/socket-core.gateway.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588708307976.3162
+      },
+      {
+        "file": "apps/api/src/app/sockets/socket-core.gateway.ts",
+        "ext": ".ts",
+        "mtime": 1588708307976.522
+      },
+      {
+        "file": "apps/api/src/app/sockets/sockets.module.ts",
+        "ext": ".ts",
+        "mtime": 1588708307976.758
+      },
+      {
+        "file": "apps/api/src/app/users/users.module.ts",
+        "ext": ".ts",
+        "mtime": 1588707910401.8958
       },
       {
         "file": "apps/api/src/assets/.gitkeep",
