@@ -613,7 +613,7 @@
             {
               "file": "apps/api/src/app/app.module.ts",
               "ext": ".ts",
-              "mtime": 1588708289305.0796
+              "mtime": 1588711295224.32
             },
             {
               "file": "apps/api/src/app/app.service.spec.ts",
@@ -663,12 +663,12 @@
             {
               "file": "apps/api/src/environments/environment.prod.ts",
               "ext": ".ts",
-              "mtime": 1588694589305.8992
+              "mtime": 1588711148016.9458
             },
             {
               "file": "apps/api/src/environments/environment.ts",
               "ext": ".ts",
-              "mtime": 1588694589306.1863
+              "mtime": 1588711098369.48
             },
             {
               "file": "apps/api/src/main.ts",
@@ -778,6 +778,14 @@
           "files": []
         }
       },
+      "@nestjs/mongoose": {
+        "type": "npm",
+        "name": "@nestjs/mongoose",
+        "data": {
+          "version": "^6.4.0",
+          "files": []
+        }
+      },
       "@nestjs/platform-express": {
         "type": "npm",
         "name": "@nestjs/platform-express",
@@ -834,6 +842,14 @@
           "files": []
         }
       },
+      "mongoose": {
+        "type": "npm",
+        "name": "mongoose",
+        "data": {
+          "version": "^5.9.12",
+          "files": []
+        }
+      },
       "reflect-metadata": {
         "type": "npm",
         "name": "reflect-metadata",
@@ -858,83 +874,19 @@
           "files": []
         }
       },
+      "@angular-devkit/build-angular": {
+        "type": "npm",
+        "name": "@angular-devkit/build-angular",
+        "data": {
+          "version": "0.901.0",
+          "files": []
+        }
+      },
       "@angular/cli": {
         "type": "npm",
         "name": "@angular/cli",
         "data": {
           "version": "9.1.0",
-          "files": []
-        }
-      },
-      "@nrwl/workspace": {
-        "type": "npm",
-        "name": "@nrwl/workspace",
-        "data": {
-          "version": "9.2.3",
-          "files": []
-        }
-      },
-      "@types/node": {
-        "type": "npm",
-        "name": "@types/node",
-        "data": {
-          "version": "~8.9.4",
-          "files": []
-        }
-      },
-      "dotenv": {
-        "type": "npm",
-        "name": "dotenv",
-        "data": {
-          "version": "6.2.0",
-          "files": []
-        }
-      },
-      "ts-node": {
-        "type": "npm",
-        "name": "ts-node",
-        "data": {
-          "version": "~7.0.0",
-          "files": []
-        }
-      },
-      "tslint": {
-        "type": "npm",
-        "name": "tslint",
-        "data": {
-          "version": "~6.0.0",
-          "files": []
-        }
-      },
-      "eslint": {
-        "type": "npm",
-        "name": "eslint",
-        "data": {
-          "version": "6.8.0",
-          "files": []
-        }
-      },
-      "typescript": {
-        "type": "npm",
-        "name": "typescript",
-        "data": {
-          "version": "~3.8.3",
-          "files": []
-        }
-      },
-      "prettier": {
-        "type": "npm",
-        "name": "prettier",
-        "data": {
-          "version": "1.19.1",
-          "files": []
-        }
-      },
-      "@nrwl/nest": {
-        "type": "npm",
-        "name": "@nrwl/nest",
-        "data": {
-          "version": "9.2.3",
           "files": []
         }
       },
@@ -954,86 +906,6 @@
           "files": []
         }
       },
-      "@angular-devkit/build-angular": {
-        "type": "npm",
-        "name": "@angular-devkit/build-angular",
-        "data": {
-          "version": "0.901.0",
-          "files": []
-        }
-      },
-      "codelyzer": {
-        "type": "npm",
-        "name": "codelyzer",
-        "data": {
-          "version": "~5.0.1",
-          "files": []
-        }
-      },
-      "jest-preset-angular": {
-        "type": "npm",
-        "name": "jest-preset-angular",
-        "data": {
-          "version": "8.1.2",
-          "files": []
-        }
-      },
-      "@nrwl/jest": {
-        "type": "npm",
-        "name": "@nrwl/jest",
-        "data": {
-          "version": "9.2.3",
-          "files": []
-        }
-      },
-      "jest": {
-        "type": "npm",
-        "name": "jest",
-        "data": {
-          "version": "25.2.3",
-          "files": []
-        }
-      },
-      "@types/jest": {
-        "type": "npm",
-        "name": "@types/jest",
-        "data": {
-          "version": "25.1.4",
-          "files": []
-        }
-      },
-      "ts-jest": {
-        "type": "npm",
-        "name": "ts-jest",
-        "data": {
-          "version": "25.2.1",
-          "files": []
-        }
-      },
-      "cypress": {
-        "type": "npm",
-        "name": "cypress",
-        "data": {
-          "version": "^4.1.0",
-          "files": []
-        }
-      },
-      "@nrwl/cypress": {
-        "type": "npm",
-        "name": "@nrwl/cypress",
-        "data": {
-          "version": "9.2.3",
-          "files": []
-        }
-      },
-      "@nrwl/node": {
-        "type": "npm",
-        "name": "@nrwl/node",
-        "data": {
-          "version": "9.2.3",
-          "files": []
-        }
-      },
       "@nestjs/schematics": {
         "type": "npm",
         "name": "@nestjs/schematics",
@@ -1047,6 +919,158 @@
         "name": "@nestjs/testing",
         "data": {
           "version": "^6.8.3",
+          "files": []
+        }
+      },
+      "@nrwl/cypress": {
+        "type": "npm",
+        "name": "@nrwl/cypress",
+        "data": {
+          "version": "9.2.3",
+          "files": []
+        }
+      },
+      "@nrwl/jest": {
+        "type": "npm",
+        "name": "@nrwl/jest",
+        "data": {
+          "version": "9.2.3",
+          "files": []
+        }
+      },
+      "@nrwl/nest": {
+        "type": "npm",
+        "name": "@nrwl/nest",
+        "data": {
+          "version": "9.2.3",
+          "files": []
+        }
+      },
+      "@nrwl/node": {
+        "type": "npm",
+        "name": "@nrwl/node",
+        "data": {
+          "version": "9.2.3",
+          "files": []
+        }
+      },
+      "@nrwl/workspace": {
+        "type": "npm",
+        "name": "@nrwl/workspace",
+        "data": {
+          "version": "9.2.3",
+          "files": []
+        }
+      },
+      "@types/jest": {
+        "type": "npm",
+        "name": "@types/jest",
+        "data": {
+          "version": "25.1.4",
+          "files": []
+        }
+      },
+      "@types/mongoose": {
+        "type": "npm",
+        "name": "@types/mongoose",
+        "data": {
+          "version": "^5.7.15",
+          "files": []
+        }
+      },
+      "@types/node": {
+        "type": "npm",
+        "name": "@types/node",
+        "data": {
+          "version": "~8.9.4",
+          "files": []
+        }
+      },
+      "codelyzer": {
+        "type": "npm",
+        "name": "codelyzer",
+        "data": {
+          "version": "~5.0.1",
+          "files": []
+        }
+      },
+      "cypress": {
+        "type": "npm",
+        "name": "cypress",
+        "data": {
+          "version": "^4.1.0",
+          "files": []
+        }
+      },
+      "dotenv": {
+        "type": "npm",
+        "name": "dotenv",
+        "data": {
+          "version": "6.2.0",
+          "files": []
+        }
+      },
+      "eslint": {
+        "type": "npm",
+        "name": "eslint",
+        "data": {
+          "version": "6.8.0",
+          "files": []
+        }
+      },
+      "jest": {
+        "type": "npm",
+        "name": "jest",
+        "data": {
+          "version": "25.2.3",
+          "files": []
+        }
+      },
+      "jest-preset-angular": {
+        "type": "npm",
+        "name": "jest-preset-angular",
+        "data": {
+          "version": "8.1.2",
+          "files": []
+        }
+      },
+      "prettier": {
+        "type": "npm",
+        "name": "prettier",
+        "data": {
+          "version": "1.19.1",
+          "files": []
+        }
+      },
+      "ts-jest": {
+        "type": "npm",
+        "name": "ts-jest",
+        "data": {
+          "version": "25.2.1",
+          "files": []
+        }
+      },
+      "ts-node": {
+        "type": "npm",
+        "name": "ts-node",
+        "data": {
+          "version": "~7.0.0",
+          "files": []
+        }
+      },
+      "tslint": {
+        "type": "npm",
+        "name": "tslint",
+        "data": {
+          "version": "~6.0.0",
+          "files": []
+        }
+      },
+      "typescript": {
+        "type": "npm",
+        "name": "typescript",
+        "data": {
+          "version": "~3.8.3",
           "files": []
         }
       }
@@ -1121,6 +1145,11 @@
         {
           "type": "static",
           "source": "api",
+          "target": "@nestjs/mongoose"
+        },
+        {
+          "type": "static",
+          "source": "api",
           "target": "@nestjs/websockets"
         },
         {
@@ -1139,6 +1168,7 @@
       "@angular/router": [],
       "@nestjs/common": [],
       "@nestjs/core": [],
+      "@nestjs/mongoose": [],
       "@nestjs/platform-express": [],
       "@nestjs/platform-socket.io": [],
       "@nestjs/serve-static": [],
@@ -1146,33 +1176,35 @@
       "@nrwl/angular": [],
       "@types/socket.io": [],
       "core-js": [],
+      "mongoose": [],
       "reflect-metadata": [],
       "rxjs": [],
       "zone.js": [],
+      "@angular-devkit/build-angular": [],
       "@angular/cli": [],
-      "@nrwl/workspace": [],
-      "@types/node": [],
-      "dotenv": [],
-      "ts-node": [],
-      "tslint": [],
-      "eslint": [],
-      "typescript": [],
-      "prettier": [],
-      "@nrwl/nest": [],
       "@angular/compiler-cli": [],
       "@angular/language-service": [],
-      "@angular-devkit/build-angular": [],
-      "codelyzer": [],
-      "jest-preset-angular": [],
-      "@nrwl/jest": [],
-      "jest": [],
-      "@types/jest": [],
-      "ts-jest": [],
-      "cypress": [],
-      "@nrwl/cypress": [],
-      "@nrwl/node": [],
       "@nestjs/schematics": [],
-      "@nestjs/testing": []
+      "@nestjs/testing": [],
+      "@nrwl/cypress": [],
+      "@nrwl/jest": [],
+      "@nrwl/nest": [],
+      "@nrwl/node": [],
+      "@nrwl/workspace": [],
+      "@types/jest": [],
+      "@types/mongoose": [],
+      "@types/node": [],
+      "codelyzer": [],
+      "cypress": [],
+      "dotenv": [],
+      "eslint": [],
+      "jest": [],
+      "jest-preset-angular": [],
+      "prettier": [],
+      "ts-jest": [],
+      "ts-node": [],
+      "tslint": [],
+      "typescript": []
     }
   },
   "fileMap": {
@@ -1551,7 +1583,7 @@
       {
         "file": "apps/api/src/app/app.module.ts",
         "ext": ".ts",
-        "mtime": 1588708289305.0796
+        "mtime": 1588711295224.32
       },
       {
         "file": "apps/api/src/app/app.service.spec.ts",
@@ -1601,12 +1633,12 @@
       {
         "file": "apps/api/src/environments/environment.prod.ts",
         "ext": ".ts",
-        "mtime": 1588694589305.8992
+        "mtime": 1588711148016.9458
       },
       {
         "file": "apps/api/src/environments/environment.ts",
         "ext": ".ts",
-        "mtime": 1588694589306.1863
+        "mtime": 1588711098369.48
       },
       {
         "file": "apps/api/src/main.ts",

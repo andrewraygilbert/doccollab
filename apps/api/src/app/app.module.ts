@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { DocumentsModule } from './documents/documents.module';
 import { SocketsModule } from './sockets/sockets.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { environment } from './../environments/environment';
 
 @Module({
   imports: [
@@ -14,6 +16,7 @@ import { SocketsModule } from './sockets/sockets.module';
       rootPath: join(__dirname, '..', 'doc-collab'),
       exclude: ['/api*']
     }),
+    MongooseModule.forRoot(environment.dbURI as string, {useNewUrlParser: true, useUnifiedTopology: true}),
     AuthModule,
     UsersModule,
     DocumentsModule,

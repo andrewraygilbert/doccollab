@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  dbURI: process.env.MONGODB_URI
 };
