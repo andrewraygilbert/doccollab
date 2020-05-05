@@ -643,12 +643,12 @@
             {
               "file": "apps/api/src/app/sockets/socket-core.gateway.ts",
               "ext": ".ts",
-              "mtime": 1588708307976.522
+              "mtime": 1588710392778.5686
             },
             {
               "file": "apps/api/src/app/sockets/sockets.module.ts",
               "ext": ".ts",
-              "mtime": 1588708307976.758
+              "mtime": 1588710037534.3608
             },
             {
               "file": "apps/api/src/app/users/users.module.ts",
@@ -1581,12 +1581,12 @@
       {
         "file": "apps/api/src/app/sockets/socket-core.gateway.ts",
         "ext": ".ts",
-        "mtime": 1588708307976.522
+        "mtime": 1588710392778.5686
       },
       {
         "file": "apps/api/src/app/sockets/sockets.module.ts",
         "ext": ".ts",
-        "mtime": 1588708307976.758
+        "mtime": 1588710037534.3608
       },
       {
         "file": "apps/api/src/app/users/users.module.ts",
