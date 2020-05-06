@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Credentials } from '@doccollab/api-interfaces';
 import { AuthService } from './../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'doccollab-login',
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +37,7 @@ export class LoginComponent implements OnInit {
       .then(response => {
         console.log(response);
         this.authService.saveToken(response);
+        this.router.navigateByUrl('/dashboard');
       })
       .catch(err => {
         console.log(err);

@@ -306,7 +306,7 @@
             {
               "file": "apps/doc-collab/src/app/app.module.ts",
               "ext": ".ts",
-              "mtime": 1588790265747.9465
+              "mtime": 1588802067186.4727
             },
             {
               "file": "apps/doc-collab/src/app/auth/auth.module.ts",
@@ -341,7 +341,7 @@
             {
               "file": "apps/doc-collab/src/app/auth/login/login.component.ts",
               "ext": ".ts",
-              "mtime": 1588801279976.238
+              "mtime": 1588802183467.2373
             },
             {
               "file": "apps/doc-collab/src/app/auth/register/register.component.css",
@@ -1535,7 +1535,7 @@
       {
         "file": "apps/doc-collab/src/app/app.module.ts",
         "ext": ".ts",
-        "mtime": 1588790265747.9465
+        "mtime": 1588802067186.4727
       },
       {
         "file": "apps/doc-collab/src/app/auth/auth.module.ts",
@@ -1570,7 +1570,7 @@
       {
         "file": "apps/doc-collab/src/app/auth/login/login.component.ts",
         "ext": ".ts",
-        "mtime": 1588801279976.238
+        "mtime": 1588802183467.2373
       },
       {
         "file": "apps/doc-collab/src/app/auth/register/register.component.css",

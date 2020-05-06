@@ -6,9 +6,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from './auth/auth.module';
+import { DashboardRootComponent } from './dashboard/dashboard-root/dashboard-root.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'dashboard', component: DashboardRootComponent}
 ]
 
 @NgModule({
