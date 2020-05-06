@@ -141,7 +141,7 @@
             {
               "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
               "ext": ".ts",
-              "mtime": 1588712514904.8884
+              "mtime": 1588778657918.8699
             },
             {
               "file": "libs/api-interfaces/tsconfig.json",
@@ -613,7 +613,7 @@
             {
               "file": "apps/api/src/app/app.module.ts",
               "ext": ".ts",
-              "mtime": 1588712620828.436
+              "mtime": 1588774691779.0974
             },
             {
               "file": "apps/api/src/app/app.service.spec.ts",
@@ -626,14 +626,74 @@
               "mtime": 1588712648315.5195
             },
             {
+              "file": "apps/api/src/app/auth/auth.controller.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588779109232.3047
+            },
+            {
+              "file": "apps/api/src/app/auth/auth.controller.ts",
+              "ext": ".ts",
+              "mtime": 1588781065565.9426
+            },
+            {
               "file": "apps/api/src/app/auth/auth.module.ts",
               "ext": ".ts",
-              "mtime": 1588705967948.1826
+              "mtime": 1588781878558.1377
+            },
+            {
+              "file": "apps/api/src/app/auth/auth.service.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588777776473.294
+            },
+            {
+              "file": "apps/api/src/app/auth/auth.service.ts",
+              "ext": ".ts",
+              "mtime": 1588781087873.1162
+            },
+            {
+              "file": "apps/api/src/app/auth/jwt-auth.guard.ts",
+              "ext": ".ts",
+              "mtime": 1588782030862.3005
+            },
+            {
+              "file": "apps/api/src/app/auth/jwt.strategy.ts",
+              "ext": ".ts",
+              "mtime": 1588781305540.5676
+            },
+            {
+              "file": "apps/api/src/app/auth/local-auth.guard.ts",
+              "ext": ".ts",
+              "mtime": 1588779898286.7847
+            },
+            {
+              "file": "apps/api/src/app/auth/local.strategy.ts",
+              "ext": ".ts",
+              "mtime": 1588781096411.5613
+            },
+            {
+              "file": "apps/api/src/app/documents/documents.controller.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588715347135.203
+            },
+            {
+              "file": "apps/api/src/app/documents/documents.controller.ts",
+              "ext": ".ts",
+              "mtime": 1588715347135.4485
             },
             {
               "file": "apps/api/src/app/documents/documents.module.ts",
               "ext": ".ts",
-              "mtime": 1588707922901.5835
+              "mtime": 1588715375031.7139
+            },
+            {
+              "file": "apps/api/src/app/documents/documents.service.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588715375031.1196
+            },
+            {
+              "file": "apps/api/src/app/documents/documents.service.ts",
+              "ext": ".ts",
+              "mtime": 1588715375031.433
             },
             {
               "file": "apps/api/src/app/sockets/socket-core.gateway.spec.ts",
@@ -651,9 +711,34 @@
               "mtime": 1588710037534.3608
             },
             {
+              "file": "apps/api/src/app/users/user.schema.ts",
+              "ext": ".ts",
+              "mtime": 1588779651226.525
+            },
+            {
+              "file": "apps/api/src/app/users/users.controller.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588715327754.475
+            },
+            {
+              "file": "apps/api/src/app/users/users.controller.ts",
+              "ext": ".ts",
+              "mtime": 1588776005007.8816
+            },
+            {
               "file": "apps/api/src/app/users/users.module.ts",
               "ext": ".ts",
-              "mtime": 1588707910401.8958
+              "mtime": 1588777866395.3862
+            },
+            {
+              "file": "apps/api/src/app/users/users.service.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588715392727.8623
+            },
+            {
+              "file": "apps/api/src/app/users/users.service.ts",
+              "ext": ".ts",
+              "mtime": 1588778402433.554
             },
             {
               "file": "apps/api/src/assets/.gitkeep",
@@ -663,12 +748,12 @@
             {
               "file": "apps/api/src/environments/environment.prod.ts",
               "ext": ".ts",
-              "mtime": 1588711148016.9458
+              "mtime": 1588782294917.374
             },
             {
               "file": "apps/api/src/environments/environment.ts",
               "ext": ".ts",
-              "mtime": 1588711098369.48
+              "mtime": 1588780556994.7883
             },
             {
               "file": "apps/api/src/main.ts",
@@ -778,11 +863,27 @@
           "files": []
         }
       },
+      "@nestjs/jwt": {
+        "type": "npm",
+        "name": "@nestjs/jwt",
+        "data": {
+          "version": "^7.0.0",
+          "files": []
+        }
+      },
       "@nestjs/mongoose": {
         "type": "npm",
         "name": "@nestjs/mongoose",
         "data": {
           "version": "^6.4.0",
+          "files": []
+        }
+      },
+      "@nestjs/passport": {
+        "type": "npm",
+        "name": "@nestjs/passport",
+        "data": {
+          "version": "^7.0.0",
           "files": []
         }
       },
@@ -847,6 +948,30 @@
         "name": "mongoose",
         "data": {
           "version": "^5.9.12",
+          "files": []
+        }
+      },
+      "passport": {
+        "type": "npm",
+        "name": "passport",
+        "data": {
+          "version": "^0.4.1",
+          "files": []
+        }
+      },
+      "passport-jwt": {
+        "type": "npm",
+        "name": "passport-jwt",
+        "data": {
+          "version": "^4.0.0",
+          "files": []
+        }
+      },
+      "passport-local": {
+        "type": "npm",
+        "name": "passport-local",
+        "data": {
+          "version": "^1.0.0",
           "files": []
         }
       },
@@ -983,6 +1108,22 @@
         "name": "@types/node",
         "data": {
           "version": "~8.9.4",
+          "files": []
+        }
+      },
+      "@types/passport-jwt": {
+        "type": "npm",
+        "name": "@types/passport-jwt",
+        "data": {
+          "version": "^3.0.3",
+          "files": []
+        }
+      },
+      "@types/passport-local": {
+        "type": "npm",
+        "name": "@types/passport-local",
+        "data": {
+          "version": "^1.0.33",
           "files": []
         }
       },
@@ -1126,6 +1267,11 @@
         {
           "type": "static",
           "source": "api",
+          "target": "api-interfaces"
+        },
+        {
+          "type": "static",
+          "source": "api",
           "target": "@nestjs/testing"
         },
         {
@@ -1146,7 +1292,32 @@
         {
           "type": "static",
           "source": "api",
+          "target": "@nestjs/passport"
+        },
+        {
+          "type": "static",
+          "source": "api",
+          "target": "@nestjs/jwt"
+        },
+        {
+          "type": "static",
+          "source": "api",
+          "target": "passport-jwt"
+        },
+        {
+          "type": "static",
+          "source": "api",
+          "target": "passport-local"
+        },
+        {
+          "type": "static",
+          "source": "api",
           "target": "@nestjs/websockets"
+        },
+        {
+          "type": "static",
+          "source": "api",
+          "target": "mongoose"
         },
         {
           "type": "static",
@@ -1164,7 +1335,9 @@
       "@angular/router": [],
       "@nestjs/common": [],
       "@nestjs/core": [],
+      "@nestjs/jwt": [],
       "@nestjs/mongoose": [],
+      "@nestjs/passport": [],
       "@nestjs/platform-express": [],
       "@nestjs/platform-socket.io": [],
       "@nestjs/serve-static": [],
@@ -1173,6 +1346,9 @@
       "@types/socket.io": [],
       "core-js": [],
       "mongoose": [],
+      "passport": [],
+      "passport-jwt": [],
+      "passport-local": [],
       "reflect-metadata": [],
       "rxjs": [],
       "zone.js": [],
@@ -1190,6 +1366,8 @@
       "@types/jest": [],
       "@types/mongoose": [],
       "@types/node": [],
+      "@types/passport-jwt": [],
+      "@types/passport-local": [],
       "codelyzer": [],
       "cypress": [],
       "dotenv": [],
@@ -1275,7 +1453,7 @@
       {
         "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
         "ext": ".ts",
-        "mtime": 1588712514904.8884
+        "mtime": 1588778657918.8699
       },
       {
         "file": "libs/api-interfaces/tsconfig.json",
@@ -1579,7 +1757,7 @@
       {
         "file": "apps/api/src/app/app.module.ts",
         "ext": ".ts",
-        "mtime": 1588712620828.436
+        "mtime": 1588774691779.0974
       },
       {
         "file": "apps/api/src/app/app.service.spec.ts",
@@ -1592,14 +1770,74 @@
         "mtime": 1588712648315.5195
       },
       {
+        "file": "apps/api/src/app/auth/auth.controller.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588779109232.3047
+      },
+      {
+        "file": "apps/api/src/app/auth/auth.controller.ts",
+        "ext": ".ts",
+        "mtime": 1588781065565.9426
+      },
+      {
         "file": "apps/api/src/app/auth/auth.module.ts",
         "ext": ".ts",
-        "mtime": 1588705967948.1826
+        "mtime": 1588781878558.1377
+      },
+      {
+        "file": "apps/api/src/app/auth/auth.service.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588777776473.294
+      },
+      {
+        "file": "apps/api/src/app/auth/auth.service.ts",
+        "ext": ".ts",
+        "mtime": 1588781087873.1162
+      },
+      {
+        "file": "apps/api/src/app/auth/jwt-auth.guard.ts",
+        "ext": ".ts",
+        "mtime": 1588782030862.3005
+      },
+      {
+        "file": "apps/api/src/app/auth/jwt.strategy.ts",
+        "ext": ".ts",
+        "mtime": 1588781305540.5676
+      },
+      {
+        "file": "apps/api/src/app/auth/local-auth.guard.ts",
+        "ext": ".ts",
+        "mtime": 1588779898286.7847
+      },
+      {
+        "file": "apps/api/src/app/auth/local.strategy.ts",
+        "ext": ".ts",
+        "mtime": 1588781096411.5613
+      },
+      {
+        "file": "apps/api/src/app/documents/documents.controller.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588715347135.203
+      },
+      {
+        "file": "apps/api/src/app/documents/documents.controller.ts",
+        "ext": ".ts",
+        "mtime": 1588715347135.4485
       },
       {
         "file": "apps/api/src/app/documents/documents.module.ts",
         "ext": ".ts",
-        "mtime": 1588707922901.5835
+        "mtime": 1588715375031.7139
+      },
+      {
+        "file": "apps/api/src/app/documents/documents.service.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588715375031.1196
+      },
+      {
+        "file": "apps/api/src/app/documents/documents.service.ts",
+        "ext": ".ts",
+        "mtime": 1588715375031.433
       },
       {
         "file": "apps/api/src/app/sockets/socket-core.gateway.spec.ts",
@@ -1617,9 +1855,34 @@
         "mtime": 1588710037534.3608
       },
       {
+        "file": "apps/api/src/app/users/user.schema.ts",
+        "ext": ".ts",
+        "mtime": 1588779651226.525
+      },
+      {
+        "file": "apps/api/src/app/users/users.controller.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588715327754.475
+      },
+      {
+        "file": "apps/api/src/app/users/users.controller.ts",
+        "ext": ".ts",
+        "mtime": 1588776005007.8816
+      },
+      {
         "file": "apps/api/src/app/users/users.module.ts",
         "ext": ".ts",
-        "mtime": 1588707910401.8958
+        "mtime": 1588777866395.3862
+      },
+      {
+        "file": "apps/api/src/app/users/users.service.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588715392727.8623
+      },
+      {
+        "file": "apps/api/src/app/users/users.service.ts",
+        "ext": ".ts",
+        "mtime": 1588778402433.554
       },
       {
         "file": "apps/api/src/assets/.gitkeep",
@@ -1629,12 +1892,12 @@
       {
         "file": "apps/api/src/environments/environment.prod.ts",
         "ext": ".ts",
-        "mtime": 1588711148016.9458
+        "mtime": 1588782294917.374
       },
       {
         "file": "apps/api/src/environments/environment.ts",
         "ext": ".ts",
-        "mtime": 1588711098369.48
+        "mtime": 1588780556994.7883
       },
       {
         "file": "apps/api/src/main.ts",
