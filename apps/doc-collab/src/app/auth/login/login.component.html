@@ -1,1 +1,27 @@
-<p>login works!</p>
+<div class='container-fluid'>
+  <div class='row justify-content-center'>
+    <div class='col-8'>
+      <div class='row justify-content-center'>
+        <h1>Login Here</h1>
+      </div>
+      <div class='row justify-content-center'>
+        <div class='col-8' style='height: 75px;'>
+          <div *ngIf='activeError' class='alert alert-danger'>
+            {{errorMsg}}
+          </div>
+        </div>
+      </div>
+      <form [formGroup]='loginForm' (ngSubmit)='onSubmitLogin()'>
+        <div class='form-group'>
+          <label for='username'>Username</label>
+          <input type='text' class='form-control' id='username' name='username' formControlName='username' data-cy='username-input' required>
+        </div>
+        <div class='form-group'>
+          <label for='password'>Password</label>
+          <input type='text' class='form-control' id='password' name='password' formControlName='password' data-cy='password-input' required>
+        </div>
+        <button type='submit' class='btn btn-primary' data-cy='login-btn'>Login</button>
+      </form>
+    </div>
+  </div>
+</div>

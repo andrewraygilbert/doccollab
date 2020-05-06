@@ -141,7 +141,7 @@
             {
               "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
               "ext": ".ts",
-              "mtime": 1588778657918.8699
+              "mtime": 1588800113099.6543
             },
             {
               "file": "libs/api-interfaces/tsconfig.json",
@@ -286,12 +286,12 @@
             {
               "file": "apps/doc-collab/src/app/app.component.css",
               "ext": ".css",
-              "mtime": 1588694589299.2175
+              "mtime": 1588789046189.5842
             },
             {
               "file": "apps/doc-collab/src/app/app.component.html",
               "ext": ".html",
-              "mtime": 1588715017561.1882
+              "mtime": 1588788230518.7888
             },
             {
               "file": "apps/doc-collab/src/app/app.component.spec.ts",
@@ -301,17 +301,17 @@
             {
               "file": "apps/doc-collab/src/app/app.component.ts",
               "ext": ".ts",
-              "mtime": 1588714905828.2195
+              "mtime": 1588798468273.6362
             },
             {
               "file": "apps/doc-collab/src/app/app.module.ts",
               "ext": ".ts",
-              "mtime": 1588694589298.8914
+              "mtime": 1588790265747.9465
             },
             {
               "file": "apps/doc-collab/src/app/auth/auth.module.ts",
               "ext": ".ts",
-              "mtime": 1588707751828.9658
+              "mtime": 1588790355156.5046
             },
             {
               "file": "apps/doc-collab/src/app/auth/auth.service.spec.ts",
@@ -321,7 +321,7 @@
             {
               "file": "apps/doc-collab/src/app/auth/auth.service.ts",
               "ext": ".ts",
-              "mtime": 1588706445212.5203
+              "mtime": 1588801175290.3948
             },
             {
               "file": "apps/doc-collab/src/app/auth/login/login.component.css",
@@ -331,7 +331,7 @@
             {
               "file": "apps/doc-collab/src/app/auth/login/login.component.html",
               "ext": ".html",
-              "mtime": 1588706358339.1104
+              "mtime": 1588801529681.7046
             },
             {
               "file": "apps/doc-collab/src/app/auth/login/login.component.spec.ts",
@@ -341,7 +341,7 @@
             {
               "file": "apps/doc-collab/src/app/auth/login/login.component.ts",
               "ext": ".ts",
-              "mtime": 1588706358339.7678
+              "mtime": 1588801279976.238
             },
             {
               "file": "apps/doc-collab/src/app/auth/register/register.component.css",
@@ -362,6 +362,11 @@
               "file": "apps/doc-collab/src/app/auth/register/register.component.ts",
               "ext": ".ts",
               "mtime": 1588707180591.4294
+            },
+            {
+              "file": "apps/doc-collab/src/app/constants/browser-storage.ts",
+              "ext": ".ts",
+              "mtime": 1588798842191.9004
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.css",
@@ -466,12 +471,12 @@
             {
               "file": "apps/doc-collab/src/environments/environment.prod.ts",
               "ext": ".ts",
-              "mtime": 1588694589298.423
+              "mtime": 1588798397696.3062
             },
             {
               "file": "apps/doc-collab/src/environments/environment.ts",
               "ext": ".ts",
-              "mtime": 1588694589298.6404
+              "mtime": 1588798417724.2734
             },
             {
               "file": "apps/doc-collab/src/favicon.ico",
@@ -613,7 +618,7 @@
             {
               "file": "apps/api/src/app/app.module.ts",
               "ext": ".ts",
-              "mtime": 1588774691779.0974
+              "mtime": 1588787974941.7761
             },
             {
               "file": "apps/api/src/app/app.service.spec.ts",
@@ -748,17 +753,17 @@
             {
               "file": "apps/api/src/environments/environment.prod.ts",
               "ext": ".ts",
-              "mtime": 1588782294917.374
+              "mtime": 1588797585246.6807
             },
             {
               "file": "apps/api/src/environments/environment.ts",
               "ext": ".ts",
-              "mtime": 1588780556994.7883
+              "mtime": 1588791199589.0454
             },
             {
               "file": "apps/api/src/main.ts",
               "ext": ".ts",
-              "mtime": 1588694971276.845
+              "mtime": 1588800567891.053
             },
             {
               "file": "apps/api/tsconfig.app.json",
@@ -1235,6 +1240,11 @@
         {
           "type": "static",
           "source": "doc-collab",
+          "target": "api-interfaces"
+        },
+        {
+          "type": "static",
+          "source": "doc-collab",
           "target": "@angular/core"
         },
         {
@@ -1246,6 +1256,16 @@
           "type": "static",
           "source": "doc-collab",
           "target": "@angular/platform-browser"
+        },
+        {
+          "type": "static",
+          "source": "doc-collab",
+          "target": "@angular/router"
+        },
+        {
+          "type": "static",
+          "source": "doc-collab",
+          "target": "@angular/forms"
         },
         {
           "type": "static",
@@ -1453,7 +1473,7 @@
       {
         "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
         "ext": ".ts",
-        "mtime": 1588778657918.8699
+        "mtime": 1588800113099.6543
       },
       {
         "file": "libs/api-interfaces/tsconfig.json",
@@ -1495,12 +1515,12 @@
       {
         "file": "apps/doc-collab/src/app/app.component.css",
         "ext": ".css",
-        "mtime": 1588694589299.2175
+        "mtime": 1588789046189.5842
       },
       {
         "file": "apps/doc-collab/src/app/app.component.html",
         "ext": ".html",
-        "mtime": 1588715017561.1882
+        "mtime": 1588788230518.7888
       },
       {
         "file": "apps/doc-collab/src/app/app.component.spec.ts",
@@ -1510,17 +1530,17 @@
       {
         "file": "apps/doc-collab/src/app/app.component.ts",
         "ext": ".ts",
-        "mtime": 1588714905828.2195
+        "mtime": 1588798468273.6362
       },
       {
         "file": "apps/doc-collab/src/app/app.module.ts",
         "ext": ".ts",
-        "mtime": 1588694589298.8914
+        "mtime": 1588790265747.9465
       },
       {
         "file": "apps/doc-collab/src/app/auth/auth.module.ts",
         "ext": ".ts",
-        "mtime": 1588707751828.9658
+        "mtime": 1588790355156.5046
       },
       {
         "file": "apps/doc-collab/src/app/auth/auth.service.spec.ts",
@@ -1530,7 +1550,7 @@
       {
         "file": "apps/doc-collab/src/app/auth/auth.service.ts",
         "ext": ".ts",
-        "mtime": 1588706445212.5203
+        "mtime": 1588801175290.3948
       },
       {
         "file": "apps/doc-collab/src/app/auth/login/login.component.css",
@@ -1540,7 +1560,7 @@
       {
         "file": "apps/doc-collab/src/app/auth/login/login.component.html",
         "ext": ".html",
-        "mtime": 1588706358339.1104
+        "mtime": 1588801529681.7046
       },
       {
         "file": "apps/doc-collab/src/app/auth/login/login.component.spec.ts",
@@ -1550,7 +1570,7 @@
       {
         "file": "apps/doc-collab/src/app/auth/login/login.component.ts",
         "ext": ".ts",
-        "mtime": 1588706358339.7678
+        "mtime": 1588801279976.238
       },
       {
         "file": "apps/doc-collab/src/app/auth/register/register.component.css",
@@ -1571,6 +1591,11 @@
         "file": "apps/doc-collab/src/app/auth/register/register.component.ts",
         "ext": ".ts",
         "mtime": 1588707180591.4294
+      },
+      {
+        "file": "apps/doc-collab/src/app/constants/browser-storage.ts",
+        "ext": ".ts",
+        "mtime": 1588798842191.9004
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.css",
@@ -1675,12 +1700,12 @@
       {
         "file": "apps/doc-collab/src/environments/environment.prod.ts",
         "ext": ".ts",
-        "mtime": 1588694589298.423
+        "mtime": 1588798397696.3062
       },
       {
         "file": "apps/doc-collab/src/environments/environment.ts",
         "ext": ".ts",
-        "mtime": 1588694589298.6404
+        "mtime": 1588798417724.2734
       },
       {
         "file": "apps/doc-collab/src/favicon.ico",
@@ -1757,7 +1782,7 @@
       {
         "file": "apps/api/src/app/app.module.ts",
         "ext": ".ts",
-        "mtime": 1588774691779.0974
+        "mtime": 1588787974941.7761
       },
       {
         "file": "apps/api/src/app/app.service.spec.ts",
@@ -1892,17 +1917,17 @@
       {
         "file": "apps/api/src/environments/environment.prod.ts",
         "ext": ".ts",
-        "mtime": 1588782294917.374
+        "mtime": 1588797585246.6807
       },
       {
         "file": "apps/api/src/environments/environment.ts",
         "ext": ".ts",
-        "mtime": 1588780556994.7883
+        "mtime": 1588791199589.0454
       },
       {
         "file": "apps/api/src/main.ts",
         "ext": ".ts",
-        "mtime": 1588694971276.845
+        "mtime": 1588800567891.053
       },
       {
         "file": "apps/api/tsconfig.app.json",

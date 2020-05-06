@@ -37,4 +37,13 @@ export interface UserModel extends UserBase, Document {
   password: string;
 }
 
+export interface Credentials {
+  username: string;
+  password: string;
+}
+
+export interface TokenObject {
+  access_token: string;
+}
+
 
