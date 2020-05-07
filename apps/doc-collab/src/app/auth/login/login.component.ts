@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.verifyLoggedIn();
   }
 
   public onSubmitLogin() {
@@ -52,6 +53,16 @@ export class LoginComponent implements OnInit {
       this.activeError = false;
       this.errorMsg = '';
     }, 5000);
+  }
+
+  private verifyLoggedIn() {
+    console.log('in logged in');
+    const token = this.authService.getToken();
+    if (!token) {
+      this.router.navigateByUrl('login');
+    } else {
+      this.router.navigateByUrl('dashboard');
+    }
   }
 
 }

@@ -35,4 +35,8 @@ export class AuthService {
       });
   }
 
+  public async logout(): Promise<void> {
+    this.localStorage.removeItem('access_token');
+  }
+
 }

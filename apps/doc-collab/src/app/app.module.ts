@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { DashboardRootComponent } from './dashboard/dashboard-root/dashboard-root.component';
 
 const appRoutes: Routes = [
+  { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardRootComponent}
 ]
