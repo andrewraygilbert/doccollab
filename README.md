@@ -9,6 +9,7 @@ This repo contains an in progress **prototype** of a document collaboration appl
 * Backend Framework: NestJS
 * Backend Runtime: Node.js
 * Workspace: Nx
+* Real-time Data Library: Socket.io
 
 ## Core Features
 
