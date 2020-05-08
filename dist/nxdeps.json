@@ -146,7 +146,7 @@
             {
               "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
               "ext": ".ts",
-              "mtime": 1588800113099.6543
+              "mtime": 1588971312318.6062
             },
             {
               "file": "libs/api-interfaces/tsconfig.json",
@@ -381,7 +381,7 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
               "ext": ".html",
-              "mtime": 1588876577992.3315
+              "mtime": 1588950090601.5513
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
@@ -391,7 +391,7 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.ts",
               "ext": ".ts",
-              "mtime": 1588879008656.278
+              "mtime": 1588971365790.965
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard.module.ts",
@@ -406,7 +406,7 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard.service.ts",
               "ext": ".ts",
-              "mtime": 1588945769005.788
+              "mtime": 1588949733343.8384
             },
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
@@ -663,7 +663,7 @@
             {
               "file": "apps/api/src/app/auth/auth.module.ts",
               "ext": ".ts",
-              "mtime": 1588781878558.1377
+              "mtime": 1588957844108.1938
             },
             {
               "file": "apps/api/src/app/auth/auth.service.spec.ts",
@@ -673,7 +673,7 @@
             {
               "file": "apps/api/src/app/auth/auth.service.ts",
               "ext": ".ts",
-              "mtime": 1588862233324.7686
+              "mtime": 1588970956888.591
             },
             {
               "file": "apps/api/src/app/auth/jwt-auth.guard.ts",
@@ -696,6 +696,36 @@
               "mtime": 1588781096411.5613
             },
             {
+              "file": "apps/api/src/app/auth/ws-auth.pipe.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588962964589.1692
+            },
+            {
+              "file": "apps/api/src/app/auth/ws-auth.pipe.ts",
+              "ext": ".ts",
+              "mtime": 1588969689345.2727
+            },
+            {
+              "file": "apps/api/src/app/auth/ws.auth.ts",
+              "ext": ".ts",
+              "mtime": 1588972975586.6814
+            },
+            {
+              "file": "apps/api/src/app/auth/ws.guard.spec.ts",
+              "ext": ".ts",
+              "mtime": 1588955487604.4846
+            },
+            {
+              "file": "apps/api/src/app/auth/ws.guard.ts",
+              "ext": ".ts",
+              "mtime": 1588969555120.3828
+            },
+            {
+              "file": "apps/api/src/app/documents/document.schema.ts",
+              "ext": ".ts",
+              "mtime": 1588947439990.844
+            },
+            {
               "file": "apps/api/src/app/documents/documents.controller.spec.ts",
               "ext": ".ts",
               "mtime": 1588715347135.203
@@ -713,12 +743,12 @@
             {
               "file": "apps/api/src/app/documents/documents.gateway.ts",
               "ext": ".ts",
-              "mtime": 1588945437253.0369
+              "mtime": 1588972434513.5444
             },
             {
               "file": "apps/api/src/app/documents/documents.module.ts",
               "ext": ".ts",
-              "mtime": 1588944717878.9878
+              "mtime": 1588972058670.621
             },
             {
               "file": "apps/api/src/app/documents/documents.service.spec.ts",
@@ -728,7 +758,7 @@
             {
               "file": "apps/api/src/app/documents/documents.service.ts",
               "ext": ".ts",
-              "mtime": 1588943937513.651
+              "mtime": 1588972609103.6504
             },
             {
               "file": "apps/api/src/app/sockets/socket-core.gateway.spec.ts",
@@ -738,7 +768,7 @@
             {
               "file": "apps/api/src/app/sockets/socket-core.gateway.ts",
               "ext": ".ts",
-              "mtime": 1588945156834.4697
+              "mtime": 1588964915966.882
             },
             {
               "file": "apps/api/src/app/sockets/sockets.module.ts",
@@ -1375,12 +1405,12 @@
         {
           "type": "static",
           "source": "api",
-          "target": "@nestjs/websockets"
+          "target": "mongoose"
         },
         {
           "type": "static",
           "source": "api",
-          "target": "mongoose"
+          "target": "@nestjs/websockets"
         },
         {
           "type": "static",
@@ -1522,7 +1552,7 @@
       {
         "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
         "ext": ".ts",
-        "mtime": 1588800113099.6543
+        "mtime": 1588971312318.6062
       },
       {
         "file": "libs/api-interfaces/tsconfig.json",
@@ -1654,7 +1684,7 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
         "ext": ".html",
-        "mtime": 1588876577992.3315
+        "mtime": 1588950090601.5513
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
@@ -1664,7 +1694,7 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.ts",
         "ext": ".ts",
-        "mtime": 1588879008656.278
+        "mtime": 1588971365790.965
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard.module.ts",
@@ -1679,7 +1709,7 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard.service.ts",
         "ext": ".ts",
-        "mtime": 1588945769005.788
+        "mtime": 1588949733343.8384
       },
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
@@ -1871,7 +1901,7 @@
       {
         "file": "apps/api/src/app/auth/auth.module.ts",
         "ext": ".ts",
-        "mtime": 1588781878558.1377
+        "mtime": 1588957844108.1938
       },
       {
         "file": "apps/api/src/app/auth/auth.service.spec.ts",
@@ -1881,7 +1911,7 @@
       {
         "file": "apps/api/src/app/auth/auth.service.ts",
         "ext": ".ts",
-        "mtime": 1588862233324.7686
+        "mtime": 1588970956888.591
       },
       {
         "file": "apps/api/src/app/auth/jwt-auth.guard.ts",
@@ -1904,6 +1934,36 @@
         "mtime": 1588781096411.5613
       },
       {
+        "file": "apps/api/src/app/auth/ws-auth.pipe.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588962964589.1692
+      },
+      {
+        "file": "apps/api/src/app/auth/ws-auth.pipe.ts",
+        "ext": ".ts",
+        "mtime": 1588969689345.2727
+      },
+      {
+        "file": "apps/api/src/app/auth/ws.auth.ts",
+        "ext": ".ts",
+        "mtime": 1588972975586.6814
+      },
+      {
+        "file": "apps/api/src/app/auth/ws.guard.spec.ts",
+        "ext": ".ts",
+        "mtime": 1588955487604.4846
+      },
+      {
+        "file": "apps/api/src/app/auth/ws.guard.ts",
+        "ext": ".ts",
+        "mtime": 1588969555120.3828
+      },
+      {
+        "file": "apps/api/src/app/documents/document.schema.ts",
+        "ext": ".ts",
+        "mtime": 1588947439990.844
+      },
+      {
         "file": "apps/api/src/app/documents/documents.controller.spec.ts",
         "ext": ".ts",
         "mtime": 1588715347135.203
@@ -1921,12 +1981,12 @@
       {
         "file": "apps/api/src/app/documents/documents.gateway.ts",
         "ext": ".ts",
-        "mtime": 1588945437253.0369
+        "mtime": 1588972434513.5444
       },
       {
         "file": "apps/api/src/app/documents/documents.module.ts",
         "ext": ".ts",
-        "mtime": 1588944717878.9878
+        "mtime": 1588972058670.621
       },
       {
         "file": "apps/api/src/app/documents/documents.service.spec.ts",
@@ -1936,7 +1996,7 @@
       {
         "file": "apps/api/src/app/documents/documents.service.ts",
         "ext": ".ts",
-        "mtime": 1588943937513.651
+        "mtime": 1588972609103.6504
       },
       {
         "file": "apps/api/src/app/sockets/socket-core.gateway.spec.ts",
@@ -1946,7 +2006,7 @@
       {
         "file": "apps/api/src/app/sockets/socket-core.gateway.ts",
         "ext": ".ts",
-        "mtime": 1588945156834.4697
+        "mtime": 1588964915966.882
       },
       {
         "file": "apps/api/src/app/sockets/sockets.module.ts",

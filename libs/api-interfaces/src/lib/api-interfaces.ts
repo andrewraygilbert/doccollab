@@ -18,16 +18,22 @@ export interface CreateUserDTO extends UserBase {
 }
 
 export interface Collaborator extends UserBase {
-  _id: string;
+  userId: string;
 }
 
-export interface AppDocument {
+export interface AppDocBase {
   title: string;
-  owner: Collaborator,
-  collaborators: [Collaborator],
-  viewers: [Collaborator]
-  content: {}
+  owner: Collaborator;
+  collaborators: [Collaborator];
+  viewers: [Collaborator];
+  content: {};
 }
+
+export interface CreateDocDto {
+  title: string;
+}
+
+export interface AppDocument extends AppDocBase, Document {}
 
 export interface User extends UserBase {
   _id: string;

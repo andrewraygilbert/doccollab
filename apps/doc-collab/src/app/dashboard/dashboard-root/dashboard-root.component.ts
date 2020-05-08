@@ -31,8 +31,20 @@ export class DashboardRootComponent implements OnInit {
     this.dashService.sendTest();
   }
 
+  public createDoc() {
+    const newDoc = {
+      title: 'The New Title of the Doc',
+    };
+    this.dashService.createDoc(newDoc);
+  }
+
   ngOnInit(): void {
-    this.coreSocket.initializeSocket();
+    if (!this.authService.getToken()) {
+      this.router.navigateByUrl('login');
+    } else {
+      this.coreSocket.initializeSocket();
+    }
+
   }
 
 }
