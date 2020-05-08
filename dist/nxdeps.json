@@ -48,9 +48,14 @@
               "mtime": 1588694589301.9995
             },
             {
+              "file": "apps/doc-collab-e2e/src/fixtures/mock-credentials.ts",
+              "ext": ".ts",
+              "mtime": 1588865732507.828
+            },
+            {
               "file": "apps/doc-collab-e2e/src/integration/app.spec.ts",
               "ext": ".ts",
-              "mtime": 1588694589303.065
+              "mtime": 1588869556665.8904
             },
             {
               "file": "apps/doc-collab-e2e/src/plugins/index.js",
@@ -60,12 +65,12 @@
             {
               "file": "apps/doc-collab-e2e/src/support/app.po.ts",
               "ext": ".ts",
-              "mtime": 1588694589303.745
+              "mtime": 1588869015326.5713
             },
             {
               "file": "apps/doc-collab-e2e/src/support/commands.ts",
               "ext": ".ts",
-              "mtime": 1588694589303.943
+              "mtime": 1588867047292.6565
             },
             {
               "file": "apps/doc-collab-e2e/src/support/index.ts",
@@ -301,12 +306,12 @@
             {
               "file": "apps/doc-collab/src/app/app.component.ts",
               "ext": ".ts",
-              "mtime": 1588798468273.6362
+              "mtime": 1588861974626.6301
             },
             {
               "file": "apps/doc-collab/src/app/app.module.ts",
               "ext": ".ts",
-              "mtime": 1588802067186.4727
+              "mtime": 1588864924907.594
             },
             {
               "file": "apps/doc-collab/src/app/auth/auth.module.ts",
@@ -321,7 +326,7 @@
             {
               "file": "apps/doc-collab/src/app/auth/auth.service.ts",
               "ext": ".ts",
-              "mtime": 1588801175290.3948
+              "mtime": 1588862295950.6018
             },
             {
               "file": "apps/doc-collab/src/app/auth/login/login.component.css",
@@ -331,7 +336,7 @@
             {
               "file": "apps/doc-collab/src/app/auth/login/login.component.html",
               "ext": ".html",
-              "mtime": 1588801529681.7046
+              "mtime": 1588869310469.848
             },
             {
               "file": "apps/doc-collab/src/app/auth/login/login.component.spec.ts",
@@ -341,7 +346,7 @@
             {
               "file": "apps/doc-collab/src/app/auth/login/login.component.ts",
               "ext": ".ts",
-              "mtime": 1588802183467.2373
+              "mtime": 1588862084826.2056
             },
             {
               "file": "apps/doc-collab/src/app/auth/register/register.component.css",
@@ -376,7 +381,7 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
               "ext": ".html",
-              "mtime": 1588707647563.0762
+              "mtime": 1588865360551.646
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
@@ -386,7 +391,7 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.ts",
               "ext": ".ts",
-              "mtime": 1588707647563.5269
+              "mtime": 1588864762626.8232
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard.module.ts",
@@ -653,7 +658,7 @@
             {
               "file": "apps/api/src/app/auth/auth.service.ts",
               "ext": ".ts",
-              "mtime": 1588781087873.1162
+              "mtime": 1588862233324.7686
             },
             {
               "file": "apps/api/src/app/auth/jwt-auth.guard.ts",
@@ -1255,12 +1260,12 @@
         {
           "type": "static",
           "source": "doc-collab",
-          "target": "@angular/platform-browser"
+          "target": "@angular/router"
         },
         {
           "type": "static",
           "source": "doc-collab",
-          "target": "@angular/router"
+          "target": "@angular/platform-browser"
         },
         {
           "type": "static",
@@ -1414,9 +1419,14 @@
         "mtime": 1588694589301.9995
       },
       {
+        "file": "apps/doc-collab-e2e/src/fixtures/mock-credentials.ts",
+        "ext": ".ts",
+        "mtime": 1588865732507.828
+      },
+      {
         "file": "apps/doc-collab-e2e/src/integration/app.spec.ts",
         "ext": ".ts",
-        "mtime": 1588694589303.065
+        "mtime": 1588869556665.8904
       },
       {
         "file": "apps/doc-collab-e2e/src/plugins/index.js",
@@ -1426,12 +1436,12 @@
       {
         "file": "apps/doc-collab-e2e/src/support/app.po.ts",
         "ext": ".ts",
-        "mtime": 1588694589303.745
+        "mtime": 1588869015326.5713
       },
       {
         "file": "apps/doc-collab-e2e/src/support/commands.ts",
         "ext": ".ts",
-        "mtime": 1588694589303.943
+        "mtime": 1588867047292.6565
       },
       {
         "file": "apps/doc-collab-e2e/src/support/index.ts",
@@ -1530,12 +1540,12 @@
       {
         "file": "apps/doc-collab/src/app/app.component.ts",
         "ext": ".ts",
-        "mtime": 1588798468273.6362
+        "mtime": 1588861974626.6301
       },
       {
         "file": "apps/doc-collab/src/app/app.module.ts",
         "ext": ".ts",
-        "mtime": 1588802067186.4727
+        "mtime": 1588864924907.594
       },
       {
         "file": "apps/doc-collab/src/app/auth/auth.module.ts",
@@ -1550,7 +1560,7 @@
       {
         "file": "apps/doc-collab/src/app/auth/auth.service.ts",
         "ext": ".ts",
-        "mtime": 1588801175290.3948
+        "mtime": 1588862295950.6018
       },
       {
         "file": "apps/doc-collab/src/app/auth/login/login.component.css",
@@ -1560,7 +1570,7 @@
       {
         "file": "apps/doc-collab/src/app/auth/login/login.component.html",
         "ext": ".html",
-        "mtime": 1588801529681.7046
+        "mtime": 1588869310469.848
       },
       {
         "file": "apps/doc-collab/src/app/auth/login/login.component.spec.ts",
@@ -1570,7 +1580,7 @@
       {
         "file": "apps/doc-collab/src/app/auth/login/login.component.ts",
         "ext": ".ts",
-        "mtime": 1588802183467.2373
+        "mtime": 1588862084826.2056
       },
       {
         "file": "apps/doc-collab/src/app/auth/register/register.component.css",
@@ -1605,7 +1615,7 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
         "ext": ".html",
-        "mtime": 1588707647563.0762
+        "mtime": 1588865360551.646
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
@@ -1615,7 +1625,7 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.ts",
         "ext": ".ts",
-        "mtime": 1588707647563.5269
+        "mtime": 1588864762626.8232
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard.module.ts",
@@ -1817,7 +1827,7 @@
       {
         "file": "apps/api/src/app/auth/auth.service.ts",
         "ext": ".ts",
-        "mtime": 1588781087873.1162
+        "mtime": 1588862233324.7686
       },
       {
         "file": "apps/api/src/app/auth/jwt-auth.guard.ts",

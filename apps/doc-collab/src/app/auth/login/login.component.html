@@ -2,11 +2,11 @@
   <div class='row justify-content-center'>
     <div class='col-8'>
       <div class='row justify-content-center'>
-        <h1>Login Here</h1>
+        <h1>Login</h1>
       </div>
       <div class='row justify-content-center'>
         <div class='col-8' style='height: 75px;'>
-          <div *ngIf='activeError' class='alert alert-danger'>
+          <div *ngIf='activeError' class='alert alert-danger' data-cy='error-login'>
             {{errorMsg}}
           </div>
         </div>
