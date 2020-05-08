@@ -47,9 +47,9 @@ export class CoreSocketService implements OnDestroy {
 
   private socketLogger() {
     this.connectLogger = this.onConnect()
-      .subscribe(() => console.log('connected'));
+      .subscribe(() => console.log('*** SOCKET CONNECTED ***'));
     this.disconnectLogger = this.onDisconnect()
-      .subscribe(() => console.log('disconnected'));
+      .subscribe(() => console.log('~~~ SOCKET DISCONNECTED ~~~'));
     this.errorLogger = this.onError()
       .subscribe((err) => console.log('error', err));
   }

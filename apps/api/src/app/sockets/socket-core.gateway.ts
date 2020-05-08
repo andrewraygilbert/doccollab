@@ -8,11 +8,12 @@ export class SocketCoreGateway implements OnGatewayConnection, OnGatewayDisconne
 
   // called when a new socket connects
   handleConnection(@ConnectedSocket() socket: Socket) {
-    console.log('a socket connected');
+    console.log('*** SOCKET CONNECTED ***');
+    console.log(socket.id);
   }
 
   // called when a socket disconnects
   handleDisconnect() {
-    console.log('a socket disconnected');
+    console.log('~~~ SOCKET DISCONNECTED ~~~');
   }
 }

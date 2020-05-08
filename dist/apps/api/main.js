@@ -522,6 +522,50 @@ DocumentsController = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 /***/ }),
 
+/***/ "./apps/api/src/app/documents/documents.gateway.ts":
+/*!*********************************************************!*\
+  !*** ./apps/api/src/app/documents/documents.gateway.ts ***!
+  \*********************************************************/
+/*! exports provided: DocumentsGateway */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DocumentsGateway", function() { return DocumentsGateway; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/websockets */ "@nestjs/websockets");
+/* harmony import */ var _nestjs_websockets__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _documents_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./documents.service */ "./apps/api/src/app/documents/documents.service.ts");
+var _a;
+
+
+
+let DocumentsGateway = class DocumentsGateway {
+    constructor(docService) {
+        this.docService = docService;
+    }
+    testing() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            console.log('received testing');
+        });
+    }
+};
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__["SubscribeMessage"])('testing'),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", []),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", Promise)
+], DocumentsGateway.prototype, "testing", null);
+DocumentsGateway = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__["WebSocketGateway"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof _documents_service__WEBPACK_IMPORTED_MODULE_2__["DocumentsService"] !== "undefined" && _documents_service__WEBPACK_IMPORTED_MODULE_2__["DocumentsService"]) === "function" ? _a : Object])
+], DocumentsGateway);
+
+
+
+/***/ }),
+
 /***/ "./apps/api/src/app/documents/documents.module.ts":
 /*!********************************************************!*\
   !*** ./apps/api/src/app/documents/documents.module.ts ***!
@@ -538,6 +582,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _documents_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./documents.controller */ "./apps/api/src/app/documents/documents.controller.ts");
 /* harmony import */ var _documents_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./documents.service */ "./apps/api/src/app/documents/documents.service.ts");
+/* harmony import */ var _sockets_sockets_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../sockets/sockets.module */ "./apps/api/src/app/sockets/sockets.module.ts");
+/* harmony import */ var _documents_gateway__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./documents.gateway */ "./apps/api/src/app/documents/documents.gateway.ts");
+
+
 
 
 
@@ -546,8 +594,9 @@ let DocumentsModule = class DocumentsModule {
 };
 DocumentsModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Module"])({
+        imports: [_sockets_sockets_module__WEBPACK_IMPORTED_MODULE_4__["SocketsModule"]],
         controllers: [_documents_controller__WEBPACK_IMPORTED_MODULE_2__["DocumentsController"]],
-        providers: [_documents_service__WEBPACK_IMPORTED_MODULE_3__["DocumentsService"]]
+        providers: [_documents_service__WEBPACK_IMPORTED_MODULE_3__["DocumentsService"], _documents_gateway__WEBPACK_IMPORTED_MODULE_5__["DocumentsGateway"]]
     })
 ], DocumentsModule);
 
@@ -607,11 +656,12 @@ var _a;
 let SocketCoreGateway = class SocketCoreGateway {
     // called when a new socket connects
     handleConnection(socket) {
-        console.log('a socket connected');
+        console.log('*** SOCKET CONNECTED ***');
+        console.log(socket.id);
     }
     // called when a socket disconnects
     handleDisconnect() {
-        console.log('a socket disconnected');
+        console.log('~~~ SOCKET DISCONNECTED ~~~');
     }
 };
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
