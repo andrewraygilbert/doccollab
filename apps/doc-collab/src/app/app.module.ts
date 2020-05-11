@@ -10,6 +10,7 @@ import { DashboardRootComponent } from './dashboard/dashboard-root/dashboard-roo
 import { DashboardModule } from './dashboard/dashboard.module';
 import { DocumentModule } from './document/document.module';
 import { SocketModule } from './socket/socket.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -30,7 +31,8 @@ const appRoutes: Routes = [
     AuthModule,
     DashboardModule,
     DocumentModule,
-    SocketModule
+    SocketModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

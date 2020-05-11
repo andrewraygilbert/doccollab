@@ -6,7 +6,7 @@
       </div>
       <div class='row justify-content-end'>
         <button class='btn btn-secondary' (click)='logout()' data-cy='logout-btn'>Logout</button>&nbsp;
-        <button class='btn btn-info' (click)='createDoc()'>Create Doc</button>
+        <button class='btn btn-info' (click)='createDocModal.open()'>Create Doc</button>
       </div>
       <div class='row'>
         <div class='col-12'>
@@ -35,3 +35,6 @@
     </div>
   </div>
 </div>
+<doccollab-create-doc-modal #createDocModal
+(outCreateDoc)='createDoc($event)'
+></doccollab-create-doc-modal>

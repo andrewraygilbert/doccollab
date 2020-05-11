@@ -5,6 +5,7 @@ import { CoreSocketService } from './../../socket/core-socket.service';
 import { DashboardService } from '../dashboard.service';
 import { Subscription } from 'rxjs';
 import { AppDocBase } from '@doccollab/api-interfaces';
+import { CreateDocDto } from '@doccollab/api-interfaces';
 
 @Component({
   selector: 'doccollab-dashboard-root',
@@ -37,10 +38,7 @@ export class DashboardRootComponent implements OnInit, OnDestroy {
       .catch(err => console.log(err));
   }
 
-  public createDoc() {
-    const newDoc = {
-      title: 'The New Title of the Doc',
-    };
+  public createDoc(newDoc: CreateDocDto) {
     this.dashService.createDoc(newDoc);
   }
 
