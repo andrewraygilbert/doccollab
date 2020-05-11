@@ -1,19 +1,16 @@
-import { SubscribeMessage, WebSocketGateway, OnGatewayConnection, ConnectedSocket, MessageBody } from '@nestjs/websockets';
+import { SubscribeMessage, WebSocketGateway, ConnectedSocket, MessageBody } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
 import { DocumentsService } from './documents.service';
 import { AppDocBase, CreateDocDto } from '@doccollab/api-interfaces';
-import { UseGuards, UsePipes } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import { WsGuard } from '../auth/ws.guard';
-import { WsAuthPipe } from '../auth/ws-auth.pipe';
-import { AuthService } from '../auth/auth.service';
 
 @WebSocketGateway()
 export class DocumentsGateway {
 
   constructor(
     private docService: DocumentsService,
-    private authService: AuthService,
-  ) {}
+    ) {}
 
   @UseGuards(WsGuard)
   @SubscribeMessage('testing')
@@ -23,16 +20,16 @@ export class DocumentsGateway {
 
   @UseGuards(WsGuard)
   @SubscribeMessage('create.document')
-  async createDocument(@ConnectedSocket() socket: Socket, @MessageBody() createDocDto: CreateDocDto): Promise<AppDocBase> {
-    return this.docService.createDocument(socket, createDocDto);
+  async createDocument(@ConnectedSocket() socket: Socket, @MessageBody() createDocDto: CreateDocDto): Promise<void> {
+    const newDoc = await this.docService.createDocument(socket, createDocDto);
+    socket.emit('new.document', newDoc);
   }
 
-  /*
   @UseGuards(WsGuard)
   @SubscribeMessage('get.documents')
-  async getDocuments(@ConnectedSocket() socket: Socket): Promise<AppDocument[]> {
-    return this.docService.getDocuments(socket);
+  async getDocuments(@ConnectedSocket() socket: Socket) {
+    const documents = await this.docService.getDocuments(socket);
+    socket.emit('return.documents', documents);
   }
-  */
 
 }

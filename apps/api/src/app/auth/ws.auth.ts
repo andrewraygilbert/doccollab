@@ -14,4 +14,9 @@ export class WsAuth {
     return this.jwtService.verify(token, {ignoreExpiration: true});
   }
 
+  async getUser(token: string) {
+    const payload = await this.jwtService.verify(token, { ignoreExpiration: true });
+    return this.usersService.userModelById(payload.sub);
+  }
+
 }

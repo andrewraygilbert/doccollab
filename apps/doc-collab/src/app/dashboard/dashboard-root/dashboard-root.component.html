@@ -5,16 +5,19 @@
         <h1>Dashboard</h1>
       </div>
       <div class='row justify-content-end'>
-        <button class='btn btn-secondary' (click)='logout()' data-cy='logout-btn'>Logout</button>
-        <button class='btn btn-success' (click)='sendTest()'>Test</button>
+        <button class='btn btn-secondary' (click)='logout()' data-cy='logout-btn'>Logout</button>&nbsp;
         <button class='btn btn-info' (click)='createDoc()'>Create Doc</button>
       </div>
       <div class='row'>
         <div class='col-12'>
-          <button class='btn btn-primary'>Create New Doc</button>
           <div class='row'>
             <div class='col-12'>
               <h3>My Docs</h3>
+              <ul>
+                <li *ngFor='let doc of myDocuments'>
+                  {{ doc.title }}
+                </li>
+              </ul>
             </div>
           </div>
           <div class='row'>

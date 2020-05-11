@@ -7,6 +7,9 @@ import { LoginComponent } from './auth/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from './auth/auth.module';
 import { DashboardRootComponent } from './dashboard/dashboard-root/dashboard-root.component';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { DocumentModule } from './document/document.module';
+import { SocketModule } from './socket/socket.module';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -24,7 +27,10 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: false }
     ),
-    AuthModule
+    AuthModule,
+    DashboardModule,
+    DocumentModule,
+    SocketModule
   ],
   providers: [],
   bootstrap: [AppComponent]

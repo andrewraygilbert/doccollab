@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { DocumentSchema } from './document.schema';
 import { AuthModule } from '../auth/auth.module';
 import { UserSchema } from '../users/user.schema';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { UserSchema } from '../users/user.schema';
       { name: 'AppDocument', schema: DocumentSchema},
       { name: 'User', schema: UserSchema}
     ]),
-    AuthModule
+    AuthModule,
+    UsersModule,
   ],
   controllers: [DocumentsController],
   providers: [DocumentsService, DocumentsGateway]

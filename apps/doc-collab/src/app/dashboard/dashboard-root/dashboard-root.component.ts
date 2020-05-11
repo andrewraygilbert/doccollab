@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from './../../auth/auth.service';
 import { Router } from '@angular/router';
 import { CoreSocketService } from './../../socket/core-socket.service';
 import { DashboardService } from '../dashboard.service';
+import { Subscription } from 'rxjs';
+import { AppDocBase } from '@doccollab/api-interfaces';
 
 @Component({
   selector: 'doccollab-dashboard-root',
   templateUrl: './dashboard-root.component.html',
   styleUrls: ['./dashboard-root.component.css']
 })
-export class DashboardRootComponent implements OnInit {
+export class DashboardRootComponent implements OnInit, OnDestroy {
+
+  private newDocument$: any;
+  private returnDocuments$: any;
+  public myDocuments: AppDocBase[] = [];
 
   constructor(
     private authService: AuthService,
@@ -17,6 +23,10 @@ export class DashboardRootComponent implements OnInit {
     private coreSocket: CoreSocketService,
     private dashService: DashboardService,
   ) { }
+
+  /**
+   * Actions
+   */
 
   public logout() {
     this.authService.logout()
@@ -27,10 +37,6 @@ export class DashboardRootComponent implements OnInit {
       .catch(err => console.log(err));
   }
 
-  public sendTest() {
-    this.dashService.sendTest();
-  }
-
   public createDoc() {
     const newDoc = {
       title: 'The New Title of the Doc',
@@ -38,13 +44,50 @@ export class DashboardRootComponent implements OnInit {
     this.dashService.createDoc(newDoc);
   }
 
+  public getDocuments() {
+    this.dashService.getDocuments();
+  }
+
+  /**
+   * EVENTS FROM SERVER
+   */
+
+  private onNewDocument(doc: AppDocBase) {
+    console.log('here it is', doc);
+    this.myDocuments.push(doc);
+  }
+
+  /**
+   * Initialization
+   */
+
+  private initializeSubscriptions() {
+    this.newDocument$ = this.dashService.newDocument$()
+      .subscribe((newDoc: AppDocBase) => {
+        this.onNewDocument(newDoc);
+      });
+    this.returnDocuments$ = this.dashService.returnDocuments$()
+      .subscribe((docs) => {
+        this.myDocuments = docs;
+      });
+  }
+
+  /**
+   * Lifecycle Hooks
+   */
+
   ngOnInit(): void {
     if (!this.authService.getToken()) {
       this.router.navigateByUrl('login');
     } else {
       this.coreSocket.initializeSocket();
+      this.initializeSubscriptions();
+      this.getDocuments();
     }
+  }
 
+  ngOnDestroy(): void {
+    this.newDocument$.unsubscribe();
   }
 
 }

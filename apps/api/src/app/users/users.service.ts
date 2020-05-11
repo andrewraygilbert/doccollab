@@ -2,6 +2,7 @@ import { Injectable, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserModel, CreateUserDTO, User, AuthUser } from '@doccollab/api-interfaces';
 import { Model } from 'mongoose';
+import { WsException } from '@nestjs/websockets';
 
 @Injectable()
 export class UsersService {
@@ -24,6 +25,14 @@ export class UsersService {
     const user = await this.userModel.findById(_id).exec();
     if (!user) {
       throw new HttpException('Could not locate user', 400);
+    }
+    return user;
+  }
+
+  async userModelById(_id: string): Promise<UserModel> {
+    const user = await this.userModel.findById(_id).exec();
+    if (!user) {
+      throw new WsException('could not locate');
     }
     return user;
   }
