@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { CoreSocketService } from './../../socket/core-socket.service';
 import { DashboardService } from '../dashboard.service';
 import { Subscription } from 'rxjs';
-import { AppDocBase } from '@doccollab/api-interfaces';
+import { AppDocument } from '@doccollab/api-interfaces';
 import { CreateDocDto } from '@doccollab/api-interfaces';
 
 @Component({
@@ -16,7 +16,7 @@ export class DashboardRootComponent implements OnInit, OnDestroy {
 
   private newDocument$: any;
   private returnDocuments$: any;
-  public myDocuments: AppDocBase[] = [];
+  public myDocuments: AppDocument[] = [];
 
   constructor(
     private authService: AuthService,
@@ -46,11 +46,15 @@ export class DashboardRootComponent implements OnInit, OnDestroy {
     this.dashService.getDocuments();
   }
 
+  public openDocument(docId: string) {
+    this.router.navigateByUrl(`document/${docId}`);
+  }
+
   /**
    * EVENTS FROM SERVER
    */
 
-  private onNewDocument(doc: AppDocBase) {
+  private onNewDocument(doc: AppDocument) {
     console.log('here it is', doc);
     this.myDocuments.push(doc);
   }
@@ -61,11 +65,11 @@ export class DashboardRootComponent implements OnInit, OnDestroy {
 
   private initializeSubscriptions() {
     this.newDocument$ = this.dashService.newDocument$()
-      .subscribe((newDoc: AppDocBase) => {
+      .subscribe((newDoc: AppDocument) => {
         this.onNewDocument(newDoc);
       });
     this.returnDocuments$ = this.dashService.returnDocuments$()
-      .subscribe((docs) => {
+      .subscribe((docs: AppDocument[]) => {
         this.myDocuments = docs;
       });
   }
@@ -78,7 +82,9 @@ export class DashboardRootComponent implements OnInit, OnDestroy {
     if (!this.authService.getToken()) {
       this.router.navigateByUrl('login');
     } else {
-      this.coreSocket.initializeSocket();
+      if (!this.coreSocket.socket) {
+        this.coreSocket.initializeSocket();
+      }
       this.initializeSubscriptions();
       this.getDocuments();
     }

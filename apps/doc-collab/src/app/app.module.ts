@@ -11,11 +11,14 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { DocumentModule } from './document/document.module';
 import { SocketModule } from './socket/socket.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { QuillModule } from 'ngx-quill';
+import { DocRootComponent } from './document/doc-root/doc-root.component';
 
 const appRoutes: Routes = [
-  { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardRootComponent}
+  { path: 'dashboard', component: DashboardRootComponent },
+  { path: 'document/:docId', component: DocRootComponent },
+  { path: '', component: LoginComponent }
 ]
 
 @NgModule({
@@ -32,7 +35,8 @@ const appRoutes: Routes = [
     DashboardModule,
     DocumentModule,
     SocketModule,
-    NgbModule
+    NgbModule,
+    QuillModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

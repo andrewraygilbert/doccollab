@@ -32,4 +32,26 @@ export class DocumentsGateway {
     socket.emit('return.documents', documents);
   }
 
+  @UseGuards(WsGuard)
+  @SubscribeMessage('req.document')
+  async getDocument(@ConnectedSocket() socket: Socket, @MessageBody() body: any) {
+    const document = await this.docService.getDocument(socket, body);
+    socket.emit('res.document', document);
+    this.joinDocRoom(socket, document._id);
+  }
+
+  @SubscribeMessage('out.edit.doc')
+  private emitEdits(@ConnectedSocket() socket: Socket, @MessageBody() body: any) {
+    console.log('received a delta', body);
+    socket.to(Object.keys(socket.rooms)[1]).emit('in.edit.doc', body);
+  }
+
+  joinDocRoom(socket: Socket, docId: string) {
+    if (Object.keys(socket.rooms)[1]) {
+      socket.leave(Object.keys(socket.rooms)[1]);
+    }
+    socket.join(docId);
+    console.log('joining a room');
+  }
+
 }

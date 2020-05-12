@@ -1,1 +1,15 @@
-<p>doc-root works!</p>
+<div class='container-fluid' style='margin-top: 24px;'>
+  <div class='row justify-content-center'>
+    <div class='col-10'>
+      <h1>Document Editor</h1>
+      {{ activeDocument ? activeDocument.title : '' }}
+      <button class='btn btn-info' routerLink='/dashboard'>Dashboard</button>
+      <button class='btn btn-danger' (click)='testInserting()'>Insert</button>
+    </div>
+  </div>
+  <div class='row justify-content-center' style='height: 400px;'>
+    <div class='col-10'>
+      <quill-editor #quillEditor [(ngModel)]='editorContent' format='object' placeholder='Start writing here...' (onContentChanged)='contentChange($event)' (onEditorCreated)='editorInstance = $event'></quill-editor>
+    </div>
+  </div>
+</div>

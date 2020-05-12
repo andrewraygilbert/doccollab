@@ -16,7 +16,7 @@ export class DocumentsService {
     private wsAuth: WsAuth,
   ) {}
 
-  public async createDocument(socket: Socket, createDocDto: CreateDocDto): Promise<AppDocBase> {
+  public async createDocument(socket: Socket, createDocDto: CreateDocDto): Promise<AppDocument> {
     const user = await this.wsAuth.getUser(socket.handshake.query.token);
     const newDoc = {
       title: createDocDto.title,
@@ -34,9 +34,9 @@ export class DocumentsService {
     return doc;
   }
 
-  public async getDocuments(socket: Socket): Promise<AppDocBase[]> {
+  public async getDocuments(socket: Socket): Promise<AppDocument[]> {
     const user = await this.wsAuth.getUser(socket.handshake.query.token);
-    let documents: AppDocBase[] = [];
+    let documents: AppDocument[] = [];
     for (const docId of user.ownDocs) {
       const document = await this.docModel.findById(docId);
       if (!document) {
@@ -45,6 +45,30 @@ export class DocumentsService {
       documents.push(document);
     }
     return documents;
+  }
+
+  public async findDocById(_id: string): Promise<AppDocument> {
+    const doc = await this.docModel.findById(_id);
+    if (!doc) {
+      throw new WsException('Could not locate document');
+    }
+    return doc;
+  }
+
+  public async getDocument(socket: Socket, body: any): Promise<AppDocument> {
+    const user = await this.wsAuth.getUser(socket.handshake.query.token);
+    const doc = await this.findDocById(body._id);
+    if (this.verifyDocAccess(user._id, doc)) {
+      return doc;
+    }
+    throw new WsException('Unauthorized');
+  }
+
+  private async verifyDocAccess(userId: string, doc: AppDocument): Promise<boolean> {
+    if (userId == doc.owner.userId) {
+      return true;
+    }
+    return false;
   }
 
 }
