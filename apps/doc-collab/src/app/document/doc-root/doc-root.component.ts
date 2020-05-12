@@ -29,8 +29,34 @@ export class DocRootComponent implements OnInit, OnDestroy {
   }
 
   public contentChange(data: any) {
-    console.log(data);
+    console.log(data.delta);
     this.docService.outEditDoc(data.delta);
+  }
+
+  private handleDeltaIn(delta: any) {
+    const firstOp = delta.ops[0];
+    let secondOp: any;
+    if (delta.ops[1]) {
+      secondOp = delta.ops[1];
+    }
+    let index = 0;
+    if (Object.keys(firstOp)[0] === 'retain') {
+      index = firstOp.retain;
+    }
+    if (Object.keys(firstOp)[0] === 'insert' || (secondOp && Object.keys(secondOp)[0] === 'insert')) {
+      this.insertText(index, firstOp.insert ? firstOp.insert : secondOp.insert);
+    }
+    if (Object.keys(firstOp)[0] === 'delete' || (secondOp && Object.keys(secondOp)[0] === 'delete')) {
+      this.deleteText(index, firstOp.delete ? firstOp.delete : secondOp.delete);
+    }
+  }
+
+  private insertText(index: number, text: string) {
+    this.editorInstance.insertText(index, text, 'silent');
+  }
+
+  private deleteText(index: number, numRemove: number) {
+    this.editorInstance.deleteText(index, numRemove, 'silent');
   }
 
   private initializeSubscriptions() {
@@ -41,6 +67,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.inEditDoc$ = this.docService.inEditDoc$()
       .subscribe(delta => {
         console.log(delta);
+        this.handleDeltaIn(delta);
       });
   }
 
