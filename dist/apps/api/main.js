@@ -1249,7 +1249,7 @@ function bootstrap() {
         const app = yield _nestjs_core__WEBPACK_IMPORTED_MODULE_1__["NestFactory"].create(_app_app_module__WEBPACK_IMPORTED_MODULE_2__[/* AppModule */ "a"]);
         if (_environments_environment__WEBPACK_IMPORTED_MODULE_3__[/* environment */ "a"].production === false) {
             app.enableCors({
-                origin: 'http://localhost:4200',
+                origin: ['http://localhost:4200', 'http://10.0.0.168:4200'],
                 methods: ['GET', 'POST', 'PUT', 'DELETE'],
                 allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin']
             });

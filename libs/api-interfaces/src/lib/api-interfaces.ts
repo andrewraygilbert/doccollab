@@ -52,4 +52,11 @@ export interface TokenObject {
   access_token: string;
 }
 
+export interface DeltaDto {
+  socketId: string;
+  localId: number;
+  localState: DeltaDto[];
+  ops: any;
+}
+
 

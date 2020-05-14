@@ -23,6 +23,7 @@ export class DocService {
   }
 
   public outEditDoc(delta: any) {
+    console.log('delta out of service', delta);
     this.coreSocket.socket.emit('out.edit.doc', delta)
   }
 

@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DocService } from '../doc.service';
 import { Subscription } from 'rxjs';
 import { CoreSocketService } from '../../socket/core-socket.service';
+import { DeltaService } from '../../delta/delta.service';
+import { DeltaDto } from '@doccollab/api-interfaces';
 
 @Component({
   selector: 'doccollab-doc-root',
@@ -17,11 +19,13 @@ export class DocRootComponent implements OnInit, OnDestroy {
   private resDocument$: Subscription;
   private inEditDoc$: Subscription;
   public editorInstance: any;
+  private socketId: string;
 
   constructor(
     private route: ActivatedRoute,
     private docService: DocService,
     private coreSocket: CoreSocketService,
+    private deltaService: DeltaService,
   ) { }
 
   private reqDocument(docId: string) {
@@ -29,15 +33,18 @@ export class DocRootComponent implements OnInit, OnDestroy {
   }
 
   public contentChange(data: any) {
-    console.log(data.delta);
-    this.docService.outEditDoc(data.delta);
+    const deltaOut = this.deltaService.outgoingDelta(data.delta);
+    console.log('deltaOut', deltaOut);
+    this.docService.outEditDoc(deltaOut);
   }
 
-  private handleDeltaIn(delta: any) {
-    const firstOp = delta.ops[0];
+  private handleDeltaIn(delta: DeltaDto) {
+    console.log('deltaIn', delta);
+    const procDelta = this.deltaService.incomingDelta(delta);
+    const firstOp = procDelta.ops[0];
     let secondOp: any;
-    if (delta.ops[1]) {
-      secondOp = delta.ops[1];
+    if (procDelta.ops[1]) {
+      secondOp = procDelta.ops[1];
     }
     let index = 0;
     if (Object.keys(firstOp)[0] === 'retain') {
@@ -59,6 +66,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.editorInstance.deleteText(index, numRemove, 'silent');
   }
 
+  // subscribe to socket event observables
   private initializeSubscriptions() {
     this.resDocument$ = this.docService.resDocument$()
       .subscribe(doc => {
@@ -66,7 +74,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
       });
     this.inEditDoc$ = this.docService.inEditDoc$()
       .subscribe(delta => {
-        console.log(delta);
+        console.log('in subscription', delta);
         this.handleDeltaIn(delta);
       });
   }
@@ -75,20 +83,30 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.editorInstance.insertText(0, 'Hello my friend', 'user');
   }
 
+  private setSocketId() {
+    this.deltaService.setSocketId(this.coreSocket.socket.id);
+    this.socketId = this.coreSocket.socket.id;
+  }
+
   ngOnInit(): void {
+    // Initialize a socket if none exists
     if (!this.coreSocket.socket) {
       this.coreSocket.initializeSocket();
     }
+    // retrieve document id from route parameters
     this.route.params.subscribe(params => {
       this.documentId = params['docId'];
       this.reqDocument(this.documentId);
     });
+    // subscribe to socket event observables
     this.initializeSubscriptions();
+    this.setSocketId();
   }
 
   ngOnDestroy(): void {
     this.resDocument$.unsubscribe();
     this.inEditDoc$.unsubscribe();
+    this.deltaService.resetAllDeltas();
   }
 
 }
