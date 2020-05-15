@@ -55,9 +55,6 @@ export class DeltaService {
   }
 
   private reconcile(delta: DeltaDto, lastDelta?: DeltaDto) {
-    // determine whether local changes occurred at positions before the incoming change
-    // if yes, then incorporate changes
-    // if no, then ignore changes
     console.log('lastDelta', lastDelta);
     const incomingIndex = delta.ops[0].retain ? delta.ops[0].retain : 0;
     console.log('incomingIndex', incomingIndex); // gets the index of the incoming delta

@@ -1,10 +1,9 @@
 <div class='container-fluid' style='margin-top: 24px;'>
   <div class='row justify-content-center'>
     <div class='col-10'>
-      <h1>Document Editor</h1>
-      {{ activeDocument ? activeDocument.title : '' }}
-      <button class='btn btn-info' routerLink='/dashboard'>Dashboard</button>
-      <button class='btn btn-danger' (click)='testInserting()'>Insert</button>
+      <h1 style='text-transform: uppercase;'>Document Editor</h1>
+      <h4 style='color: #606060;'>"{{ activeDocument ? activeDocument.title : '' }}"</h4><br>
+      <button class='btn btn-info' routerLink='/dashboard'>Dashboard</button><br><br>
     </div>
   </div>
   <div class='row justify-content-center' style='height: 400px;'>
