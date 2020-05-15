@@ -51,19 +51,42 @@ export class DocRootComponent implements OnInit, OnDestroy {
       index = firstOp.retain;
     }
     if (Object.keys(firstOp)[0] === 'insert' || (secondOp && Object.keys(secondOp)[0] === 'insert')) {
-      this.insertText(index, firstOp.insert ? firstOp.insert : secondOp.insert);
+      if (firstOp.attributes || (secondOp && secondOp.attributes)) {
+        this.insertText(index, firstOp.insert ? firstOp.insert : secondOp.insert, firstOp.attributes ? firstOp.attributes : secondOp.attributes);
+      } else {
+        this.insertText(index, firstOp.insert ? firstOp.insert : secondOp.insert, {bold: false, italic: false, underline: false, strike: false});
+      }
     }
     if (Object.keys(firstOp)[0] === 'delete' || (secondOp && Object.keys(secondOp)[0] === 'delete')) {
       this.deleteText(index, firstOp.delete ? firstOp.delete : secondOp.delete);
     }
+    if (secondOp && Object.keys(secondOp)[0] === 'retain') {
+      if (Object.keys(secondOp)[1] === 'attributes') {
+        this.formatText(index, secondOp.retain, secondOp.attributes);
+      }
+    }
+    if (procDelta.ops[2]) {
+      const thirdOp = procDelta.ops[2];
+      if (Object.keys(thirdOp)[0] === 'retain') {
+        this.formatText(index + secondOp.insert.length, thirdOp.retain, thirdOp.attributes);
+      }
+    }
   }
 
-  private insertText(index: number, text: string) {
-    this.editorInstance.insertText(index, text, 'silent');
+  private insertText(index: number, text: string, attributes?: any) {
+    if (attributes) {
+      this.editorInstance.insertText(index, text, attributes, 'silent');
+    } else {
+      this.editorInstance.insertText(index, text, 'silent');
+    }
   }
 
   private deleteText(index: number, numRemove: number) {
     this.editorInstance.deleteText(index, numRemove, 'silent');
+  }
+
+  private formatText(index: number, length: number, attributes: any) {
+    this.editorInstance.formatText(index, length, attributes, 'silent');
   }
 
   // subscribe to socket event observables
