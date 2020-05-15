@@ -97,7 +97,6 @@ export class DocRootComponent implements OnInit, OnDestroy {
       });
     this.inEditDoc$ = this.docService.inEditDoc$()
       .subscribe(delta => {
-        console.log('in subscription', delta);
         this.handleDeltaIn(delta);
       });
   }

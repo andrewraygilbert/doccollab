@@ -58,7 +58,6 @@ export class DeltaService {
     console.log('lastDelta', lastDelta);
     const incomingIndex = delta.ops[0].retain ? delta.ops[0].retain : 0;
     console.log('incomingIndex', incomingIndex); // gets the index of the incoming delta
-    console.log('localDeltas', this.localDeltas);
     const diffDeltas = this.localDeltas.slice(lastDelta ? lastDelta.localId + 1 : []); // returns the deltas that have been performed that the incoming delta was unaware of
     console.log('diffDeltas', diffDeltas);
     let netChange = 0;
@@ -88,7 +87,6 @@ export class DeltaService {
   }
 
   public outgoingDelta(delta: any) {
-    console.log('outgoing delta', delta);
     this.addLocalDelta(delta);
     delta.socketId = this.socketId;
     delta.localId = this.deltaTracker;
