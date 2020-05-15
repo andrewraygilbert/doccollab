@@ -75,6 +75,7 @@ export class DeltaService {
         }
       }
     };
+    console.log('netChange', netChange);
     if (delta.ops[0].retain) {
       delta.ops[0].retain = delta.ops[0].retain + netChange;
     }
