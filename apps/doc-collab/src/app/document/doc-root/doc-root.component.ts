@@ -55,6 +55,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
       baseIndex = delta.ops[0].retain;
     }
     console.log('baseIndex pre-loop', baseIndex);
+    let loopIndex = 0;
     for (const op of reconciledDelta.ops) {
       switch (Object.keys(op)[0]) {
         case 'insert':
@@ -72,9 +73,13 @@ export class DocRootComponent implements OnInit, OnDestroy {
             this.formatText(baseIndex, op.retain, op.attributes);
             baseIndex = baseIndex + op.retain;
           }
+          if (loopIndex > 0) {
+            baseIndex = baseIndex + op.retain;
+          }
           console.log('retain');
           break;
       }
+      loopIndex++;
     }
   }
 
