@@ -47,6 +47,7 @@ export class DeltaService {
 
   private compareDeltaStates(delta: DeltaDto) {
     const lastDelta = this.getLastDelta(delta);
+    console.log('lastDelta', lastDelta);
     if (!lastDelta) {
       if (this.deltaTracker === 0) {
         // no local changes have been made, so states match; return delta unchanged

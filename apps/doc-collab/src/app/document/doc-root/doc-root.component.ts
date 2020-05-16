@@ -46,12 +46,41 @@ export class DocRootComponent implements OnInit, OnDestroy {
    */
 
 
-  private newHandler(delta: DeltaDto) {
+  private handleDeltaIn(delta: DeltaDto) {
+    console.log('delta in', delta);
+    const reconciledDelta = this.deltaService.incomingDelta(delta);
+    console.log('reconciledDelta', reconciledDelta);
+    let baseIndex = 0;
+    if (delta.ops[0].retain) {
+      baseIndex = delta.ops[0].retain;
+    }
+    console.log('baseIndex pre-loop', baseIndex);
+    for (const op of reconciledDelta.ops) {
+      switch (Object.keys(op)[0]) {
+        case 'insert':
+          this.insertText(baseIndex, op.insert, op.attributes ? op.attributes : null);
+          baseIndex = baseIndex + op.insert.length;
+          console.log('insert');
+          break;
+        case 'delete':
+          this.deleteText(baseIndex, op.delete);
+          baseIndex = baseIndex - op.delete;
+          console.log('delete');
+          break;
+        case 'retain':
+          if (op.attributes) {
+            this.formatText(baseIndex, op.retain, op.attributes);
+            baseIndex = baseIndex + op.retain;
+          }
+          console.log('retain');
+          break;
+      }
+    }
   }
 
 
 
-  private handleDeltaIn(delta: DeltaDto) {
+  private oldDeltaIn(delta: DeltaDto) {
     console.log('deltaIn', delta);
     const procDelta = this.deltaService.incomingDelta(delta);
     console.log('procDelta', procDelta);
