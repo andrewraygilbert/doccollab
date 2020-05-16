@@ -79,17 +79,21 @@ export class DeltaService {
   // reconciles the incoming starting index to account for local changes
   private reconcile(delta: DeltaDto, lastDelta?: DeltaDto) {
     const incomingIndex = this.getIncomingIndex(delta);
+    console.log('incomingIndex', incomingIndex);
     const diffDeltas = this.localDeltas.slice(lastDelta ? lastDelta.localId + 1 : []); // returns the deltas that have been performed that the incoming delta was unaware of
+    console.log('diffDeltas', diffDeltas);
     let netChange = 0;
     // iterate through each local delta that needs to be reconciled with incoming delta
     for (const delta_i of diffDeltas) {
       // only incorporate local delta if it occurred at i < incoming index
-      for (const op of delta_i.ops) {
-        if (op.insert) {
-          netChange = netChange + op.insert.length;
-        }
-        if (op.delete) {
-          netChange = netChange - op.delete;
+      if (delta_i.ops[0].retain < incomingIndex) {
+        for (const op of delta_i.ops) {
+          if (op.insert) {
+            netChange = netChange + op.insert.length;
+          }
+          if (op.delete) {
+            netChange = netChange - op.delete;
+          }
         }
       }
       /*
@@ -104,6 +108,7 @@ export class DeltaService {
       */
     };
     // override the incoming delta's index with the reconciled index
+    console.log('netChange', netChange);
     if (delta.ops[0].retain) {
       delta.ops[0].retain = delta.ops[0].retain + netChange;
     }
