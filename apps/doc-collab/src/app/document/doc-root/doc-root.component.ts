@@ -38,9 +38,23 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.docService.outEditDoc(deltaOut);
   }
 
+  /**
+   * each delta can have one or more ops in an array
+   * if the first op is a retain, that sets the initial index of the change
+   *    this index needs to be checked for reconciliation and reonciled if needed
+   * if the first op is delete or insert, then change occurs at index 0
+   */
+
+
+  private newHandler(delta: DeltaDto) {
+  }
+
+
+
   private handleDeltaIn(delta: DeltaDto) {
     console.log('deltaIn', delta);
     const procDelta = this.deltaService.incomingDelta(delta);
+    console.log('procDelta', procDelta);
     const firstOp = procDelta.ops[0];
     let secondOp: any;
     if (procDelta.ops[1]) {
@@ -69,6 +83,15 @@ export class DocRootComponent implements OnInit, OnDestroy {
       const thirdOp = procDelta.ops[2];
       if (Object.keys(thirdOp)[0] === 'retain') {
         this.formatText(index + secondOp.insert.length, thirdOp.retain, thirdOp.attributes);
+      }
+    }
+    if (procDelta.ops[3]) {
+      const fourthOp = procDelta.ops[3];
+      console.log('fourthOp', fourthOp);
+      if (Object.keys(fourthOp)[0] === 'insert') {
+        this.insertText(index + procDelta.ops[2].retain + procDelta.ops[1].insert.length, fourthOp.insert, fourthOp.attributes ? fourthOp.attributes : null);
+      } else if (Object.keys(fourthOp)[0] === 'delete') {
+        this.deleteText(index + procDelta.ops[2].retain, fourthOp.delete);
       }
     }
   }
