@@ -27,27 +27,28 @@ export class DeltaService {
   public incomingDelta(delta: DeltaDto): DeltaDto {
     this.addToExternalDeltas(delta);
     return this.compareDeltaStates(delta);
-    return delta;
   }
 
   // add the incoming delta to the local record for the external socket
-  // if a delta for the socket already exists in the record, then replace it with the new one
   private addToExternalDeltas(delta: DeltaDto) {
     const index = this.checkExternalDelta(delta.socketId);
+    // if no delta for socket in local state, push delta into local state
     if (index === -1) {
       this.externalDeltas.push(delta);
+    // if delta in state, then replace it with the new one
     } else {
       this.externalDeltas.splice(index, 1, delta);
     }
   }
 
+  // check for delta for this socket in local state
   private checkExternalDelta(extSocketId: string) {
     return this.externalDeltas.findIndex((delta_i: DeltaDto) => delta_i.socketId === extSocketId );
   }
 
+  // determine whether local state matches state of incoming delta
   private compareDeltaStates(delta: DeltaDto) {
     const lastDelta = this.getLastDelta(delta);
-    console.log('lastDelta', lastDelta);
     if (!lastDelta) {
       if (this.deltaTracker === 0) {
         // no local changes have been made, so states match; return delta unchanged
@@ -76,8 +77,7 @@ export class DeltaService {
     return 0;
   }
 
-
-  // reconciles the incoming starting index to account for local changes
+  // reconciles the incoming starting index to account for local state changes
   private reconcile(delta: DeltaDto, lastDelta?: DeltaDto) {
     const incomingIndex = this.getIncomingIndex(delta);
     console.log('incomingIndex', incomingIndex);
@@ -97,16 +97,6 @@ export class DeltaService {
           }
         }
       }
-      /*
-      if (delta_i.ops[0].retain < incomingIndex) {
-        if (delta_i.ops[1].insert) {
-          netChange = netChange + delta_i.ops[1].insert.length;
-        }
-        if (delta_i.ops[1].delete) {
-          netChange = netChange - delta_i.ops[1].delete;
-        }
-      }
-      */
     };
     // override the incoming delta's index with the reconciled index
     console.log('netChange', netChange);

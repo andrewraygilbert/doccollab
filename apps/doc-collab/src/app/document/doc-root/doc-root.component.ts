@@ -42,94 +42,41 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.docService.reqDocument(docId);
   }
 
+  // send out local changes in the editor
   public contentChange(data: any) {
     const deltaOut = this.deltaService.outgoingDelta(data.delta);
     console.log('deltaOut', deltaOut);
     this.docService.outEditDoc(deltaOut);
   }
 
+  // process an incoming delta
   private handleDeltaIn(delta: DeltaDto) {
-    console.log('delta in', delta);
+    // reconcile the incoming delta
     const reconciledDelta = this.deltaService.incomingDelta(delta);
-    console.log('reconciledDelta', reconciledDelta);
     let baseIndex = 0;
-    if (delta.ops[0].retain) {
-      baseIndex = delta.ops[0].retain;
-    }
-    console.log('baseIndex pre-loop', baseIndex);
-    let loopIndex = 0;
+    // iterate through each delta operation
     for (const op of reconciledDelta.ops) {
+      // handle delta based on the type of change it performs
       switch (Object.keys(op)[0]) {
         case 'insert':
           this.insertText(baseIndex, op.insert, op.attributes ? op.attributes : this.nullAttributes);
           baseIndex = baseIndex + op.insert.length;
-          console.log('insert');
           break;
         case 'delete':
           this.deleteText(baseIndex, op.delete);
-          // baseIndex = baseIndex - op.delete;
-          console.log('delete');
           break;
         case 'retain':
           if (op.attributes) {
             this.formatText(baseIndex, op.retain, op.attributes);
             baseIndex = baseIndex + op.retain;
           }
-          if (loopIndex > 0) {
-            baseIndex = baseIndex + op.retain;
-          }
-          console.log('retain');
+          baseIndex = baseIndex + op.retain;
           break;
       }
-      loopIndex++;
     }
   }
 
-  private oldDeltaIn(delta: DeltaDto) {
-    console.log('deltaIn', delta);
-    const procDelta = this.deltaService.incomingDelta(delta);
-    console.log('procDelta', procDelta);
-    const firstOp = procDelta.ops[0];
-    let secondOp: any;
-    if (procDelta.ops[1]) {
-      secondOp = procDelta.ops[1];
-    }
-    let index = 0;
-    if (Object.keys(firstOp)[0] === 'retain') {
-      index = firstOp.retain;
-    }
-    if (Object.keys(firstOp)[0] === 'insert' || (secondOp && Object.keys(secondOp)[0] === 'insert')) {
-      if (firstOp.attributes || (secondOp && secondOp.attributes)) {
-        this.insertText(index, firstOp.insert ? firstOp.insert : secondOp.insert, firstOp.attributes ? firstOp.attributes : secondOp.attributes);
-      } else {
-        this.insertText(index, firstOp.insert ? firstOp.insert : secondOp.insert, {bold: false, italic: false, underline: false, strike: false});
-      }
-    }
-    if (Object.keys(firstOp)[0] === 'delete' || (secondOp && Object.keys(secondOp)[0] === 'delete')) {
-      this.deleteText(index, firstOp.delete ? firstOp.delete : secondOp.delete);
-    }
-    if (secondOp && Object.keys(secondOp)[0] === 'retain') {
-      if (Object.keys(secondOp)[1] === 'attributes') {
-        this.formatText(index, secondOp.retain, secondOp.attributes);
-      }
-    }
-    if (procDelta.ops[2]) {
-      const thirdOp = procDelta.ops[2];
-      if (Object.keys(thirdOp)[0] === 'retain') {
-        this.formatText(index + secondOp.insert.length, thirdOp.retain, thirdOp.attributes);
-      }
-    }
-    if (procDelta.ops[3]) {
-      const fourthOp = procDelta.ops[3];
-      console.log('fourthOp', fourthOp);
-      if (Object.keys(fourthOp)[0] === 'insert') {
-        this.insertText(index + procDelta.ops[2].retain + procDelta.ops[1].insert.length, fourthOp.insert, fourthOp.attributes ? fourthOp.attributes : null);
-      } else if (Object.keys(fourthOp)[0] === 'delete') {
-        this.deleteText(index + procDelta.ops[2].retain, fourthOp.delete);
-      }
-    }
-  }
-
+  // insert text into the editor
   private insertText(index: number, text: string, attributes?: any) {
     if (attributes) {
       this.editorInstance.insertText(index, text, attributes, 'silent');
@@ -138,10 +85,12 @@ export class DocRootComponent implements OnInit, OnDestroy {
     }
   }
 
+  // delete text from the editor
   private deleteText(index: number, numRemove: number) {
     this.editorInstance.deleteText(index, numRemove, 'silent');
   }
 
+  // format text in the editor
   private formatText(index: number, length: number, attributes: any) {
     this.editorInstance.formatText(index, length, attributes, 'silent');
   }
@@ -156,10 +105,6 @@ export class DocRootComponent implements OnInit, OnDestroy {
       .subscribe(delta => {
         this.handleDeltaIn(delta);
       });
-  }
-
-  public testInserting() {
-    this.editorInstance.insertText(0, 'Hello my friend', 'user');
   }
 
   private setSocketId() {
