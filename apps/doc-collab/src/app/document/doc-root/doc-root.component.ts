@@ -21,6 +21,16 @@ export class DocRootComponent implements OnInit, OnDestroy {
   public editorInstance: any;
   private socketId: string;
 
+  private nullAttributes = {
+    bold: false,
+    italic: false,
+    underline: false,
+    strike: false,
+    script: null,
+    blockquote: false,
+    'code-block': false,
+  }
+
   constructor(
     private route: ActivatedRoute,
     private docService: DocService,
@@ -51,7 +61,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     for (const op of reconciledDelta.ops) {
       switch (Object.keys(op)[0]) {
         case 'insert':
-          this.insertText(baseIndex, op.insert, op.attributes ? op.attributes : null);
+          this.insertText(baseIndex, op.insert, op.attributes ? op.attributes : this.nullAttributes);
           baseIndex = baseIndex + op.insert.length;
           console.log('insert');
           break;
