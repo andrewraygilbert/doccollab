@@ -38,14 +38,6 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.docService.outEditDoc(deltaOut);
   }
 
-  /**
-   * each delta can have one or more ops in an array
-   * if the first op is a retain, that sets the initial index of the change
-   *    this index needs to be checked for reconciliation and reonciled if needed
-   * if the first op is delete or insert, then change occurs at index 0
-   */
-
-
   private handleDeltaIn(delta: DeltaDto) {
     console.log('delta in', delta);
     const reconciledDelta = this.deltaService.incomingDelta(delta);
@@ -65,7 +57,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
           break;
         case 'delete':
           this.deleteText(baseIndex, op.delete);
-          baseIndex = baseIndex - op.delete;
+          // baseIndex = baseIndex - op.delete;
           console.log('delete');
           break;
         case 'retain':
@@ -82,8 +74,6 @@ export class DocRootComponent implements OnInit, OnDestroy {
       loopIndex++;
     }
   }
-
-
 
   private oldDeltaIn(delta: DeltaDto) {
     console.log('deltaIn', delta);
