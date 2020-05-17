@@ -38,9 +38,9 @@ export class DocRootComponent implements OnInit, OnDestroy {
     private deltaService: DeltaService,
   ) { }
 
-  private reqDocument(docId: string) {
-    this.docService.reqDocument(docId);
-  }
+  /**
+   * GENERAL FUNCTIONS
+   */
 
   // send out local changes in the editor
   public contentChange(data: any) {
@@ -48,6 +48,10 @@ export class DocRootComponent implements OnInit, OnDestroy {
     console.log('deltaOut', deltaOut);
     this.docService.outEditDoc(deltaOut);
   }
+
+  /**
+   * COLLABORATION FEATURES
+   */
 
   // process an incoming delta
   private handleDeltaIn(delta: DeltaDto) {
@@ -95,6 +99,10 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.editorInstance.formatText(index, length, attributes, 'silent');
   }
 
+  /**
+   * INITIALIZATION HELPERS
+   */
+
   // subscribe to socket event observables
   private initializeSubscriptions() {
     this.resDocument$ = this.docService.resDocument$()
@@ -111,6 +119,14 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.deltaService.setSocketId(this.coreSocket.socket.id);
     this.socketId = this.coreSocket.socket.id;
   }
+
+  private reqDocument(docId: string) {
+    this.docService.reqDocument(docId);
+  }
+
+  /**
+   * LIFECYCLE HOOKS
+   */
 
   ngOnInit(): void {
     // Initialize a socket if none exists
