@@ -148,6 +148,7 @@ export class DeltaService {
     if (delta.ops[0].retain) {
       delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
     }
+    console.log('processedDelta', delta);
     return delta;
   }
 
