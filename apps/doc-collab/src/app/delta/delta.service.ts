@@ -24,14 +24,142 @@ export class DeltaService {
    * PROCESS INCOMING DELTAS
    */
 
+   /*
   // main handler function
-  public incomingDelta(delta: DeltaDto): DeltaDto {
-    this.addToIncomingDeltas(delta);
-    return this.compareDeltaStates(delta);
+  public async incomingDelta(delta: DeltaDto): Promise<DeltaDto> {
+    // check to see if delta ready to reconcile
+    this.recordIncomingDeltas(delta); // record the delta locally
+    return this.compareDeltaStates(delta); // reconcile
+  }
+  */
+
+  public processDelta(delta: DeltaDto): DeltaDto {
+    this.recordIncomingDeltas(delta);
+    return this.identifyDiscrepancies(delta);
   }
 
+  // record incoming deltas locally for reconciliation
+  private recordIncomingDeltas(delta: DeltaDto) {
+    const socketIndex = this.getSocketIndex(delta);
+    if (socketIndex === -1) {
+      this.addNewSocketRecord(delta);
+    } else {
+      this.incomingDeltaRecord[socketIndex].deltas.push(delta);
+    }
+    console.log('incomingDeltaRecord', this.incomingDeltaRecord);
+  }
+
+  // create a new record for the first delta from a socket
+  private addNewSocketRecord(delta: DeltaDto) {
+    const newSocketRecord = {
+      socketId: delta.socketId,
+      deltas: [delta]
+    };
+    this.incomingDeltaRecord.push(newSocketRecord);
+  }
+
+  // can the incoming delta be reconciled?
+  public canReconcileDelta(delta: DeltaDto): boolean {
+    let loopIndex = 0;
+    for (const extSocket of delta.localState) { // iterate over each socket in incoming delta's record
+    console.log('in the loop');
+      const socketIndex = this.incomingDeltaRecord.findIndex((socket_i: any) => socket_i.socketId === extSocket.socketId);
+      if (socketIndex === -1) { // the socket doesn't exist in local record; can't reconcile
+        break;
+      } else { // the socket exists in the local record; check deltas
+        const lastDeltaIdSocket = extSocket.deltas[extSocket.deltas.length-1];
+        const length = this.incomingDeltaRecord[socketIndex].deltas.length;
+        const lastDeltaIdLocal = this.incomingDeltaRecord[socketIndex].deltas[length - 1].localId;
+        console.log({
+          'lastDeltaIdSocket': lastDeltaIdSocket,
+          'lastDeltaIdLocal': lastDeltaIdLocal
+        });
+        if (lastDeltaIdSocket > lastDeltaIdLocal) { // incoming delta contains deltas that do not exist locally; can't reconcile
+          break;
+        } else { // all deltas in incoming delta exist locally; can reconcile for this external socket
+          loopIndex++;
+        }
+      }
+    };
+    console.log({'loopIndex':loopIndex, 'length':delta.localState.length+1});
+    if (loopIndex === delta.localState.length - 1) { // every delta in incoming delta exists locally; CAN incoming delta
+      return true;
+    }
+    return false; // at least one delta from one external socket does not exist locally; CANNOT reconcile; must queue delta
+  }
+
+  private identifyDiscrepancies(delta: DeltaDto): DeltaDto {
+    let diffDeltas = [];
+    // iterate through each socket record to match deltas
+    // iterate through local record to ID discrepancies
+    for (const socket_i of this.incomingDeltaRecord) { // iterate over local records for each socket
+      if (socket_i.socketId !== delta.socketId) { // do not ID discrepancies for socket that originated the incoming delta
+        const extSocketRecord = delta.localState.find(extSocket_i => extSocket_i.socketId === socket_i.socketId); // grabs external record for this socket
+        if (!extSocketRecord) {
+          throw new Error('missing socket');
+        }
+        const lastExtDeltaId = extSocketRecord.deltas[extSocketRecord.deltas.length-1].localId; // get the last delta id for this socket
+        const lastIntDeltaId = socket_i.deltas[socket_i.deltas.length-1].localId;
+        if (lastIntDeltaId > lastExtDeltaId) { // if local state has changes that are not present in incoming delta, add to diff deltas array
+          diffDeltas.push(socket_i.deltas.slice(lastExtDeltaId + 1));
+        }
+      }
+    };
+
+    return this.reconciler(delta, diffDeltas);
+  }
+
+  private reconciler(delta: DeltaDto, diffDeltas: DeltaDto[]): DeltaDto {
+    let netIndexChange = 0;
+    const incomingIndex = this.getIncomingIndex(delta);
+    for (const delta_i of diffDeltas) {
+      const deltaIndex = this.getIncomingIndex(delta_i);
+      if (deltaIndex < incomingIndex) { // if local change occurred at i before incoming delta
+        for (const op of delta_i.ops) {
+          // increase the incoming index for each insertion operation
+          if (op.insert) {
+            netIndexChange = netIndexChange + op.insert.length;
+          }
+          // reduce the incoming index for each deletion operation
+          if (op.delete) {
+            netIndexChange = netIndexChange - op.delete;
+          }
+        }
+      }
+    };
+    if (delta.ops[0].retain) {
+      delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
+    }
+    return delta;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // retrieve the index of a record for a socket
+  private getSocketIndex(delta: DeltaDto): number {
+    return this.incomingDeltaRecord.findIndex((socket_i: any) => socket_i.socketId === delta.socketId);
+  }
+
+  /* OLD ADD TO DELTA
   // add the incoming delta to the local record for deltas from external sockets
-  private addToIncomingDeltas(delta: DeltaDto) {
+  private recordIncomingDeltas(delta: DeltaDto) {
     const index = this.getLastIncomingDelta(delta.socketId);
     // if no prior delta for socket in record, push delta into local record
     if (index === -1) {
@@ -41,7 +169,34 @@ export class DeltaService {
       this.incomingDeltaRecord.splice(index, 1, delta);
     }
   }
+  */
 
+  /*
+  // compare incoming delta state to local state to identify discrepancies for reconciliation
+  private identifyStateDiscrepancies(delta: DeltaDto) {
+    // check to see if incoming delta knows of local changes
+    for (const localSocket_i of this.incomingDeltaRecord) {
+      const index = delta.localState.findIndex((extSocket_i: any) => extSocket_i.socketId === localSocket_i.socketId);
+      // incoming delta does not have record for socket
+      if (index === -1) {
+        // need to reconcile for this socket
+      // incoming delta does have record for socket
+      } else {
+        // get last delta id for this socket locally
+        // compare to last delta id for this socket in incoming delta
+        // if match, no reconciliation for this socket needed
+        // if discrepancy, then reconcile deltas for this socket
+        // remove this socket from local state of incoming socket, since it has been handled
+      }
+    };
+    // check to see if local socket knows of all deltas in incoming delta
+    if (delta.localState.length > 0) {
+      // if localState has any elements left, then that means it was aware of sockets that the local socket was not aware of -> enqueue this delta until missing sockets/deltas arrive
+    }
+  }
+  */
+
+  /*
   // determine whether local state matches state of incoming delta
   private compareDeltaStates(delta: DeltaDto) {
     const lastDelta = this.getLastDelta(delta);
@@ -64,6 +219,7 @@ export class DeltaService {
       return this.reconcile(delta, lastDelta);
     }
   }
+  */
 
   // get the last delta from this socket
   private getLastIncomingDelta(extSocketId: string) {
@@ -113,6 +269,7 @@ export class DeltaService {
   }
 
   // gets the last delta from this socket that the external socket was aware of when it sent this delta
+  /*
   private getLastDelta(delta: DeltaDto): DeltaDto | null {
     const lastDelta = delta.localState.find(delta_i => delta_i.socketId === this.socketId);
     if (!lastDelta) {
@@ -120,6 +277,7 @@ export class DeltaService {
     }
     return lastDelta;
   }
+  */
 
   /**
    * OUTGOING DELTAS

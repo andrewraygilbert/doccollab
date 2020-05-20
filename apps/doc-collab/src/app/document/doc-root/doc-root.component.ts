@@ -53,10 +53,22 @@ export class DocRootComponent implements OnInit, OnDestroy {
    * COLLABORATION FEATURES
    */
 
-  // process an incoming delta
-  private handleDeltaIn(delta: DeltaDto) {
-    // reconcile the incoming delta
-    const reconciledDelta = this.deltaService.incomingDelta(delta);
+  private readyForReconcile(delta: DeltaDto) {
+    if (delta.localState.length === 0) {
+      this.processDelta(delta);
+    } else {
+      if (this.deltaService.canReconcileDelta(delta)) {
+        this.processDelta(delta);
+      } else {
+        console.log('not ready yet');
+        setTimeout(() => this.readyForReconcile(delta), 250);
+      }
+    }
+  }
+
+  private processDelta(delta: DeltaDto) {
+    // send to delta service to reconcile
+    const reconciledDelta = this.deltaService.processDelta(delta);
     let baseIndex = 0;
     // iterate through each delta operation
     for (const op of reconciledDelta.ops) {
@@ -79,6 +91,38 @@ export class DocRootComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+
+  // process an incoming delta
+  private handleDeltaIn(delta: DeltaDto) {
+    // reconcile the incoming delta
+    this.readyForReconcile(delta);
+    /*
+    const reconciledDelta = this.deltaService.incomingDelta(delta);
+    let baseIndex = 0;
+    // iterate through each delta operation
+    for (const op of reconciledDelta.ops) {
+      // handle delta based on the type of change it performs
+      switch (Object.keys(op)[0]) {
+        case 'insert':
+          this.insertText(baseIndex, op.insert, op.attributes ? op.attributes : this.nullAttributes);
+          baseIndex = baseIndex + op.insert.length;
+          break;
+        case 'delete':
+          this.deleteText(baseIndex, op.delete);
+          break;
+        case 'retain':
+          if (op.attributes) {
+            this.formatText(baseIndex, op.retain, op.attributes);
+            baseIndex = baseIndex + op.retain;
+          }
+          baseIndex = baseIndex + op.retain;
+          break;
+      }
+    }
+    */
+  }
+
 
   // insert text into the editor
   private insertText(index: number, text: string, attributes?: any) {

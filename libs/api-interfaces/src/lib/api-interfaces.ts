@@ -52,10 +52,15 @@ export interface TokenObject {
   access_token: string;
 }
 
+export interface DeltaRecord {
+  socketId: string;
+  deltas: DeltaDto[];
+}
+
 export interface DeltaDto {
   socketId: string;
   localId: number;
-  localState: DeltaDto[];
+  localState: DeltaRecord[];
   ops: any;
 }
 
