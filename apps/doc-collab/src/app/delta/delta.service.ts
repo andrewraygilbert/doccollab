@@ -129,8 +129,8 @@ export class DeltaService {
     let netIndexChange = 0;
     const incomingIndex = this.getIncomingIndex(delta);
     for (const delta_i of diffDeltas) {
-      const deltaIndex = this.getIncomingIndex(delta_i);
-      if (deltaIndex < incomingIndex) { // if local change occurred at i before incoming delta
+      console.log('starting index');
+      if (delta_i.ops[0].retain < incomingIndex) { // if local change occurred at i before incoming delta
         for (const op of delta_i.ops) {
           // increase the incoming index for each insertion operation
           if (op.insert) {
@@ -143,6 +143,7 @@ export class DeltaService {
         }
       }
     };
+    console.log('netIndexChange', netIndexChange);
     if (delta.ops[0].retain) {
       delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
     }
