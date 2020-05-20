@@ -106,6 +106,17 @@ export class DeltaService {
         }
       }
     };
+    const lastDeltaForThisSocket = delta.localRecord.find((socket_i) => socket_i.socketId === this.socketId);
+    if (!lastDeltaForThisSocket && this.localDeltaTracker > 0) {
+      for (const eachDelta of this.outgoingDeltaRecord) {
+        diffDeltas.push(eachDelta);
+      }
+    } else if (lastDeltaForThisSocket && lastDeltaForThisSocket.deltaId && lastDeltaForThisSocket.deltaId < this.localDeltaTracker) {
+      const diff = this.outgoingDeltaRecord.slice(lastDeltaForThisSocket.deltaId + 1);
+      for (const eachDelta of diff) {
+        diffDeltas.push(eachDelta);
+      };
+    }
     if (diffDeltas.length > 0) { // if discrepancies, reconcile
       console.log('detected discrepancies', diffDeltas);
       return this.reconciler(delta, diffDeltas);
