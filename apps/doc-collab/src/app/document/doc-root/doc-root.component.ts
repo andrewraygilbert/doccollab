@@ -44,8 +44,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
 
   // send out local changes in the editor
   public contentChange(data: any) {
-    const deltaOut = this.deltaService.outgoingDelta(data.delta);
-    console.log('deltaOut', deltaOut);
+    const deltaOut = this.deltaService.processDeltaOut(data.delta);
     this.docService.outEditDoc(deltaOut);
   }
 
@@ -54,10 +53,12 @@ export class DocRootComponent implements OnInit, OnDestroy {
    */
 
   private readyForReconcile(delta: DeltaDto) {
-    if (delta.localState.length === 0) {
+    if (delta.localRecord.length === 0) {
+      console.log('no local record in incoming delta');
       this.processDelta(delta);
     } else {
       if (this.deltaService.canReconcileDelta(delta)) {
+        console.log('can reconcile');
         this.processDelta(delta);
       } else {
         console.log('not ready yet');

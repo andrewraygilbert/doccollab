@@ -57,11 +57,19 @@ export interface DeltaRecord {
   deltas: DeltaDto[];
 }
 
-export interface DeltaDto {
+export interface DeltaDtoRecord {
+  socketId: string;
+  deltaId: number;
+}
+
+export interface BaseDelta {
+  ops: [any];
+}
+
+export interface DeltaDto extends BaseDelta {
   socketId: string;
   localId: number;
-  localState: DeltaRecord[];
-  ops: any;
+  localRecord: DeltaDtoRecord[];
 }
 
 
