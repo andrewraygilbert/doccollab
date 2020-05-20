@@ -96,6 +96,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
 
   // process an incoming delta
   private handleDeltaIn(delta: DeltaDto) {
+    console.log('deltaIn', delta);
     // reconcile the incoming delta
     this.readyForReconcile(delta);
     /*
