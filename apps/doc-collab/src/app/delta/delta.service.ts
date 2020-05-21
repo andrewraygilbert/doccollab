@@ -44,10 +44,6 @@ export class DeltaService {
         const lastDeltaIdSocket = extSocket.deltaId;
         const length = this.incomingDeltaRecord[socketIndex].deltas.length;
         const lastDeltaIdLocal = this.incomingDeltaRecord[socketIndex].deltas[length - 1].localId;
-        console.log({
-          'lastDeltaIdSocket': lastDeltaIdSocket,
-          'lastDeltaIdLocal': lastDeltaIdLocal
-        });
         if (lastDeltaIdSocket > lastDeltaIdLocal) { // incoming delta contains deltas that do not exist locally; can't reconcile
           break;
         } else { // all deltas in incoming delta exist locally; can reconcile for this external socket
@@ -73,14 +69,12 @@ export class DeltaService {
     if (socketIndex === -1) {
       this.addNewSocketRecord(delta);
     } else {
-      console.log('pushing a new delta into socket record');
       this.incomingDeltaRecord[socketIndex].deltas.push(delta);
     }
   }
 
   // create a new record for the first delta from a socket
   private addNewSocketRecord(delta: DeltaDto) {
-    console.log('adding a new socket record');
     const newSocketRecord = {
       socketId: delta.socketId,
       deltas: [delta]
@@ -106,56 +100,39 @@ export class DeltaService {
       }
     };
     const lastDeltaForThisSocket = delta.localRecord.find((socket_i) => socket_i.socketId === this.socketId);
-    console.log('lastDeltaForThisSocket', lastDeltaForThisSocket);
     if (!lastDeltaForThisSocket && this.localDeltaTracker > 0) {
-      console.log('no last delta in incoming socket');
       for (const eachDelta of this.outgoingDeltaRecord) {
         diffDeltas.push(eachDelta);
       }
     } else if (lastDeltaForThisSocket && lastDeltaForThisSocket.deltaId && lastDeltaForThisSocket.deltaId < this.localDeltaTracker) {
-      console.log('lest delta is less than current delta');
-      console.log('outgoingDeltaRecord', this.outgoingDeltaRecord);
       const diff = this.outgoingDeltaRecord.slice(lastDeltaForThisSocket.deltaId + 1);
-      console.log('diff slice', diff);
       for (const eachDelta of diff) {
         diffDeltas.push(eachDelta);
       };
     }
     if (diffDeltas.length > 0) { // if discrepancies, reconcile
-      console.log('detected discrepancies', diffDeltas);
       return this.reconciler(delta, diffDeltas);
     }
-    console.log('no discrepancies, return delta');
     return delta;
   }
 
   private reconciler(delta: DeltaDto, diffDeltas: DeltaDto[]): DeltaDto {
-    console.log('delta in reconciler', delta);
     let netIndexChange = 0;
     const incomingIndex = this.getIncomingIndex(delta);
-    console.log('incomingIndex', incomingIndex);
     for (const delta_i of diffDeltas) { // for each discrepant delta
       if (delta_i.ops[0].retain < incomingIndex) { // if local change occurred at i before incoming delta
-        console.log({
-          'message': 'comparing indexes',
-          'localdeltaop': delta_i.ops[0].retain,
-          'incomingIndex': incomingIndex
-        });
         for (const op of delta_i.ops) {
           // increase the incoming index for each insertion operation
           if (op.insert) {
-            console.log('netIndexChange++');
             netIndexChange = netIndexChange + op.insert.length;
           }
           // reduce the incoming index for each deletion operation
           if (op.delete) {
-            console.log('netIndexChange--');
             netIndexChange = netIndexChange - op.delete;
           }
         }
       }
     };
-    console.log('netIndexChange', netIndexChange);
     /*
     if (delta.ops[0].retain) {
       console.log('reassigning delta op 1 retain index');
@@ -163,20 +140,16 @@ export class DeltaService {
     }
     */
     if (delta.ops[0].retain) {
-      console.log('delta has retain property; reassigning');
       delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
     }
-    console.log('processedDelta', delta);
     return delta;
   }
 
   private getIncomingIndex(delta: DeltaDto): number {
-    console.log('delta in getIncomingIndex', delta);
     if (delta.ops[0].retain) {
       if (delta.ops[0].attributes) {
         return 0;
       }
-      console.log('retain index from delta', delta.ops[0].retain);
       return delta.ops[0].retain;
     }
     return 0;
