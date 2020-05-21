@@ -32,6 +32,9 @@ export class DeltaService {
       const socketIndex = this.incomingDeltaRecord.findIndex((socket_i: any) => socket_i.socketId === extSocket.socketId);
       console.log('socketIndex', socketIndex);
       if (socketIndex === -1) { // the socket doesn't exist in local record; can't reconcile
+        if (extSocket.socketId === this.socketId) { // skip the record for this socket since it is not in incomingDeltaRecord
+          loopIndex++;
+        }
         break;
       } else { // the socket exists in the local record; check deltas
         const lastDeltaIdSocket = extSocket.deltaId;
