@@ -178,9 +178,15 @@ export class DeltaService {
       if (delta.ops[0].attributes) {
         return 0;
       }
+      console.log('retain index from delta', delta.ops[0].retain);
       return delta.ops[0].retain;
     }
     return 0;
+  }
+
+  // retrieve the index of a record for a socket
+  private getSocketIndex(delta: DeltaDto): number {
+    return this.incomingDeltaRecord.findIndex((socket_i: any) => socket_i.socketId === delta.socketId);
   }
 
   /**
@@ -235,10 +241,7 @@ export class DeltaService {
 
 
 
-  // retrieve the index of a record for a socket
-  private getSocketIndex(delta: DeltaDto): number {
-    return this.incomingDeltaRecord.findIndex((socket_i: any) => socket_i.socketId === delta.socketId);
-  }
+
 
   /* OLD ADD TO DELTA
   // add the incoming delta to the local record for deltas from external sockets
@@ -305,13 +308,16 @@ export class DeltaService {
   */
 
   // get the last delta from this socket
+  /*
   private getLastIncomingDelta(extSocketId: string) {
     return this.incomingDeltaRecord.findIndex((delta_i: DeltaDto) => delta_i.socketId === extSocketId );
   }
+  */
 
   // gets the starting index of the incoming delta
 
 
+  /*
   // reconciles the incoming starting index to account for local state changes
   private reconcile(delta: DeltaDto, lastDelta?: DeltaDto) {
     const incomingIndex = this.getIncomingIndex(delta);
@@ -342,6 +348,7 @@ export class DeltaService {
     }
     return delta;
   }
+  /*
 
   // gets the last delta from this socket that the external socket was aware of when it sent this delta
   /*
