@@ -60,6 +60,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
       if (this.deltaService.canReconcileDelta(delta)) {
         this.processDelta(delta);
       } else {
+        console.log('not ready yet');
         setTimeout(() => this.readyForReconcile(delta), 250); // delta is not ready -> wait and try again
       }
     }
@@ -68,6 +69,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
   // incorporate the delta into the editor
   private processDelta(delta: DeltaDto) {
     const reconciledDelta = this.deltaService.processDelta(delta); // obtain a reconciled delta
+    console.log('reconciled delta', reconciledDelta);
     let baseIndex = 0;
     for (const op of reconciledDelta.ops) { // process each operation of the delta
       switch (Object.keys(op)[0]) {
