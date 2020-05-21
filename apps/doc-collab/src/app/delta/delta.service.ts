@@ -159,9 +159,14 @@ export class DeltaService {
       delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
     }
     */
-    let revisedDelta = delta;
-    if (revisedDelta.ops[0].retain) {
-      revisedDelta.ops[0].retain = revisedDelta.ops[0].retain + netIndexChange;
+    let revisedDelta: any = {
+      ops: []
+    };
+    for (let op of delta.ops) {
+      revisedDelta.ops.push(op);
+    };
+    if (revisedDelta.op[0].retain) {
+      revisedDelta.op[0].retain = revisedDelta.op[0].retain + netIndexChange;
     }
     console.log('processedDelta', revisedDelta);
     return revisedDelta;
