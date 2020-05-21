@@ -33,32 +33,6 @@ export class DeltaService {
   }
   */
 
-  public processDelta(delta: DeltaDto): DeltaDto {
-    this.recordIncomingDeltas(delta);
-    return this.identifyDiscrepancies(delta);
-  }
-
-  // record incoming deltas locally for reconciliation
-  private recordIncomingDeltas(delta: DeltaDto) {
-    const socketIndex = this.getSocketIndex(delta);
-    if (socketIndex === -1) {
-      this.addNewSocketRecord(delta);
-    } else {
-      console.log('pushing a new delta into socket record');
-      this.incomingDeltaRecord[socketIndex].deltas.push(delta);
-    }
-  }
-
-  // create a new record for the first delta from a socket
-  private addNewSocketRecord(delta: DeltaDto) {
-    console.log('adding a new socket record');
-    const newSocketRecord = {
-      socketId: delta.socketId,
-      deltas: [delta]
-    };
-    this.incomingDeltaRecord.push(newSocketRecord);
-  }
-
   // can the incoming delta be reconciled?
   public canReconcileDelta(delta: DeltaDto): boolean {
     let loopIndex = 0;
@@ -85,6 +59,33 @@ export class DeltaService {
       return true;
     }
     return false; // at least one delta from one external socket does not exist locally; CANNOT reconcile; must queue delta
+  }
+
+  public processDelta(delta: DeltaDto): DeltaDto {
+    const reconciled = this.identifyDiscrepancies(delta);
+    this.recordIncomingDeltas(delta);
+    return reconciled;
+  }
+
+  // record incoming deltas locally for reconciliation
+  private recordIncomingDeltas(delta: DeltaDto) {
+    const socketIndex = this.getSocketIndex(delta);
+    if (socketIndex === -1) {
+      this.addNewSocketRecord(delta);
+    } else {
+      console.log('pushing a new delta into socket record');
+      this.incomingDeltaRecord[socketIndex].deltas.push(delta);
+    }
+  }
+
+  // create a new record for the first delta from a socket
+  private addNewSocketRecord(delta: DeltaDto) {
+    console.log('adding a new socket record');
+    const newSocketRecord = {
+      socketId: delta.socketId,
+      deltas: [delta]
+    };
+    this.incomingDeltaRecord.push(newSocketRecord);
   }
 
   private identifyDiscrepancies(delta: DeltaDto): DeltaDto {
@@ -131,7 +132,7 @@ export class DeltaService {
     let netIndexChange = 0;
     const incomingIndex = this.getIncomingIndex(delta);
     console.log('incomingIndex', incomingIndex);
-    for (const delta_i of diffDeltas) {
+    for (const delta_i of diffDeltas) { // for each discrepant delta
       if (delta_i.ops[0].retain < incomingIndex) { // if local change occurred at i before incoming delta
         console.log({
           'message': 'comparing indexes',
@@ -159,17 +160,12 @@ export class DeltaService {
       delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
     }
     */
-    let revisedDelta: any = {
-      ops: []
-    };
-    for (let op of delta.ops) {
-      revisedDelta.ops.push(op);
-    };
-    if (revisedDelta.ops[0].retain) {
-      revisedDelta.ops[0].retain = revisedDelta.ops[0].retain + netIndexChange;
+    if (delta.ops[0].retain) {
+      console.log('delta has retain property; reassigning');
+      delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
     }
-    console.log('processedDelta', revisedDelta);
-    return revisedDelta;
+    console.log('processedDelta', delta);
+    return delta;
   }
 
   private getIncomingIndex(delta: DeltaDto): number {

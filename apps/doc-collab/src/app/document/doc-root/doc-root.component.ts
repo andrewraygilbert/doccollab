@@ -52,6 +52,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
    * COLLABORATION FEATURES
    */
 
+  // handle the incoming delta; check to see if ready to reconcile
   private readyForReconcile(delta: DeltaDto) {
     if (delta.localRecord.length === 0) {
       console.log('no local record in incoming delta');
@@ -93,39 +94,6 @@ export class DocRootComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  // process an incoming delta
-  private handleDeltaIn(delta: DeltaDto) {
-    console.log('deltaIn', delta);
-    // reconcile the incoming delta
-    this.readyForReconcile(delta);
-    /*
-    const reconciledDelta = this.deltaService.incomingDelta(delta);
-    let baseIndex = 0;
-    // iterate through each delta operation
-    for (const op of reconciledDelta.ops) {
-      // handle delta based on the type of change it performs
-      switch (Object.keys(op)[0]) {
-        case 'insert':
-          this.insertText(baseIndex, op.insert, op.attributes ? op.attributes : this.nullAttributes);
-          baseIndex = baseIndex + op.insert.length;
-          break;
-        case 'delete':
-          this.deleteText(baseIndex, op.delete);
-          break;
-        case 'retain':
-          if (op.attributes) {
-            this.formatText(baseIndex, op.retain, op.attributes);
-            baseIndex = baseIndex + op.retain;
-          }
-          baseIndex = baseIndex + op.retain;
-          break;
-      }
-    }
-    */
-  }
-
-
   // insert text into the editor
   private insertText(index: number, text: string, attributes?: any) {
     if (attributes) {
@@ -157,7 +125,8 @@ export class DocRootComponent implements OnInit, OnDestroy {
       });
     this.inEditDoc$ = this.docService.inEditDoc$()
       .subscribe(delta => {
-        this.handleDeltaIn(delta);
+        console.log('INCOMING DELTA', delta);
+        this.readyForReconcile(delta);
       });
   }
 
