@@ -61,7 +61,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
         this.processDelta(delta);
       } else {
         console.log('not ready yet');
-        setTimeout(() => this.readyForReconcile(delta), 250); // delta is not ready -> wait and try again
+        setTimeout(() => this.readyForReconcile(delta), 1000); // delta is not ready -> wait and try again
       }
     }
   }

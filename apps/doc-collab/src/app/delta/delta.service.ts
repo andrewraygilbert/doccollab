@@ -28,7 +28,9 @@ export class DeltaService {
   public canReconcileDelta(delta: DeltaDto): boolean {
     let loopIndex = 0;
     for (const extSocket of delta.localRecord) { // iterate over each socket in incoming delta's record
+      console.log('extSocket', extSocket);
       const socketIndex = this.incomingDeltaRecord.findIndex((socket_i: any) => socket_i.socketId === extSocket.socketId);
+      console.log('socketIndex', socketIndex);
       if (socketIndex === -1) { // the socket doesn't exist in local record; can't reconcile
         break;
       } else { // the socket exists in the local record; check deltas
@@ -36,6 +38,7 @@ export class DeltaService {
         const length = this.incomingDeltaRecord[socketIndex].deltas.length;
         const lastDeltaIdLocal = this.incomingDeltaRecord[socketIndex].deltas[length - 1].localId;
         if (lastDeltaIdSocket > lastDeltaIdLocal) { // incoming delta contains deltas that do not exist locally; can't reconcile
+          console.log('deltas that do not exist locally');
           break;
         } else { // all deltas in incoming delta exist locally; can reconcile for this external socket
           loopIndex++;
