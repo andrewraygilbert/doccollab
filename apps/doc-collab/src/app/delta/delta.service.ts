@@ -45,7 +45,7 @@ export class DeltaService {
         }
       }
     };
-    if (loopIndex === delta.localRecord.length - 1) { // every delta in incoming delta exists locally; CAN incoming delta
+    if (loopIndex === delta.localRecord.length) { // every delta in incoming delta exists locally; CAN incoming delta
       return true;
     }
     return false; // at least one delta from one external socket does not exist locally; CANNOT reconcile; must queue delta
