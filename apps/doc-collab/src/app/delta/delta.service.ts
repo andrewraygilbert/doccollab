@@ -153,10 +153,12 @@ export class DeltaService {
       }
     };
     console.log('netIndexChange', netIndexChange);
+    /*
     if (delta.ops[0].retain) {
       console.log('reassigning delta op 1 retain index');
       delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
     }
+    */
     console.log('processedDelta', delta);
     return delta;
   }
