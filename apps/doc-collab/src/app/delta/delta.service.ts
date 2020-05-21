@@ -162,6 +162,7 @@ export class DeltaService {
   }
 
   private getIncomingIndex(delta: DeltaDto): number {
+    console.log('delta in getIncomingIndex', delta);
     if (delta.ops[0].retain) {
       if (delta.ops[0].attributes) {
         return 0;
