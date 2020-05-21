@@ -159,8 +159,12 @@ export class DeltaService {
       delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
     }
     */
-    console.log('processedDelta', delta);
-    return delta;
+    let revisedDelta = delta;
+    if (revisedDelta.ops[0].retain) {
+      revisedDelta.ops[0].retain = revisedDelta.ops[0].retain + netIndexChange;
+    }
+    console.log('processedDelta', revisedDelta);
+    return revisedDelta;
   }
 
   private getIncomingIndex(delta: DeltaDto): number {
