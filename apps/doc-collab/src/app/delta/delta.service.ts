@@ -106,6 +106,7 @@ export class DeltaService {
       }
     };
     const lastDeltaForThisSocket = delta.localRecord.find((socket_i) => socket_i.socketId === this.socketId);
+    console.log('lastDeltaForThisSocket', lastDeltaForThisSocket);
     if (!lastDeltaForThisSocket && this.localDeltaTracker > 0) {
       console.log('no last delta in incoming socket');
       for (const eachDelta of this.outgoingDeltaRecord) {
