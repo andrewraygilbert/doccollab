@@ -9,7 +9,7 @@ export class DeltaService {
 
   private socketId: string;
   private localDeltaTracker = 0;
-  private outgoingDeltaRecord: any = [];
+  private outgoingDeltaRecord: BaseDelta[] = [];
   private incomingDeltaRecord: any = [];
 
   constructor(
@@ -114,7 +114,8 @@ export class DeltaService {
       }
     } else if (lastDeltaForThisSocket && lastDeltaForThisSocket.deltaId && lastDeltaForThisSocket.deltaId < this.localDeltaTracker) {
       console.log('lest delta is less than current delta');
-      const diff = this.outgoingDeltaRecord.slice(lastDeltaForThisSocket.deltaId + 1);
+      console.log('outgoingDeltaRecord', this.outgoingDeltaRecord);
+      const diff = this.outgoingDeltaRecord.slice(lastDeltaForThisSocket.deltaId);
       console.log('diff slice', diff);
       for (const eachDelta of diff) {
         diffDeltas.push(eachDelta);
