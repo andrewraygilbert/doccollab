@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ɵConsole } from '@angular/core';
 import { CoreSocketService } from '../socket/core-socket.service';
 import { DeltaDto, BaseDelta } from '@doccollab/api-interfaces';
 
@@ -63,7 +63,6 @@ export class DeltaService {
   public canReconcileDelta(delta: DeltaDto): boolean {
     let loopIndex = 0;
     for (const extSocket of delta.localRecord) { // iterate over each socket in incoming delta's record
-      console.log('in the loop');
       const socketIndex = this.incomingDeltaRecord.findIndex((socket_i: any) => socket_i.socketId === extSocket.socketId);
       if (socketIndex === -1) { // the socket doesn't exist in local record; can't reconcile
         break;
@@ -82,7 +81,6 @@ export class DeltaService {
         }
       }
     };
-    console.log({'loopIndex':loopIndex, 'length':delta.localRecord.length+1});
     if (loopIndex === delta.localRecord.length - 1) { // every delta in incoming delta exists locally; CAN incoming delta
       return true;
     }
@@ -108,11 +106,14 @@ export class DeltaService {
     };
     const lastDeltaForThisSocket = delta.localRecord.find((socket_i) => socket_i.socketId === this.socketId);
     if (!lastDeltaForThisSocket && this.localDeltaTracker > 0) {
+      console.log('no last delta in incoming socket');
       for (const eachDelta of this.outgoingDeltaRecord) {
         diffDeltas.push(eachDelta);
       }
     } else if (lastDeltaForThisSocket && lastDeltaForThisSocket.deltaId && lastDeltaForThisSocket.deltaId < this.localDeltaTracker) {
+      console.log('lest delta is less than current delta');
       const diff = this.outgoingDeltaRecord.slice(lastDeltaForThisSocket.deltaId + 1);
+      console.log('diff slice', diff);
       for (const eachDelta of diff) {
         diffDeltas.push(eachDelta);
       };
