@@ -127,19 +127,26 @@ export class DeltaService {
   }
 
   private reconciler(delta: DeltaDto, diffDeltas: DeltaDto[]): DeltaDto {
+    console.log('delta in reconciler', delta);
     let netIndexChange = 0;
     const incomingIndex = this.getIncomingIndex(delta);
     console.log('incomingIndex', incomingIndex);
     for (const delta_i of diffDeltas) {
       if (delta_i.ops[0].retain < incomingIndex) { // if local change occurred at i before incoming delta
-        console.log('change was before incoming index');
+        console.log({
+          'message': 'comparing indexes',
+          'localdeltaop': delta_i.ops[0].retain,
+          'incomingIndex': incomingIndex
+        });
         for (const op of delta_i.ops) {
           // increase the incoming index for each insertion operation
           if (op.insert) {
+            console.log('netIndexChange++');
             netIndexChange = netIndexChange + op.insert.length;
           }
           // reduce the incoming index for each deletion operation
           if (op.delete) {
+            console.log('netIndexChange--');
             netIndexChange = netIndexChange - op.delete;
           }
         }
@@ -147,10 +154,21 @@ export class DeltaService {
     };
     console.log('netIndexChange', netIndexChange);
     if (delta.ops[0].retain) {
+      console.log('reassigning delta op 1 retain index');
       delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
     }
     console.log('processedDelta', delta);
     return delta;
+  }
+
+  private getIncomingIndex(delta: DeltaDto): number {
+    if (delta.ops[0].retain) {
+      if (delta.ops[0].attributes) {
+        return 0;
+      }
+      return delta.ops[0].retain;
+    }
+    return 0;
   }
 
   /**
@@ -280,15 +298,7 @@ export class DeltaService {
   }
 
   // gets the starting index of the incoming delta
-  private getIncomingIndex(delta: DeltaDto): number {
-    if (delta.ops[0].retain) {
-      if (delta.ops[0].attributes) {
-        return 0;
-      }
-      return delta.ops[0].retain;
-    }
-    return 0;
-  }
+
 
   // reconciles the incoming starting index to account for local state changes
   private reconcile(delta: DeltaDto, lastDelta?: DeltaDto) {
