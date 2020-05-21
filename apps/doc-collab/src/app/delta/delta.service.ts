@@ -24,16 +24,7 @@ export class DeltaService {
    * PROCESS INCOMING DELTAS
    */
 
-   /*
-  // main handler function
-  public async incomingDelta(delta: DeltaDto): Promise<DeltaDto> {
-    // check to see if delta ready to reconcile
-    this.recordIncomingDeltas(delta); // record the delta locally
-    return this.compareDeltaStates(delta); // reconcile
-  }
-  */
-
-  // can the incoming delta be reconciled?
+  // determine whether an incoming delta can be reconciled
   public canReconcileDelta(delta: DeltaDto): boolean {
     let loopIndex = 0;
     for (const extSocket of delta.localRecord) { // iterate over each socket in incoming delta's record
@@ -82,13 +73,12 @@ export class DeltaService {
     this.incomingDeltaRecord.push(newSocketRecord);
   }
 
-  private identifyDiscrepancies(delta: DeltaDto): DeltaDto {
-    let diffDeltas = [];
-    // iterate through each socket record to match deltas
-    // iterate through local record to ID discrepancies
-    for (const socket_i of this.incomingDeltaRecord) { // iterate over local records for each socket
-      if (socket_i.socketId !== delta.socketId) { // do not ID discrepancies for socket that originated the incoming delta
-        const extSocketRecord = delta.localRecord.find(extSocket_i => extSocket_i.socketId === socket_i.socketId); // grabs external record for this socket
+  // checks for discrepancies in third party sockets
+  private checkExtDiscrepancies(delta: DeltaDto) {
+    let diffDeltas: any = [];
+    for (const socket_i of this.incomingDeltaRecord) {
+      if (socket_i.socketId !== delta.socketId) { // do not check the socket that originated this delta
+        const extSocketRecord = delta.localRecord.find(extSocket_i => extSocket_i.socketId === socket_i.socketId);
         if (!extSocketRecord) {
           throw new Error('missing socket');
         }
@@ -98,7 +88,12 @@ export class DeltaService {
           diffDeltas.push(socket_i.deltas.slice(lastExtDeltaId + 1));
         }
       }
-    };
+    }
+    return diffDeltas;
+  }
+
+  // checks for discrepancies with this socket
+  private checkIntDiscrepancies(delta: DeltaDto, diffDeltas: any[]) {
     const lastDeltaForThisSocket = delta.localRecord.find((socket_i) => socket_i.socketId === this.socketId);
     if (!lastDeltaForThisSocket && this.localDeltaTracker > 0) {
       for (const eachDelta of this.outgoingDeltaRecord) {
@@ -110,6 +105,13 @@ export class DeltaService {
         diffDeltas.push(eachDelta);
       };
     }
+    return diffDeltas;
+  }
+
+  // check for discrepancies in delta states
+  private identifyDiscrepancies(delta: DeltaDto): DeltaDto {
+    let diffDeltas = this.checkExtDiscrepancies(delta);
+    diffDeltas = this.checkIntDiscrepancies(delta, diffDeltas);
     if (diffDeltas.length > 0) { // if discrepancies, reconcile
       return this.reconciler(delta, diffDeltas);
     }
@@ -133,12 +135,6 @@ export class DeltaService {
         }
       }
     };
-    /*
-    if (delta.ops[0].retain) {
-      console.log('reassigning delta op 1 retain index');
-      delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
-    }
-    */
     if (delta.ops[0].retain) {
       delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
     }
