@@ -94,7 +94,10 @@ export class DeltaService {
           const lastExtDeltaId = extSocketRecord.deltaId; // get the last delta id for this socket
           const lastIntDeltaId = socket_i.deltas[socket_i.deltas.length-1].localId;
           if (lastIntDeltaId > lastExtDeltaId) { // if local state has changes that are not present in incoming delta, add to diff deltas array
-          diffDeltas.push(socket_i.deltas.slice(lastExtDeltaId + 1));
+            const slice = socket_i.deltas.slice(lastExtDeltaId + 1);
+            for (const each of slice) {
+              diffDeltas.push(each);
+            };
           }
         }
       }
