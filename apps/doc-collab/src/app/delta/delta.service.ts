@@ -132,7 +132,9 @@ export class DeltaService {
   private reconciler(delta: DeltaDto, diffDeltas: DeltaDto[]): DeltaDto {
     let netIndexChange = 0;
     const incomingIndex = this.getIncomingIndex(delta);
+    console.log('incoming index', incomingIndex);
     for (const delta_i of diffDeltas) { // for each discrepant delta
+      console.log('delta_i', delta_i);
       if (delta_i.ops[0].retain < incomingIndex) { // if local change occurred at i before incoming delta
         for (const op of delta_i.ops) {
           // increase the incoming index for each insertion operation
