@@ -5,7 +5,7 @@ import { AppDocBase, CreateDocDto } from '@doccollab/api-interfaces';
 import { UseGuards } from '@nestjs/common';
 import { WsGuard } from '../auth/ws.guard';
 
-@WebSocketGateway()
+@WebSocketGateway({"pingTimeout" : 30000})
 export class DocumentsGateway {
 
   constructor(
