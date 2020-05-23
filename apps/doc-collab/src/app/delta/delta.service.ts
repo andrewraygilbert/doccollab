@@ -1,6 +1,6 @@
 import { Injectable, ɵConsole } from '@angular/core';
 import { CoreSocketService } from '../socket/core-socket.service';
-import { DeltaDto, BaseDelta } from '@doccollab/api-interfaces';
+import { DeltaDto, BaseDelta, DeltaDtoRecord } from '@doccollab/api-interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -24,13 +24,51 @@ export class DeltaService {
    * PROCESS INCOMING DELTAS
    */
 
-  // determine whether an incoming delta can be reconciled
+  // verify that incoming delta can be reconciled
+  public reconciliable(delta: DeltaDto): boolean {
+    let loopIndex = 0;
+    for (const extRecord of delta.localRecord) { // iterate over each external record
+      if (extRecord.socketId === this.socketId) { // skip context socket
+        loopIndex++;
+      } else {
+        const matched = this.matchSockets(extRecord);
+        if (matched) { // socket and delta exist locally
+          loopIndex++;
+        } else {
+          return false;
+        }
+      }
+    };
+    if (loopIndex === delta.localRecord.length) {
+      return true;
+    }
+    return false;
+  }
+
+  // verify that incoming delta's sockets exist locally
+  private matchSockets(extRecord: DeltaDtoRecord): boolean {
+    const internalIndex = this.incomingDeltaRecord.findIndex((intRecord: any) => intRecord.socketId === extRecord.socketId);
+    if (internalIndex === -1) { // incoming delta contains sockets that do not exist locally
+      return false;
+    } else {
+      return this.matchDeltas(extRecord.deltaId, this.incomingDeltaRecord[internalIndex].deltas);
+    }
+  }
+
+  // verify that incoming delta's deltas exist locally
+  private matchDeltas(lastExtDeltaId: number, intRecordDeltas: any): boolean {
+    const lastIntDeltaId = intRecordDeltas[intRecordDeltas.length - 1].localId;
+    if (lastExtDeltaId > lastIntDeltaId) { // incoming delta contains deltas that do not exist locally
+      return false;
+    }
+    return true;
+  }
+
+  /*
   public canReconcileDelta(delta: DeltaDto): boolean {
     let loopIndex = 0;
     for (const extSocket of delta.localRecord) { // iterate over each socket in incoming delta's record
-      console.log('extSocket', extSocket);
       const socketIndex = this.incomingDeltaRecord.findIndex((socket_i: any) => socket_i.socketId === extSocket.socketId);
-      console.log('socketIndex', socketIndex);
       if (socketIndex === -1) { // the socket doesn't exist in local record; can't reconcile
         if (extSocket.socketId === this.socketId) { // skip the record for this socket since it is not in incomingDeltaRecord
           loopIndex++;
@@ -42,7 +80,6 @@ export class DeltaService {
         const length = this.incomingDeltaRecord[socketIndex].deltas.length;
         const lastDeltaIdLocal = this.incomingDeltaRecord[socketIndex].deltas[length - 1].localId;
         if (lastDeltaIdSocket > lastDeltaIdLocal) { // incoming delta contains deltas that do not exist locally; can't reconcile
-          console.log('deltas that do not exist locally');
           break;
         } else { // all deltas in incoming delta exist locally; can reconcile for this external socket
           loopIndex++;
@@ -54,7 +91,9 @@ export class DeltaService {
     }
     return false; // at least one delta from one external socket does not exist locally; CANNOT reconcile; must queue delta
   }
+  */
 
+  // main handler function for processing delta
   public processDelta(delta: DeltaDto): DeltaDto {
     const reconciled = this.identifyDiscrepancies(delta);
     this.recordIncomingDeltas(delta);

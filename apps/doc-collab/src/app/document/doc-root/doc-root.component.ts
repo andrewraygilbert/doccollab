@@ -57,7 +57,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     if (delta.localRecord.length === 0) { // delta has no local record -> ready to reconcile
       this.processDelta(delta);
     } else { // delta has a local record
-      if (this.deltaService.canReconcileDelta(delta)) {
+      if (this.deltaService.reconciliable(delta)) {
         this.processDelta(delta);
       } else {
         console.log('not ready yet');
