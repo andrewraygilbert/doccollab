@@ -29,6 +29,14 @@ export class DocRootComponent implements OnInit, OnDestroy {
     script: null,
     blockquote: false,
     'code-block': false,
+    header: null,
+    list: null,
+    indent: null,
+    background: null,
+    color: null,
+    font: null,
+    size: null,
+    align: null,
   }
 
   constructor(
@@ -59,9 +67,9 @@ export class DocRootComponent implements OnInit, OnDestroy {
     } else { // delta has a local record
       if (this.deltaService.reconciliable(delta)) {
         this.processDelta(delta);
-      } else {
+      } else { // delta cannot be reconciled yet
         console.log('not ready yet');
-        setTimeout(() => this.readyForReconcile(delta), 1000); // delta is not ready -> wait and try again
+        setTimeout(() => this.readyForReconcile(delta), 1000);
       }
     }
   }
@@ -69,7 +77,6 @@ export class DocRootComponent implements OnInit, OnDestroy {
   // incorporate the delta into the editor
   private processDelta(delta: DeltaDto) {
     const reconciledDelta = this.deltaService.processDelta(delta); // obtain a reconciled delta
-    console.log('reconciled delta', reconciledDelta);
     let baseIndex = 0;
     for (const op of reconciledDelta.ops) { // process each operation of the delta
       const attr = this.buildAttributes(op);
@@ -83,7 +90,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
           break;
         case 'retain':
           if (op.attributes) {
-            this.formatText(baseIndex, op.retain, attr);
+            this.formatText(baseIndex, op.retain, op.attributes);
             baseIndex = baseIndex + op.retain;
           }
           baseIndex = baseIndex + op.retain;
@@ -92,6 +99,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     }
   }
 
+  // constructs the attributes of the delta
   private buildAttributes(op: any) {
     if (op.attributes) {
       return {
@@ -105,6 +113,11 @@ export class DocRootComponent implements OnInit, OnDestroy {
         header: op.attributes.header ? op.attributes.header : null,
         list: op.attributes.list ? op.attributes.list : null,
         indent: op.attributes.indent ? op.attributes.indent : null,
+        background: op.attributes.background ? op.attributes.background : null,
+        color: op.attributes.color ? op.attributes.color : null,
+        font: op.attributes.font ? op.attributes.font : null,
+        size: op.attributes.size ? op.attributes.size : null,
+        align: op.attributes.align ? op.attributes.align : null,
       }
     } else {
       return this.nullAttributes;
