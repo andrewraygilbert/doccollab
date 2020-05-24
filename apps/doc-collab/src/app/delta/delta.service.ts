@@ -64,35 +64,6 @@ export class DeltaService {
     return true;
   }
 
-  /*
-  public canReconcileDelta(delta: DeltaDto): boolean {
-    let loopIndex = 0;
-    for (const extSocket of delta.localRecord) { // iterate over each socket in incoming delta's record
-      const socketIndex = this.incomingDeltaRecord.findIndex((socket_i: any) => socket_i.socketId === extSocket.socketId);
-      if (socketIndex === -1) { // the socket doesn't exist in local record; can't reconcile
-        if (extSocket.socketId === this.socketId) { // skip the record for this socket since it is not in incomingDeltaRecord
-          loopIndex++;
-        } else {
-          break;
-        }
-      } else { // the socket exists in the local record; check deltas
-        const lastDeltaIdSocket = extSocket.deltaId;
-        const length = this.incomingDeltaRecord[socketIndex].deltas.length;
-        const lastDeltaIdLocal = this.incomingDeltaRecord[socketIndex].deltas[length - 1].localId;
-        if (lastDeltaIdSocket > lastDeltaIdLocal) { // incoming delta contains deltas that do not exist locally; can't reconcile
-          break;
-        } else { // all deltas in incoming delta exist locally; can reconcile for this external socket
-          loopIndex++;
-        }
-      }
-    };
-    if (loopIndex === delta.localRecord.length) { // every delta in incoming delta exists locally; CAN incoming delta
-      return true;
-    }
-    return false; // at least one delta from one external socket does not exist locally; CANNOT reconcile; must queue delta
-  }
-  */
-
   // main handler function for processing delta
   public processDelta(delta: DeltaDto): DeltaDto {
     const reconciled = this.identifyDiscrepancies(delta);
@@ -164,19 +135,17 @@ export class DeltaService {
   private identifyDiscrepancies(delta: DeltaDto): DeltaDto {
     let diffDeltas = this.checkExtDiscrepancies(delta);
     diffDeltas = this.checkIntDiscrepancies(delta, diffDeltas);
-    console.log('diffDeltas', diffDeltas);
     if (diffDeltas.length > 0) { // if discrepancies, reconcile
       return this.reconciler(delta, diffDeltas);
     }
     return delta;
   }
 
+  // reconcile an incoming delta
   private reconciler(delta: DeltaDto, diffDeltas: DeltaDto[]): DeltaDto {
     let netIndexChange = 0;
     const incomingIndex = this.getIncomingIndex(delta);
-    console.log('incoming index', incomingIndex);
     for (const delta_i of diffDeltas) { // for each discrepant delta
-      console.log('delta_i', delta_i);
       if (delta_i.ops[0].retain < incomingIndex) { // if local change occurred at i before incoming delta
         for (const op of delta_i.ops) {
           // increase the incoming index for each insertion operation
@@ -190,13 +159,13 @@ export class DeltaService {
         }
       }
     };
-    console.log('netIndexChange', netIndexChange);
     if (delta.ops[0].retain) {
       delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
     }
     return delta;
   }
 
+  // return the starting index for the delta
   private getIncomingIndex(delta: DeltaDto): number {
     if (delta.ops[0].retain) {
       if (delta.ops[0].attributes) {

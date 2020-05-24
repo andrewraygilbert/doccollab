@@ -72,9 +72,10 @@ export class DocRootComponent implements OnInit, OnDestroy {
     console.log('reconciled delta', reconciledDelta);
     let baseIndex = 0;
     for (const op of reconciledDelta.ops) { // process each operation of the delta
+      const attr = this.buildAttributes(op);
       switch (Object.keys(op)[0]) {
         case 'insert':
-          this.insertText(baseIndex, op.insert, op.attributes ? op.attributes : this.nullAttributes);
+          this.insertText(baseIndex, op.insert, attr);
           baseIndex = baseIndex + op.insert.length;
           break;
         case 'delete':
@@ -82,12 +83,28 @@ export class DocRootComponent implements OnInit, OnDestroy {
           break;
         case 'retain':
           if (op.attributes) {
-            this.formatText(baseIndex, op.retain, op.attributes);
+            this.formatText(baseIndex, op.retain, attr);
             baseIndex = baseIndex + op.retain;
           }
           baseIndex = baseIndex + op.retain;
           break;
       }
+    }
+  }
+
+  private buildAttributes(op: any) {
+    if (op.attributes) {
+      return {
+        bold: op.attributes.bold ? op.attributes.bold : false,
+        italic: op.attributes.italic ? op.attributes.italic : false,
+        underline: op.attributes.underline ? op.attributes.underline : false,
+        strike: op.attributes.strike ? op.attributes.strike : false,
+        script: op.attributes.script ? op.attributes.script : null,
+        blockquote: op.attributes.blockquote ? op.attributes.blockquote : false,
+        'code-block': op.attributes['code-block'] ? op.attributes['code-block'] : false
+      }
+    } else {
+      return this.nullAttributes;
     }
   }
 
