@@ -101,7 +101,10 @@ export class DocRootComponent implements OnInit, OnDestroy {
         strike: op.attributes.strike ? op.attributes.strike : false,
         script: op.attributes.script ? op.attributes.script : null,
         blockquote: op.attributes.blockquote ? op.attributes.blockquote : false,
-        'code-block': op.attributes['code-block'] ? op.attributes['code-block'] : false
+        'code-block': op.attributes['code-block'] ? op.attributes['code-block'] : false,
+        header: op.attributes.header ? op.attributes.header : null,
+        list: op.attributes.list ? op.attributes.list : null,
+        indent: op.attributes.indent ? op.attributes.indent : null,
       }
     } else {
       return this.nullAttributes;
