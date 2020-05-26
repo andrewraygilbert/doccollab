@@ -9,6 +9,11 @@ export interface UserBase {
   viewDocs: string[];
 }
 
+export interface AddCollabDto {
+  username: string;
+  docId: string;
+}
+
 export interface AuthUser extends User, UserBase {
   password: string;
 }
@@ -31,6 +36,10 @@ export interface AppDocBase {
 
 export interface CreateDocDto {
   title: string;
+}
+
+export interface AppDoc extends AppDocBase {
+  _id: string;
 }
 
 export interface AppDocument extends AppDocBase, Document {}

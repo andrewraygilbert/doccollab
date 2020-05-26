@@ -14,8 +14,8 @@
             <div class='col-12'>
               <h3>My Docs</h3>
               <ul>
-                <li *ngFor='let doc of myDocuments' (click)='openDocument(doc._id)' style='cursor: pointer;'>
-                  {{ doc.title }}
+                <li *ngFor='let doc of myDocuments'>
+                  <span (click)='openDocument(doc._id)' style='cursor: pointer;'>{{ doc.title }} &nbsp; </span><span style='font-style: italic; font-size: 13px; color: #aaa; cursor: pointer;' (click)='manageDocModal.open(doc)'>Manage</span>
                 </li>
               </ul>
             </div>
@@ -23,6 +23,11 @@
           <div class='row'>
             <div class='col-12'>
               <h3>Collaboration Docs</h3>
+              <ul>
+                <li *ngFor='let doc of collabDocs'>
+                  <span (click)='openDocument(doc._id)' style='cursor: pointer;'>{{ doc.title }} &nbsp; </span>
+                </li>
+              </ul>
             </div>
           </div>
           <div class='row'>
@@ -38,3 +43,4 @@
 <doccollab-create-doc-modal #createDocModal
 (outCreateDoc)='createDoc($event)'
 ></doccollab-create-doc-modal>
+<doccollab-manage-doc-modal #manageDocModal></doccollab-manage-doc-modal>

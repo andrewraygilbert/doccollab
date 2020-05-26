@@ -13,9 +13,11 @@ import { SocketModule } from './socket/socket.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { QuillModule } from 'ngx-quill';
 import { DocRootComponent } from './document/doc-root/doc-root.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardRootComponent },
   { path: 'document/:docId', component: DocRootComponent },
   { path: '', component: LoginComponent }

@@ -1,0 +1,28 @@
+<ng-template #manageDocModal let-manageDocModal>
+  <div class='container-fluid' style='padding: 24px;'>
+    <div class='row justify-content-end'>
+      <span class='modal-close' (click)='manageDocModal.close()'>&times;</span>
+    </div>
+    <div class='row justify-content-center'>
+      <div class='col-8'>
+        <form [formGroup]='collabForm' (ngSubmit)='onCollabSubmit()'>
+          <div class='form-group'>
+            <label for='username'>Username</label>
+            <input type='text' class='form-control' id='username' name='username' formControlName='username' data-cy='collab-input' required>
+          </div>
+          <button type='submit' class='btn btn-primary' data-cy='create-doc-btn'>Collaborate</button>
+        </form>
+      </div>
+    </div>
+    <div class='row justify-content-center' style='padding-top: 16px;'>
+      <div class='col-8'>
+        <h4>Collaborators</h4>
+        <ul>
+          <li *ngFor='let collaborator of doc.collaborators'>
+            {{ collaborator.firstName }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -45,4 +45,12 @@ export class UsersService {
     return user;
   }
 
+  async userModelByUsername(username: string): Promise<UserModel> {
+    const user = await this.userModel.findOne({'username' : username}).exec();
+    if (!user) {
+      throw new WsException('cannot locate user');
+    }
+    return user;
+  }
+
 }

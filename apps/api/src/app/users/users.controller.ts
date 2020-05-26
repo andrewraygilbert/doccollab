@@ -19,7 +19,7 @@ export class UsersController {
     return this.usersService.findUserById(_id);
   }
 
-  @Post()
+  @Post('register')
   async createUser(@Body() createUserDTO: CreateUserDTO): Promise<User> {
     return this.usersService.createUser(createUserDTO);
   }

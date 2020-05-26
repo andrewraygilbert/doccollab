@@ -1,1 +1,35 @@
-<p>register works!</p>
+<div class='container-fluid'>
+  <div class='row justify-content-center'>
+    <div class='col-8'>
+      <div class='row justify-content-center'>
+        <h1>Register</h1>
+      </div>
+      <div class='row justify-content-center'>
+        <div class='col-8' style='height: 75px;'>
+          <div *ngIf='activeError' class='alert alert-danger' data-cy='error-login'>
+            {{errorMsg}}
+          </div>
+        </div>
+      </div>
+      <form [formGroup]='registerForm' (ngSubmit)='onRegister()'>
+        <div class='form-group'>
+          <label for='firstName'>First Name</label>
+          <input type='text' class='form-control' id='firstName' name='firstName' formControlName='firstName' data-cy='firstname-input' required>
+        </div>
+        <div class='form-group'>
+          <label for='lastName'>Last Name</label>
+          <input type='text' class='form-control' id='lastName' name='lastName' formControlName='lastName' data-cy='lastname-input' required>
+        </div>
+        <div class='form-group'>
+          <label for='username'>Username</label>
+          <input type='text' class='form-control' id='username' name='username' formControlName='username' data-cy='username-input' required>
+        </div>
+        <div class='form-group'>
+          <label for='password'>Password</label>
+          <input type='text' class='form-control' id='password' name='password' formControlName='password' data-cy='password-input' required>
+        </div>
+        <button type='submit' class='btn btn-primary' data-cy='register-btn'>Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

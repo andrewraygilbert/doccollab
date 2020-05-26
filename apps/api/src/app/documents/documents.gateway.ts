@@ -1,7 +1,7 @@
-import { SubscribeMessage, WebSocketGateway, ConnectedSocket, MessageBody } from '@nestjs/websockets';
+import { SubscribeMessage, WebSocketGateway, ConnectedSocket, MessageBody, WsException } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
 import { DocumentsService } from './documents.service';
-import { AppDocBase, CreateDocDto } from '@doccollab/api-interfaces';
+import { CreateDocDto } from '@doccollab/api-interfaces';
 import { UseGuards } from '@nestjs/common';
 import { WsGuard } from '../auth/ws.guard';
 
@@ -41,12 +41,23 @@ export class DocumentsGateway {
   }
 
   @SubscribeMessage('out.edit.doc')
-  private emitEdits(@ConnectedSocket() socket: Socket, @MessageBody() body: any) {
+  public emitEdits(@ConnectedSocket() socket: Socket, @MessageBody() body: any) {
     console.log('received a delta', body);
     socket.to(Object.keys(socket.rooms)[1]).emit('in.edit.doc', body);
   }
 
-  joinDocRoom(socket: Socket, docId: string) {
+  @UseGuards(WsGuard)
+  @SubscribeMessage('add.collaborator.req')
+  public async addCollaborator(@ConnectedSocket() socket: Socket, @MessageBody() body: any) {
+    const collaborator = await this.docService.addCollaborator(socket, body);
+    if (collaborator) {
+      socket.emit('add.collaborator.res', collaborator);
+    } else {
+      throw new WsException('Something went wrong');
+    }
+  }
+
+  private joinDocRoom(socket: Socket, docId: string) {
     if (Object.keys(socket.rooms)[1]) {
       socket.leave(Object.keys(socket.rooms)[1]);
     }

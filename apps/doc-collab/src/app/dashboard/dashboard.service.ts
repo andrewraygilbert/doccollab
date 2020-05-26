@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CoreSocketService } from './../socket/core-socket.service';
-import { AppDocBase, CreateDocDto } from '@doccollab/api-interfaces';
+import { CreateDocDto, AddCollabDto } from '@doccollab/api-interfaces';
 import { Observable, fromEvent } from 'rxjs';
 
 @Injectable({
@@ -24,6 +24,11 @@ export class DashboardService {
     this.coreSocket.socket.emit('get.documents');
   }
 
+  public addCollaborator(dto: AddCollabDto): void {
+    console.log('sending add');
+    this.coreSocket.socket.emit('add.collaborator.req', dto);
+  }
+
   /**
    * EVENTS FROM SERVER
    */
@@ -34,6 +39,10 @@ export class DashboardService {
 
   public returnDocuments$(): Observable<any> {
     return fromEvent(this.coreSocket.socket.on(), 'return.documents');
+  }
+
+  public addCollabRes$(): Observable<any> {
+    return fromEvent(this.coreSocket.socket.on(), 'add.collaborator.res');
   }
 
 }

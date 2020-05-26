@@ -17,6 +17,7 @@ export class DashboardRootComponent implements OnInit, OnDestroy {
   private newDocument$: any;
   private returnDocuments$: any;
   public myDocuments: AppDocument[] = [];
+  public collabDocs: AppDocument[] = [];
 
   constructor(
     private authService: AuthService,
@@ -26,7 +27,7 @@ export class DashboardRootComponent implements OnInit, OnDestroy {
   ) { }
 
   /**
-   * Actions
+   * LOCAL ACTIONS
    */
 
   public logout() {
@@ -60,7 +61,7 @@ export class DashboardRootComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Initialization
+   * INITIALIZATION
    */
 
   private initializeSubscriptions() {
@@ -69,13 +70,15 @@ export class DashboardRootComponent implements OnInit, OnDestroy {
         this.onNewDocument(newDoc);
       });
     this.returnDocuments$ = this.dashService.returnDocuments$()
-      .subscribe((docs: AppDocument[]) => {
-        this.myDocuments = docs;
+      .subscribe((docs: any) => {
+        this.myDocuments = docs.ownDocs;
+        this.collabDocs = docs.collabDocs;
+        console.log(docs);
       });
   }
 
   /**
-   * Lifecycle Hooks
+   * LIFECYCLE HOOKS
    */
 
   ngOnInit(): void {

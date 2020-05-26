@@ -104,6 +104,12 @@ module.exports = require("@nestjs/websockets");
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("socket.io");
+
+/***/ }),
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -167,6 +173,15 @@ let UsersService = class UsersService {
             return user;
         });
     }
+    userModelByUsername(username) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const user = yield this.userModel.findOne({ 'username': username }).exec();
+            if (!user) {
+                throw new _nestjs_websockets__WEBPACK_IMPORTED_MODULE_4__["WsException"]('cannot locate user');
+            }
+            return user;
+        });
+    }
 };
 UsersService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
@@ -175,12 +190,6 @@ UsersService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 ], UsersService);
 
 
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("socket.io");
 
 /***/ }),
 /* 5 */
@@ -194,7 +203,7 @@ module.exports = require("socket.io");
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _nestjs_jwt__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11);
 /* harmony import */ var _nestjs_jwt__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_jwt__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _users_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
+/* harmony import */ var _users_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4);
 var _a, _b;
 
 
@@ -246,7 +255,7 @@ module.exports = require("@nestjs/mongoose");
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _users_users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
+/* harmony import */ var _users_users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
 /* harmony import */ var _nestjs_jwt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(11);
 /* harmony import */ var _nestjs_jwt__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_nestjs_jwt__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _ws_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5);
@@ -331,7 +340,7 @@ module.exports = require("@nestjs/jwt");
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _users_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(28);
-/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
+/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4);
 /* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7);
 /* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_nestjs_mongoose__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _user_schema__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(18);
@@ -375,6 +384,44 @@ UsersModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WsGuard; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ws_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
+var _a;
+
+
+
+let WsGuard = class WsGuard {
+    constructor(wsAuth) {
+        this.wsAuth = wsAuth;
+    }
+    canActivate(context) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const client = context.switchToWs().getClient();
+            const token = client.handshake.query.token;
+            const payload = this.wsAuth.validate(token);
+            if (payload) {
+                return true;
+            }
+            return false;
+        });
+    }
+};
+WsGuard = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof _ws_auth__WEBPACK_IMPORTED_MODULE_2__[/* WsAuth */ "a"] !== "undefined" && _ws_auth__WEBPACK_IMPORTED_MODULE_2__[/* WsAuth */ "a"]) === "function" ? _a : Object])
+], WsGuard);
+
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
@@ -391,7 +438,7 @@ AppService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -407,7 +454,7 @@ AppService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /* harmony import */ var _nestjs_websockets__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2);
 /* harmony import */ var _nestjs_websockets__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _auth_ws_auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5);
-/* harmony import */ var _users_users_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3);
+/* harmony import */ var _users_users_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4);
 var _a, _b, _c;
 
 
@@ -452,7 +499,21 @@ let DocumentsService = class DocumentsService {
                 }
                 documents.push(document);
             }
-            return documents;
+            ;
+            let collabDocs = [];
+            for (const docId of user.collabDocs) {
+                const document = yield this.docModel.findById(docId);
+                if (!document) {
+                    throw new _nestjs_websockets__WEBPACK_IMPORTED_MODULE_4__["WsException"]('could not locate document');
+                }
+                collabDocs.push(document);
+            }
+            ;
+            const docs = {
+                ownDocs: documents,
+                collabDocs: collabDocs
+            };
+            return docs;
         });
     }
     findDocById(_id) {
@@ -474,12 +535,50 @@ let DocumentsService = class DocumentsService {
             throw new _nestjs_websockets__WEBPACK_IMPORTED_MODULE_4__["WsException"]('Unauthorized');
         });
     }
+    addCollaborator(socket, dto) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const user = yield this.wsAuth.getUser(socket.handshake.query.token);
+            const doc = yield this.findDocById(dto.docId);
+            if (yield this.verifyDocOwner(user._id, doc)) {
+                const collaborator = yield this.usersService.userModelByUsername(dto.username);
+                const collab = {
+                    userId: collaborator._id,
+                    firstName: collaborator.firstName,
+                    lastName: collaborator.lastName,
+                    username: collaborator.username,
+                    ownDocs: collaborator.ownDocs,
+                    collabDocs: collaborator.collabDocs,
+                    viewDocs: collaborator.viewDocs
+                };
+                doc.collaborators.push(collab);
+                const newCollab = doc.collaborators[doc.collaborators.length - 1];
+                yield doc.save();
+                collaborator.collabDocs.push(doc._id);
+                yield collaborator.save();
+                return newCollab;
+            }
+            throw new _nestjs_websockets__WEBPACK_IMPORTED_MODULE_4__["WsException"]('Unauthorized');
+        });
+    }
+    verifyDocOwner(userId, doc) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            console.log(userId, doc.owner.userId);
+            if (userId == doc.owner.userId) {
+                return true;
+            }
+            return false;
+        });
+    }
     verifyDocAccess(userId, doc) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             if (userId == doc.owner.userId) {
                 return true;
             }
-            return false;
+            const isCollab = doc.collaborators.findIndex(each => each.userId === userId);
+            if (isCollab === -1) {
+                return false;
+            }
+            return true;
         });
     }
 };
@@ -488,44 +587,6 @@ DocumentsService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2__["InjectModel"])('AppDocument')),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof mongoose__WEBPACK_IMPORTED_MODULE_3__["Model"] !== "undefined" && mongoose__WEBPACK_IMPORTED_MODULE_3__["Model"]) === "function" ? _a : Object, typeof (_b = typeof _users_users_service__WEBPACK_IMPORTED_MODULE_6__[/* UsersService */ "a"] !== "undefined" && _users_users_service__WEBPACK_IMPORTED_MODULE_6__[/* UsersService */ "a"]) === "function" ? _b : Object, typeof (_c = typeof _auth_ws_auth__WEBPACK_IMPORTED_MODULE_5__[/* WsAuth */ "a"] !== "undefined" && _auth_ws_auth__WEBPACK_IMPORTED_MODULE_5__[/* WsAuth */ "a"]) === "function" ? _c : Object])
 ], DocumentsService);
-
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WsGuard; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
-/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _ws_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
-var _a;
-
-
-
-let WsGuard = class WsGuard {
-    constructor(wsAuth) {
-        this.wsAuth = wsAuth;
-    }
-    canActivate(context) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const client = context.switchToWs().getClient();
-            const token = client.handshake.query.token;
-            const payload = this.wsAuth.validate(token);
-            if (payload) {
-                return true;
-            }
-            return false;
-        });
-    }
-};
-WsGuard = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof _ws_auth__WEBPACK_IMPORTED_MODULE_2__[/* WsAuth */ "a"] !== "undefined" && _ws_auth__WEBPACK_IMPORTED_MODULE_2__[/* WsAuth */ "a"]) === "function" ? _a : Object])
-], WsGuard);
 
 
 
@@ -649,7 +710,7 @@ module.exports = require("passport-jwt");
 /* harmony import */ var _nestjs_websockets__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4);
+/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
 /* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(socket_io__WEBPACK_IMPORTED_MODULE_3__);
 var _a;
 
@@ -709,7 +770,7 @@ module.exports = require("@nestjs/core");
 /* harmony import */ var _nestjs_serve_static__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(25);
 /* harmony import */ var _nestjs_serve_static__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_serve_static__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _app_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(26);
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14);
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(15);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(27);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _auth_auth_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(17);
@@ -769,7 +830,7 @@ module.exports = require("@nestjs/serve-static");
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(14);
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(15);
 var _a;
 
 
@@ -803,7 +864,7 @@ module.exports = require("path");
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _doccollab_api_interfaces__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
-/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
+/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4);
 var _a, _b, _c, _d, _e;
 
 
@@ -843,7 +904,7 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", typeof (_b = typeof Promise !== "undefined" && Promise) === "function" ? _b : Object)
 ], UsersController.prototype, "findUserById", null);
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Post"])(),
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Post"])('register'),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Body"])()),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_c = typeof _doccollab_api_interfaces__WEBPACK_IMPORTED_MODULE_2__["CreateUserDTO"] !== "undefined" && _doccollab_api_interfaces__WEBPACK_IMPORTED_MODULE_2__["CreateUserDTO"]) === "function" ? _c : Object]),
@@ -1022,7 +1083,7 @@ JwtStrategy = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _documents_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(35);
-/* harmony import */ var _documents_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(15);
+/* harmony import */ var _documents_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(16);
 /* harmony import */ var _sockets_sockets_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(19);
 /* harmony import */ var _documents_gateway__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(36);
 /* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7);
@@ -1092,14 +1153,14 @@ DocumentsController = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var _nestjs_websockets__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
+/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
 /* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(socket_io__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _documents_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(15);
+/* harmony import */ var _documents_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(16);
 /* harmony import */ var _doccollab_api_interfaces__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _auth_ws_guard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(16);
-var _a, _b, _c, _d, _e, _f, _g, _h;
+/* harmony import */ var _auth_ws_guard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(14);
+var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 
 
 
@@ -1138,6 +1199,17 @@ let DocumentsGateway = class DocumentsGateway {
     emitEdits(socket, body) {
         console.log('received a delta', body);
         socket.to(Object.keys(socket.rooms)[1]).emit('in.edit.doc', body);
+    }
+    addCollaborator(socket, body) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const collaborator = yield this.docService.addCollaborator(socket, body);
+            if (collaborator) {
+                socket.emit('add.collaborator.res', collaborator);
+            }
+            else {
+                throw new _nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__["WsException"]('Something went wrong');
+            }
+        });
     }
     joinDocRoom(socket, docId) {
         if (Object.keys(socket.rooms)[1]) {
@@ -1186,9 +1258,17 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_g = typeof socket_io__WEBPACK_IMPORTED_MODULE_2__["Socket"] !== "undefined" && socket_io__WEBPACK_IMPORTED_MODULE_2__["Socket"]) === "function" ? _g : Object, Object]),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", void 0)
 ], DocumentsGateway.prototype, "emitEdits", null);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_5__["UseGuards"])(_auth_ws_guard__WEBPACK_IMPORTED_MODULE_6__[/* WsGuard */ "a"]),
+    Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__["SubscribeMessage"])('add.collaborator.req'),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__["ConnectedSocket"])()), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__["MessageBody"])()),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_h = typeof socket_io__WEBPACK_IMPORTED_MODULE_2__["Socket"] !== "undefined" && socket_io__WEBPACK_IMPORTED_MODULE_2__["Socket"]) === "function" ? _h : Object, Object]),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", Promise)
+], DocumentsGateway.prototype, "addCollaborator", null);
 DocumentsGateway = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__["WebSocketGateway"])({ "pingTimeout": 30000 }),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_h = typeof _documents_service__WEBPACK_IMPORTED_MODULE_3__[/* DocumentsService */ "a"] !== "undefined" && _documents_service__WEBPACK_IMPORTED_MODULE_3__[/* DocumentsService */ "a"]) === "function" ? _h : Object])
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_j = typeof _documents_service__WEBPACK_IMPORTED_MODULE_3__[/* DocumentsService */ "a"] !== "undefined" && _documents_service__WEBPACK_IMPORTED_MODULE_3__[/* DocumentsService */ "a"]) === "function" ? _j : Object])
 ], DocumentsGateway);
 
 

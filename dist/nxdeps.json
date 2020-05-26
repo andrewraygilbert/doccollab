@@ -146,7 +146,7 @@
             {
               "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
               "ext": ".ts",
-              "mtime": 1589988948019.5237
+              "mtime": 1590503340575.1335
             },
             {
               "file": "libs/api-interfaces/tsconfig.json",
@@ -312,7 +312,7 @@
             {
               "file": "apps/doc-collab/src/app/app.module.ts",
               "ext": ".ts",
-              "mtime": 1589290151518.0225
+              "mtime": 1590416880518.5454
             },
             {
               "file": "apps/doc-collab/src/app/auth/auth.module.ts",
@@ -327,7 +327,7 @@
             {
               "file": "apps/doc-collab/src/app/auth/auth.service.ts",
               "ext": ".ts",
-              "mtime": 1588862295950.6018
+              "mtime": 1590419938070.4192
             },
             {
               "file": "apps/doc-collab/src/app/auth/login/login.component.css",
@@ -357,7 +357,7 @@
             {
               "file": "apps/doc-collab/src/app/auth/register/register.component.html",
               "ext": ".html",
-              "mtime": 1588707180590.978
+              "mtime": 1590420452481.1482
             },
             {
               "file": "apps/doc-collab/src/app/auth/register/register.component.spec.ts",
@@ -367,7 +367,7 @@
             {
               "file": "apps/doc-collab/src/app/auth/register/register.component.ts",
               "ext": ".ts",
-              "mtime": 1588707180591.4294
+              "mtime": 1590421267375.784
             },
             {
               "file": "apps/doc-collab/src/app/constants/browser-storage.ts",
@@ -402,7 +402,7 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
               "ext": ".html",
-              "mtime": 1589293684161.5986
+              "mtime": 1590507076901.914
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
@@ -412,12 +412,12 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.ts",
               "ext": ".ts",
-              "mtime": 1589303003293.8813
+              "mtime": 1590505580215.9712
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard.module.ts",
               "ext": ".ts",
-              "mtime": 1589223047477.7737
+              "mtime": 1590422503177.2507
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard.service.spec.ts",
@@ -427,7 +427,27 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard.service.ts",
               "ext": ".ts",
-              "mtime": 1589217366466.7852
+              "mtime": 1590504617603.9106
+            },
+            {
+              "file": "apps/doc-collab/src/app/dashboard/manage-doc-modal/manage-doc-modal.component.css",
+              "ext": ".css",
+              "mtime": 1590422324524.0864
+            },
+            {
+              "file": "apps/doc-collab/src/app/dashboard/manage-doc-modal/manage-doc-modal.component.html",
+              "ext": ".html",
+              "mtime": 1590504387026.8745
+            },
+            {
+              "file": "apps/doc-collab/src/app/dashboard/manage-doc-modal/manage-doc-modal.component.spec.ts",
+              "ext": ".ts",
+              "mtime": 1590422324524.9885
+            },
+            {
+              "file": "apps/doc-collab/src/app/dashboard/manage-doc-modal/manage-doc-modal.component.ts",
+              "ext": ".ts",
+              "mtime": 1590505687650.3306
             },
             {
               "file": "apps/doc-collab/src/app/delta/delta.service.spec.ts",
@@ -844,7 +864,7 @@
             {
               "file": "apps/api/src/app/documents/documents.gateway.ts",
               "ext": ".ts",
-              "mtime": 1590239204085.2373
+              "mtime": 1590502651673.3813
             },
             {
               "file": "apps/api/src/app/documents/documents.module.ts",
@@ -859,7 +879,7 @@
             {
               "file": "apps/api/src/app/documents/documents.service.ts",
               "ext": ".ts",
-              "mtime": 1589292927150.4412
+              "mtime": 1590507447925.7595
             },
             {
               "file": "apps/api/src/app/sockets/socket-core.gateway.spec.ts",
@@ -889,7 +909,7 @@
             {
               "file": "apps/api/src/app/users/users.controller.ts",
               "ext": ".ts",
-              "mtime": 1588776005007.8816
+              "mtime": 1590419871459.0996
             },
             {
               "file": "apps/api/src/app/users/users.module.ts",
@@ -904,7 +924,7 @@
             {
               "file": "apps/api/src/app/users/users.service.ts",
               "ext": ".ts",
-              "mtime": 1589216079806.2908
+              "mtime": 1590505970030.411
             },
             {
               "file": "apps/api/src/assets/.gitkeep",
@@ -1713,7 +1733,7 @@
       {
         "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
         "ext": ".ts",
-        "mtime": 1589988948019.5237
+        "mtime": 1590503340575.1335
       },
       {
         "file": "libs/api-interfaces/tsconfig.json",
@@ -1775,7 +1795,7 @@
       {
         "file": "apps/doc-collab/src/app/app.module.ts",
         "ext": ".ts",
-        "mtime": 1589290151518.0225
+        "mtime": 1590416880518.5454
       },
       {
         "file": "apps/doc-collab/src/app/auth/auth.module.ts",
@@ -1790,7 +1810,7 @@
       {
         "file": "apps/doc-collab/src/app/auth/auth.service.ts",
         "ext": ".ts",
-        "mtime": 1588862295950.6018
+        "mtime": 1590419938070.4192
       },
       {
         "file": "apps/doc-collab/src/app/auth/login/login.component.css",
@@ -1820,7 +1840,7 @@
       {
         "file": "apps/doc-collab/src/app/auth/register/register.component.html",
         "ext": ".html",
-        "mtime": 1588707180590.978
+        "mtime": 1590420452481.1482
       },
       {
         "file": "apps/doc-collab/src/app/auth/register/register.component.spec.ts",
@@ -1830,7 +1850,7 @@
       {
         "file": "apps/doc-collab/src/app/auth/register/register.component.ts",
         "ext": ".ts",
-        "mtime": 1588707180591.4294
+        "mtime": 1590421267375.784
       },
       {
         "file": "apps/doc-collab/src/app/constants/browser-storage.ts",
@@ -1865,7 +1885,7 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
         "ext": ".html",
-        "mtime": 1589293684161.5986
+        "mtime": 1590507076901.914
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
@@ -1875,12 +1895,12 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.ts",
         "ext": ".ts",
-        "mtime": 1589303003293.8813
+        "mtime": 1590505580215.9712
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard.module.ts",
         "ext": ".ts",
-        "mtime": 1589223047477.7737
+        "mtime": 1590422503177.2507
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard.service.spec.ts",
@@ -1890,7 +1910,27 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard.service.ts",
         "ext": ".ts",
-        "mtime": 1589217366466.7852
+        "mtime": 1590504617603.9106
+      },
+      {
+        "file": "apps/doc-collab/src/app/dashboard/manage-doc-modal/manage-doc-modal.component.css",
+        "ext": ".css",
+        "mtime": 1590422324524.0864
+      },
+      {
+        "file": "apps/doc-collab/src/app/dashboard/manage-doc-modal/manage-doc-modal.component.html",
+        "ext": ".html",
+        "mtime": 1590504387026.8745
+      },
+      {
+        "file": "apps/doc-collab/src/app/dashboard/manage-doc-modal/manage-doc-modal.component.spec.ts",
+        "ext": ".ts",
+        "mtime": 1590422324524.9885
+      },
+      {
+        "file": "apps/doc-collab/src/app/dashboard/manage-doc-modal/manage-doc-modal.component.ts",
+        "ext": ".ts",
+        "mtime": 1590505687650.3306
       },
       {
         "file": "apps/doc-collab/src/app/delta/delta.service.spec.ts",
@@ -2242,7 +2282,7 @@
       {
         "file": "apps/api/src/app/documents/documents.gateway.ts",
         "ext": ".ts",
-        "mtime": 1590239204085.2373
+        "mtime": 1590502651673.3813
       },
       {
         "file": "apps/api/src/app/documents/documents.module.ts",
@@ -2257,7 +2297,7 @@
       {
         "file": "apps/api/src/app/documents/documents.service.ts",
         "ext": ".ts",
-        "mtime": 1589292927150.4412
+        "mtime": 1590507447925.7595
       },
       {
         "file": "apps/api/src/app/sockets/socket-core.gateway.spec.ts",
@@ -2287,7 +2327,7 @@
       {
         "file": "apps/api/src/app/users/users.controller.ts",
         "ext": ".ts",
-        "mtime": 1588776005007.8816
+        "mtime": 1590419871459.0996
       },
       {
         "file": "apps/api/src/app/users/users.module.ts",
@@ -2302,7 +2342,7 @@
       {
         "file": "apps/api/src/app/users/users.service.ts",
         "ext": ".ts",
-        "mtime": 1589216079806.2908
+        "mtime": 1590505970030.411
       },
       {
         "file": "apps/api/src/assets/.gitkeep",
