@@ -467,7 +467,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.html",
               "ext": ".html",
-              "mtime": 1589559674591.908
+              "mtime": 1590511660347.6736
             },
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.spec.ts",
@@ -477,7 +477,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
               "ext": ".ts",
-              "mtime": 1590330042768.8875
+              "mtime": 1590511792564.0532
             },
             {
               "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
@@ -487,7 +487,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc.service.ts",
               "ext": ".ts",
-              "mtime": 1589566563089.378
+              "mtime": 1590511931239.3972
             },
             {
               "file": "apps/doc-collab/src/app/document/document.module.ts",
@@ -864,7 +864,7 @@
             {
               "file": "apps/api/src/app/documents/documents.gateway.ts",
               "ext": ".ts",
-              "mtime": 1590502651673.3813
+              "mtime": 1590511182254.5574
             },
             {
               "file": "apps/api/src/app/documents/documents.module.ts",
@@ -879,7 +879,7 @@
             {
               "file": "apps/api/src/app/documents/documents.service.ts",
               "ext": ".ts",
-              "mtime": 1590507447925.7595
+              "mtime": 1590511886421.2412
             },
             {
               "file": "apps/api/src/app/sockets/socket-core.gateway.spec.ts",
@@ -1950,7 +1950,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.html",
         "ext": ".html",
-        "mtime": 1589559674591.908
+        "mtime": 1590511660347.6736
       },
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.spec.ts",
@@ -1960,7 +1960,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
         "ext": ".ts",
-        "mtime": 1590330042768.8875
+        "mtime": 1590511792564.0532
       },
       {
         "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
@@ -1970,7 +1970,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc.service.ts",
         "ext": ".ts",
-        "mtime": 1589566563089.378
+        "mtime": 1590511931239.3972
       },
       {
         "file": "apps/doc-collab/src/app/document/document.module.ts",
@@ -2282,7 +2282,7 @@
       {
         "file": "apps/api/src/app/documents/documents.gateway.ts",
         "ext": ".ts",
-        "mtime": 1590502651673.3813
+        "mtime": 1590511182254.5574
       },
       {
         "file": "apps/api/src/app/documents/documents.module.ts",
@@ -2297,7 +2297,7 @@
       {
         "file": "apps/api/src/app/documents/documents.service.ts",
         "ext": ".ts",
-        "mtime": 1590507447925.7595
+        "mtime": 1590511886421.2412
       },
       {
         "file": "apps/api/src/app/sockets/socket-core.gateway.spec.ts",

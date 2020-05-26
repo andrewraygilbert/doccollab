@@ -56,6 +56,15 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.docService.outEditDoc(deltaOut);
   }
 
+  public saveDocument() {
+    const dto = {
+      content: this.editorContent,
+      docId: this.activeDocument._id
+    };
+    console.log('dto', dto);
+    this.docService.saveDocument(dto);
+  }
+
   /**
    * COLLABORATION FEATURES
    */
@@ -152,6 +161,9 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.resDocument$ = this.docService.resDocument$()
       .subscribe(doc => {
         this.activeDocument = doc;
+        if (doc.content) {
+          this.editorContent = doc.content;
+        }
       });
     this.inEditDoc$ = this.docService.inEditDoc$()
       .subscribe(delta => {

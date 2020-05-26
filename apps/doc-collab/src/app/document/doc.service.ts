@@ -18,6 +18,10 @@ export class DocService {
     this.coreSocket.socket.emit('req.document', body);
   }
 
+  public saveDocument(dto: any) {
+    this.coreSocket.socket.emit('save.document.req', dto);
+  }
+
   public resDocument$(): Observable<any> {
     return fromEvent(this.coreSocket.socket.on(), 'res.document');
   }

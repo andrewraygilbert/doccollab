@@ -34,6 +34,19 @@ export class DocumentsService {
     return doc;
   }
 
+  public async saveDocument(socket: Socket, dto: any) {
+    console.log('dto', dto);
+    const user = await this.wsAuth.getUser(socket.handshake.query.token);
+    const doc = await this.findDocById(dto.docId);
+    if (this.verifyDocAccess(user._id, doc)) {
+      console.log('saving doc');
+      doc.content = dto.content;
+      await doc.save();
+      return true;
+    }
+    throw new WsException('cannot save');
+  }
+
   public async getDocuments(socket: Socket): Promise<any> {
     const user = await this.wsAuth.getUser(socket.handshake.query.token);
     let documents: AppDocument[] = [];

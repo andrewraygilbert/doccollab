@@ -33,6 +33,16 @@ export class DocumentsGateway {
   }
 
   @UseGuards(WsGuard)
+  @SubscribeMessage('save.document.req')
+  async saveDocument(@ConnectedSocket() socket: Socket, @MessageBody() body: any) {
+    const success = this.docService.saveDocument(socket, body);
+    if (success) {
+      return 'it saved';
+    }
+    throw new WsException('it did not save');
+  }
+
+  @UseGuards(WsGuard)
   @SubscribeMessage('req.document')
   async getDocument(@ConnectedSocket() socket: Socket, @MessageBody() body: any) {
     const document = await this.docService.getDocument(socket, body);
