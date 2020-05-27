@@ -18,8 +18,13 @@ export class DocRootComponent implements OnInit, OnDestroy {
   public activeDocument: any;
   private resDocument$: Subscription;
   private inEditDoc$: Subscription;
+  private getActiveDoc$: Subscription;
+  private sendActiveDoc$: Subscription;
   public editorInstance: any;
   private socketId: string;
+  private collab: boolean;
+  private dbDoc: any;
+  private collabTimeout: any;
 
   private nullAttributes = {
     bold: false,
@@ -152,6 +157,53 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.editorInstance.formatText(index, length, attributes, 'silent');
   }
 
+  // send out active document
+  private sendActiveDoc(req: any) {
+    const activeDoc = {
+      content: this.editorContent,
+      incomingRecord: this.deltaService.getIncomingRecord(),
+      outgoingRecord: this.deltaService.getOutgoingRecord(),
+      fromSocketId: this.deltaService.getSocketId(),
+      toSocketId: req.socketId
+    };
+    console.log('outgoing activeDoc', activeDoc);
+    this.docService.sendActiveDoc(activeDoc);
+  }
+
+  private receiveActiveDoc(activeDoc: any) {
+    console.log('receiving activeDoc', activeDoc);
+    if (this.collabTimeout) {
+      this.clearCollabTimeout();
+    }
+    this.activeDocument = this.dbDoc;
+    this.editorContent = activeDoc.content;
+    this.deltaService.setIncomingRecord(activeDoc);
+  }
+
+  private handleDocIn(res: any) {
+    this.collab = res.collab;
+    if (res.collab) {
+      this.dbDoc = res.document;
+      this.startCollabTimeout();
+    } else {
+      this.editorContent = res.document.content;
+      this.activeDocument = res.document;
+    }
+  }
+
+  private useDbDoc() {
+    this.activeDocument = this.dbDoc;
+    this.editorContent = this.dbDoc.content;
+  }
+
+  private startCollabTimeout() {
+    this.collabTimeout = setTimeout(() => this.useDbDoc(), 1000);
+  }
+
+  private clearCollabTimeout() {
+    clearTimeout(this.collabTimeout);
+  }
+
   /**
    * INITIALIZATION HELPERS
    */
@@ -159,11 +211,16 @@ export class DocRootComponent implements OnInit, OnDestroy {
   // subscribe to socket event observables
   private initializeSubscriptions() {
     this.resDocument$ = this.docService.resDocument$()
-      .subscribe(doc => {
-        this.activeDocument = doc;
-        if (doc.content) {
-          this.editorContent = doc.content;
-        }
+      .subscribe(res => {
+        this.handleDocIn(res);
+      });
+    this.getActiveDoc$ = this.docService.getActiveDoc$()
+      .subscribe((req) => {
+        this.sendActiveDoc(req);
+      });
+    this.sendActiveDoc$ = this.docService.receiveActiveDoc$()
+      .subscribe((activeDoc) => {
+        this.receiveActiveDoc(activeDoc);
       });
     this.inEditDoc$ = this.docService.inEditDoc$()
       .subscribe(delta => {
@@ -203,6 +260,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.resDocument$.unsubscribe();
     this.inEditDoc$.unsubscribe();
+    this.getActiveDoc$.unsubscribe();
     this.deltaService.resetAllDeltas();
   }
 

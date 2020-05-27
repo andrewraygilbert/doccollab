@@ -20,6 +20,10 @@ export class DeltaService {
     this.socketId = socketId;
   }
 
+  public getSocketId() {
+    return this.socketId;
+  }
+
   /**
    * PROCESS INCOMING DELTAS
    */
@@ -221,6 +225,28 @@ export class DeltaService {
   public resetAllDeltas(): void {
     this.outgoingDeltaRecord = [];
     this.incomingDeltaRecord = [];
+  }
+
+  public getIncomingRecord() {
+    console.log('getIncomingRecord', this.incomingDeltaRecord);
+    return this.incomingDeltaRecord;
+  }
+
+  public getOutgoingRecord() {
+    console.log('getOutgoingRecord', this.outgoingDeltaRecord);
+    return this.outgoingDeltaRecord;
+  }
+
+  public setIncomingRecord(activeDoc: any) {
+    this.incomingDeltaRecord = activeDoc.incomingRecord;
+    this.incomingDeltaRecord.push({
+      socketId: activeDoc.fromSocketId,
+      deltas: activeDoc.outgoingRecord
+    });
+    console.log({
+      localIncoming: this.incomingDeltaRecord,
+      localOutgoing: this.outgoingDeltaRecord
+    });
   }
 
 }

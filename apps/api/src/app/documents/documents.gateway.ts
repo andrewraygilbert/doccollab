@@ -1,12 +1,16 @@
-import { SubscribeMessage, WebSocketGateway, ConnectedSocket, MessageBody, WsException } from '@nestjs/websockets';
-import { Socket } from 'socket.io';
+import { SubscribeMessage, WebSocketGateway, ConnectedSocket, MessageBody, WsException, WebSocketServer } from '@nestjs/websockets';
+import { Socket, Server } from 'socket.io';
 import { DocumentsService } from './documents.service';
 import { CreateDocDto } from '@doccollab/api-interfaces';
 import { UseGuards } from '@nestjs/common';
 import { WsGuard } from '../auth/ws.guard';
+import { isObject } from 'util';
 
 @WebSocketGateway({"pingTimeout" : 30000})
 export class DocumentsGateway {
+
+  @WebSocketServer()
+  server: Server
 
   constructor(
     private docService: DocumentsService,
@@ -43,11 +47,32 @@ export class DocumentsGateway {
   }
 
   @UseGuards(WsGuard)
+  @SubscribeMessage('send.document.active')
+  async sendActiveDocument(@ConnectedSocket() socket: Socket, @MessageBody() body: any) {
+    socket.to(body.toSocketId).emit('send.document.active', body);
+  }
+
+  @UseGuards(WsGuard)
   @SubscribeMessage('req.document')
   async getDocument(@ConnectedSocket() socket: Socket, @MessageBody() body: any) {
     const document = await this.docService.getDocument(socket, body);
-    socket.emit('res.document', document);
-    this.joinDocRoom(socket, document._id);
+    if (document.collaborators.length > 0) {
+      // ask any sockets in the room to send the active document and state
+      this.server.to(document._id).emit('get.document.active', { 'socketId' : socket.id });
+      const docOut = {
+        document: document,
+        collab: true
+      };
+      socket.emit('res.document', docOut);
+      this.joinDocRoom(socket, document._id);
+    } else {
+      const docOut = {
+        document: document,
+        collab: false
+      };
+      socket.emit('res.document', docOut);
+      this.joinDocRoom(socket, document._id);
+    }
   }
 
   @SubscribeMessage('out.edit.doc')
