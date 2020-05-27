@@ -76,7 +76,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
 
   // handle the incoming delta; check to see if ready to reconcile
   private readyForReconcile(delta: DeltaDto) {
-    if (this.activeDocument) {
+    if (this.activeDocument && this.editorInstance) {
       if (delta.localRecord.length === 0) { // delta has no local record -> ready to reconcile
         this.processDelta(delta);
       } else { // delta has a local record
