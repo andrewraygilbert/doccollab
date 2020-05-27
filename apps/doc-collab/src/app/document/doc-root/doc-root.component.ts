@@ -76,16 +76,22 @@ export class DocRootComponent implements OnInit, OnDestroy {
 
   // handle the incoming delta; check to see if ready to reconcile
   private readyForReconcile(delta: DeltaDto) {
-    if (delta.localRecord.length === 0) { // delta has no local record -> ready to reconcile
-      this.processDelta(delta);
-    } else { // delta has a local record
-      if (this.deltaService.reconciliable(delta)) {
+    if (this.activeDocument) {
+      if (delta.localRecord.length === 0) { // delta has no local record -> ready to reconcile
         this.processDelta(delta);
-      } else { // delta cannot be reconciled yet
-        console.log('not ready yet');
-        setTimeout(() => this.readyForReconcile(delta), 1000);
+      } else { // delta has a local record
+        if (this.deltaService.reconciliable(delta)) {
+          this.processDelta(delta);
+        } else { // delta cannot be reconciled yet
+          console.log('not ready yet');
+          setTimeout(() => this.readyForReconcile(delta), 1000);
+        }
       }
+    } else {
+      console.log('not ready to take in');
+      setTimeout(() => this.readyForReconcile(delta), 1000);
     }
+
   }
 
   // incorporate the delta into the editor
