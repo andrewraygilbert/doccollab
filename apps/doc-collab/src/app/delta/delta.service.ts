@@ -214,7 +214,11 @@ export class DeltaService {
 
   // add local delta to local state tracker
   public addLocalDelta(delta: any): void {
-    this.outgoingDeltaRecord.push(delta);
+    const newDelta = {
+      localId: this.localDeltaTracker,
+      ops: delta.ops,
+    };
+    this.outgoingDeltaRecord.push(newDelta);
     this.localDeltaTracker++;
   }
 
