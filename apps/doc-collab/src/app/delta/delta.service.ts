@@ -43,24 +43,29 @@ export class DeltaService {
         return false;
       }
     }
-    for (const extRecord of delta.localRecord) { // iterate over each external record
-      if (extRecord.socketId === this.socketId) { // skip context socket
-        loopIndex++;
-      } else {
-        const matched = this.matchSockets(extRecord);
-        if (matched) { // socket and delta exist locally
+    if (delta.localRecord.length === 0) {
+      return true;
+    } else {
+      for (const extRecord of delta.localRecord) { // iterate over each external record
+        if (extRecord.socketId === this.socketId) { // skip context socket
           loopIndex++;
         } else {
-          console.log('no matched socket; not ready');
-          return false;
+          const matched = this.matchSockets(extRecord);
+          if (matched) { // socket and delta exist locally
+            loopIndex++;
+          } else {
+            console.log('no matched socket; not ready');
+            return false;
+          }
         }
+      };
+      if (loopIndex === delta.localRecord.length) {
+        return true;
       }
-    };
-    if (loopIndex === delta.localRecord.length) {
-      return true;
+      console.log('something missing; not ready');
+      return false;
     }
-    console.log('something missing; not ready');
-    return false;
+
   }
 
   // verify that incoming delta's sockets exist locally
