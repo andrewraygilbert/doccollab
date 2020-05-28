@@ -64,7 +64,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
 
   public saveDocument() {
     const dto = {
-      content: this.editorContent,
+      content: this.editorInstance.getContents(),
       docId: this.activeDocument._id
     };
     console.log('dto', dto);
@@ -168,7 +168,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
   // send out active document
   private sendActiveDoc(req: any) {
     const activeDoc = {
-      content: this.editorContent,
+      content: this.editorInstance.getContents(),
       incomingRecord: this.deltaService.getIncomingRecord(),
       outgoingRecord: this.deltaService.getOutgoingRecord(),
       fromSocketId: this.deltaService.getSocketId(),
