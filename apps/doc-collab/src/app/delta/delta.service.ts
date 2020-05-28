@@ -155,6 +155,8 @@ export class DeltaService {
   private checkIntDiscrepancies(delta: DeltaDto, diffDeltas: any[]) {
     const lastDeltaForThisSocket = delta.localRecord.find((socket_i) => socket_i.socketId === this.socketId);
     console.log('lastDeltaForThisSocket', lastDeltaForThisSocket);
+    console.log('outgoingDeltaRecord', this.outgoingDeltaRecord);
+    console.log('deltaTracker', this.localDeltaTracker);
     if (!lastDeltaForThisSocket && this.localDeltaTracker > 0) {
       for (const eachDelta of this.outgoingDeltaRecord) {
         diffDeltas.push(eachDelta);
