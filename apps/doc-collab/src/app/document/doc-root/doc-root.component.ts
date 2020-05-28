@@ -89,7 +89,10 @@ export class DocRootComponent implements OnInit, OnDestroy {
       }
     } else {
       console.log('not ready to take in');
-      setTimeout(() => this.readyForReconcile(delta), 1000);
+      setTimeout(() => {
+        console.log('retrying a delta', delta);
+        this.readyForReconcile(delta);
+      }, 1000);
     }
 
   }
@@ -97,24 +100,26 @@ export class DocRootComponent implements OnInit, OnDestroy {
   // incorporate the delta into the editor
   private processDelta(delta: DeltaDto) {
     const reconciledDelta = this.deltaService.processDelta(delta); // obtain a reconciled delta
-    let baseIndex = 0;
-    for (const op of reconciledDelta.ops) { // process each operation of the delta
-      const attr = this.buildAttributes(op);
-      switch (Object.keys(op)[0]) {
-        case 'insert':
-          this.insertText(baseIndex, op.insert, attr);
-          baseIndex = baseIndex + op.insert.length;
-          break;
-        case 'delete':
-          this.deleteText(baseIndex, op.delete);
-          break;
-        case 'retain':
-          if (op.attributes) {
-            this.formatText(baseIndex, op.retain, op.attributes);
+    if (reconciledDelta) {
+      let baseIndex = 0;
+      for (const op of reconciledDelta.ops) { // process each operation of the delta
+        const attr = this.buildAttributes(op);
+        switch (Object.keys(op)[0]) {
+          case 'insert':
+            this.insertText(baseIndex, op.insert, attr);
+            baseIndex = baseIndex + op.insert.length;
+            break;
+          case 'delete':
+            this.deleteText(baseIndex, op.delete);
+            break;
+          case 'retain':
+            if (op.attributes) {
+              this.formatText(baseIndex, op.retain, op.attributes);
+              baseIndex = baseIndex + op.retain;
+            }
             baseIndex = baseIndex + op.retain;
-          }
-          baseIndex = baseIndex + op.retain;
-          break;
+            break;
+        }
       }
     }
   }

@@ -457,7 +457,7 @@
             {
               "file": "apps/doc-collab/src/app/delta/delta.service.ts",
               "ext": ".ts",
-              "mtime": 1590593305681.8206
+              "mtime": 1590599634285.7156
             },
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
@@ -477,7 +477,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
               "ext": ".ts",
-              "mtime": 1590598251163.0366
+              "mtime": 1590602715140.8484
             },
             {
               "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
@@ -1940,7 +1940,7 @@
       {
         "file": "apps/doc-collab/src/app/delta/delta.service.ts",
         "ext": ".ts",
-        "mtime": 1590593305681.8206
+        "mtime": 1590599634285.7156
       },
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
@@ -1960,7 +1960,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
         "ext": ".ts",
-        "mtime": 1590598251163.0366
+        "mtime": 1590602715140.8484
       },
       {
         "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",

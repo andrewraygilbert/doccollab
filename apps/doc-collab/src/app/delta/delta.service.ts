@@ -1,6 +1,6 @@
 import { Injectable, ɵConsole } from '@angular/core';
 import { CoreSocketService } from '../socket/core-socket.service';
-import { DeltaDto, BaseDelta, DeltaDtoRecord } from '@doccollab/api-interfaces';
+import { DeltaDto, BaseDelta, DeltaDtoRecord, DeltaRecord } from '@doccollab/api-interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -69,10 +69,25 @@ export class DeltaService {
   }
 
   // main handler function for processing delta
-  public processDelta(delta: DeltaDto): DeltaDto {
+  public processDelta(delta: DeltaDto): DeltaDto | null {
+    if (this.isDuplicateDelta(delta)) {
+      return null;
+    }
     const reconciled = this.identifyDiscrepancies(delta);
     this.recordIncomingDeltas(delta);
     return reconciled;
+  }
+
+  private isDuplicateDelta(delta: DeltaDto): boolean {
+    const intRecord = this.incomingDeltaRecord.findIndex((socket_i: DeltaRecord) => socket_i.socketId === delta.socketId);
+    if (intRecord) {
+      if (delta.localId <= intRecord.deltas.length - 1) {
+        console.log('this is a duplicate delta', delta);
+        return true;
+      }
+      return false;
+    }
+    return false;
   }
 
   // record incoming deltas locally for reconciliation
