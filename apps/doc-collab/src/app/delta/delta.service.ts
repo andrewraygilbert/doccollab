@@ -35,6 +35,7 @@ export class DeltaService {
     const intRecord: DeltaRecord = this.incomingDeltaRecord.find((record_i: DeltaRecord) => record_i.socketId === delta.socketId);
     console.log('intRecord in recon', intRecord);
     if (intRecord) {
+      console.log('has local record in recon');
       const lastId = intRecord.deltas[intRecord.deltas.length - 1].localId;
       console.log('lastId', lastId);
       if (delta.localId > lastId + 1) {
@@ -50,6 +51,7 @@ export class DeltaService {
         if (matched) { // socket and delta exist locally
           loopIndex++;
         } else {
+          console.log('no matched socket; not ready');
           return false;
         }
       }
@@ -57,6 +59,7 @@ export class DeltaService {
     if (loopIndex === delta.localRecord.length) {
       return true;
     }
+    console.log('something missing; not ready');
     return false;
   }
 
@@ -74,6 +77,7 @@ export class DeltaService {
   private matchDeltas(lastExtDeltaId: number, intRecordDeltas: any): boolean {
     const lastIntDeltaId = intRecordDeltas[intRecordDeltas.length - 1].localId;
     if (lastExtDeltaId > lastIntDeltaId) { // incoming delta contains deltas that do not exist locally
+      console.log('missing deltas; not ready');
       return false;
     }
     return true;
