@@ -187,10 +187,16 @@ export class DocRootComponent implements OnInit, OnDestroy {
     if (this.collabTimeout) {
       this.clearCollabTimeout();
     }
-    this.deltaService.setIncomingRecord(activeDoc);
-    this.editorInstance.setContents(activeDoc.content, 'silent');
-    this.activeDocument = this.dbDoc;
-    this.collabReady = true;
+    if (this.editorInstance) {
+      this.deltaService.setIncomingRecord(activeDoc);
+      this.editorInstance.setContents(activeDoc.content, 'silent');
+      this.activeDocument = this.dbDoc;
+      this.collabReady = true;
+    } else {
+      console.log('editor instance not ready yet');
+      setTimeout(() => this.receiveActiveDoc(activeDoc), 250);
+    }
+
   }
 
   private handleDocIn(res: any) {
