@@ -31,6 +31,12 @@ export class DeltaService {
   // verify that incoming delta can be reconciled
   public reconciliable(delta: DeltaDto): boolean {
     let loopIndex = 0;
+    const intRecord: DeltaRecord = this.incomingDeltaRecord.find((record_i: DeltaRecord) => record_i.socketId === delta.socketId);
+    if (intRecord) {
+      if (intRecord.deltas[intRecord.deltas.length - 1].localId !== delta.localId - 1) {
+        return false;
+      }
+    }
     for (const extRecord of delta.localRecord) { // iterate over each external record
       if (extRecord.socketId === this.socketId) { // skip context socket
         loopIndex++;
