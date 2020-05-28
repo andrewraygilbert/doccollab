@@ -1,6 +1,7 @@
 import { Injectable, ɵConsole } from '@angular/core';
 import { CoreSocketService } from '../socket/core-socket.service';
 import { DeltaDto, BaseDelta, DeltaDtoRecord, DeltaRecord } from '@doccollab/api-interfaces';
+import { last } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +33,12 @@ export class DeltaService {
   public reconciliable(delta: DeltaDto): boolean {
     let loopIndex = 0;
     const intRecord: DeltaRecord = this.incomingDeltaRecord.find((record_i: DeltaRecord) => record_i.socketId === delta.socketId);
+    console.log('intRecord in recon', intRecord);
     if (intRecord) {
-      if (intRecord.deltas[intRecord.deltas.length - 1].localId !== delta.localId - 1) {
+      const lastId = intRecord.deltas[intRecord.deltas.length - 1].localId;
+      console.log('lastId', lastId);
+      if (delta.localId > lastId + 1) {
+        console.log('missing prev delta; wait to recon');
         return false;
       }
     }
