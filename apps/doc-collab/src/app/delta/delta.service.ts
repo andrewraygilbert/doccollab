@@ -34,8 +34,9 @@ export class DeltaService {
     let loopIndex = 0;
     const intRecord: DeltaRecord = this.incomingDeltaRecord.find((record_i: DeltaRecord) => record_i.socketId === delta.socketId);
     console.log('intRecord in recon', intRecord);
-    if (intRecord) {
+    if (intRecord && intRecord.deltas && intRecord.deltas.length > 0) {
       console.log('has local record in recon');
+      console.log('intRecord.deltas.length', intRecord.deltas.length);
       const lastId = intRecord.deltas[intRecord.deltas.length - 1].localId;
       console.log('lastId', lastId);
       if (delta.localId > lastId + 1) {
