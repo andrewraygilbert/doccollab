@@ -212,6 +212,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     console.log('using db doc because no collab response');
     this.activeDocument = this.dbDoc;
     this.editorContent = this.dbDoc.content;
+    this.collabReady = true;
   }
 
   private startCollabTimeout() {
