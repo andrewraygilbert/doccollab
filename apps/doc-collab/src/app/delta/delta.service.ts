@@ -79,7 +79,7 @@ export class DeltaService {
   }
 
   private isDuplicateDelta(delta: DeltaDto): boolean {
-    const intRecord = this.incomingDeltaRecord.findIndex((socket_i: DeltaRecord) => socket_i.socketId === delta.socketId);
+    const intRecord = this.incomingDeltaRecord.find((socket_i: DeltaRecord) => socket_i.socketId === delta.socketId);
     console.log('intRecord', intRecord);
     if (intRecord) {
       if (delta.localId <= intRecord.deltas[intRecord.deltas.length - 1].localId) {
