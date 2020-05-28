@@ -79,10 +79,14 @@ export class DocRootComponent implements OnInit, OnDestroy {
   private readyForReconcile(delta: DeltaDto) {
     if (this.collabReady) {
       if (this.deltaService.reconciliable(delta)) {
+        console.log('processing this delta now', delta);
         this.processDelta(delta);
       } else { // delta cannot be reconciled yet
-        console.log('not ready yet');
-        setTimeout(() => this.readyForReconcile(delta), 1000);
+        console.log('not ready yet', delta);
+        setTimeout(() => {
+          console.log('trying delta again', delta);
+          this.readyForReconcile(delta)
+        }, 1000);
       }
     } else {
       console.log('not ready to take in');
