@@ -33,12 +33,8 @@ export class DeltaService {
   public reconciliable(delta: DeltaDto): boolean {
     let loopIndex = 0;
     const intRecord: DeltaRecord = this.incomingDeltaRecord.find((record_i: DeltaRecord) => record_i.socketId === delta.socketId);
-    console.log('intRecord in recon', intRecord);
-    if (intRecord && intRecord.deltas && intRecord.deltas.length > 0) {
-      console.log('has local record in recon');
-      console.log('intRecord.deltas.length', intRecord.deltas.length);
+    if (intRecord && intRecord.deltas.length > 0) {
       const lastId = intRecord.deltas[intRecord.deltas.length - 1].localId;
-      console.log('lastId', lastId);
       if (delta.localId > lastId + 1) {
         console.log('missing prev delta; wait to recon');
         return false;
@@ -101,7 +97,6 @@ export class DeltaService {
 
   private isDuplicateDelta(delta: DeltaDto): boolean {
     const intRecord = this.incomingDeltaRecord.find((socket_i: DeltaRecord) => socket_i.socketId === delta.socketId);
-    console.log('intRecord', intRecord);
     if (intRecord && intRecord.deltas.length > 0) {
       if (delta.localId <= intRecord.deltas[intRecord.deltas.length - 1].localId) {
         console.log('this is a duplicate delta', delta);

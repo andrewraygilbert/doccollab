@@ -216,7 +216,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
   }
 
   private startCollabTimeout() {
-    this.collabTimeout = setTimeout(() => this.useDbDoc(), 1000);
+    this.collabTimeout = setTimeout(() => this.useDbDoc(), 3000);
   }
 
   private clearCollabTimeout() {
