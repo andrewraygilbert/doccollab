@@ -22,7 +22,8 @@ export class DocRootComponent implements OnInit, OnDestroy {
   private sendActiveDoc$: Subscription;
   public editorInstance: any;
   private socketId: string;
-  private collab: boolean;
+  private collabDoc: boolean;
+  private collabReady: boolean = false;
   private dbDoc: any;
   private collabTimeout: any;
 
@@ -76,7 +77,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
 
   // handle the incoming delta; check to see if ready to reconcile
   private readyForReconcile(delta: DeltaDto) {
-    if (this.activeDocument && this.editorInstance) {
+    if (this.collabReady) {
       if (delta.localRecord.length === 0) { // delta has no local record -> ready to reconcile
         this.processDelta(delta);
       } else { // delta has a local record
@@ -187,22 +188,26 @@ export class DocRootComponent implements OnInit, OnDestroy {
       this.clearCollabTimeout();
     }
     this.deltaService.setIncomingRecord(activeDoc);
-    this.editorContent = activeDoc.content;
+    this.editorInstance.setContents(activeDoc.content, 'silent');
     this.activeDocument = this.dbDoc;
+    this.collabReady = true;
   }
 
   private handleDocIn(res: any) {
-    this.collab = res.collab;
+    this.collabDoc = res.collab;
     if (res.collab) {
+      console.log('collaborative document, starting timer');
       this.dbDoc = res.document;
       this.startCollabTimeout();
     } else {
+      console.log('non-collab, setting doc from db');
       this.editorContent = res.document.content;
       this.activeDocument = res.document;
     }
   }
 
   private useDbDoc() {
+    console.log('using db doc because no collab response');
     this.activeDocument = this.dbDoc;
     this.editorContent = this.dbDoc.content;
   }
