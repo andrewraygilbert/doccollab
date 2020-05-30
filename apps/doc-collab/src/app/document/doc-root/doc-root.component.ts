@@ -67,7 +67,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
       content: this.editorInstance.getContents(),
       docId: this.activeDocument._id
     };
-    console.log('dto', dto);
+    console.log('SAVING -> dto', dto);
     this.docService.saveDocument(dto);
   }
 
@@ -79,19 +79,19 @@ export class DocRootComponent implements OnInit, OnDestroy {
   private readyForReconcile(delta: DeltaDto) {
     if (this.collabReady) {
       if (this.deltaService.reconciliable(delta)) {
-        console.log('processing this delta now', delta);
+        console.log('READY -> processing this delta', delta);
         this.processDelta(delta);
       } else { // delta cannot be reconciled yet
-        console.log('not ready yet', delta);
+        console.log('NOT READY -> cannot reconcile yet', delta);
         setTimeout(() => {
-          console.log('trying delta again', delta);
+          console.log('RETRYING -> retry queued delta', delta);
           this.readyForReconcile(delta)
         }, 1000);
       }
     } else {
-      console.log('not ready to take in');
+      console.log('NOT READY -> cannot reconcile delta yet');
       setTimeout(() => {
-        console.log('retrying a delta', delta);
+        console.log('RETRYING -> retry queued delta', delta);
         this.readyForReconcile(delta);
       }, 1000);
     }
@@ -202,18 +202,18 @@ export class DocRootComponent implements OnInit, OnDestroy {
   private handleDocIn(res: any) {
     this.collabDoc = res.collab;
     if (res.collab) {
-      console.log('collaborative document, starting timer');
+      console.log('COLLABORATION -> setting timer to receive doc');
       this.dbDoc = res.document;
       this.startCollabTimeout();
     } else {
-      console.log('non-collab, setting doc from db');
+      console.log('NO COLLABORATION -> setting doc from db');
       this.editorContent = res.document.content;
       this.activeDocument = res.document;
     }
   }
 
   private useDbDoc() {
-    console.log('using db doc because no collab response');
+    console.log('NO COLLAB DOC -> using db doc bc no active doc received');
     this.activeDocument = this.dbDoc;
     this.editorContent = this.dbDoc.content;
     this.collabReady = true;
