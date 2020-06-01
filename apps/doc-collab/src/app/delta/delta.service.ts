@@ -138,15 +138,18 @@ export class DeltaService {
     for (const socket_i of this.incomingDeltaRecord) {
       if (socket_i.socketId !== delta.socketId) { // do not check the socket that originated this delta
         const extSocketRecord = delta.localRecord.find(extSocket_i => extSocket_i.socketId === socket_i.socketId);
-        if (!extSocketRecord) { // no record for this socket in incoming delta; all discrepant
+        if (!extSocketRecord) {
+          console.log('no socket record push all deltas'); // no record for this socket in incoming delta; all discrepant
           for (const eachDelta of socket_i.deltas) {
             diffDeltas.push(eachDelta);
           }
         } else { // record exists in incoming delta -> check delta ids
           const lastExtDeltaId = extSocketRecord.deltaId; // get the last delta id for this socket
           const lastIntDeltaId = socket_i.deltas[socket_i.deltas.length-1].localId;
+          console.log({'lastExt': lastExtDeltaId, 'lastInt': lastIntDeltaId});
           if (lastIntDeltaId > lastExtDeltaId) { // if local state has changes that are not present in incoming delta, add to diff deltas array
             const sliceIndex = socket_i.deltas.findIndex((record_i: any) => record_i.deltaId === lastExtDeltaId);
+            console.log('disc slice index', sliceIndex);
             const slice = socket_i.deltas.slice(sliceIndex + 1);
             for (const each of slice) {
               diffDeltas.push(each);
