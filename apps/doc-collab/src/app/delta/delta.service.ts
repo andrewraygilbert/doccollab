@@ -11,6 +11,7 @@ export class DeltaService {
   private localDeltaTracker = 0;
   private outgoingDeltaRecord: BaseDelta[] = [];
   private incomingDeltaRecord: any = [];
+  private purgeInterval: any;
 
   constructor(
     private coreSocket: CoreSocketService,
@@ -264,6 +265,61 @@ export class DeltaService {
   /**
    * GENERAL HELPERS
    */
+
+  public activatePurging() {
+    console.log('activating purging');
+    this.purgeInterval = setInterval(() => this.purge2(), 15000);
+  }
+
+  public stopPurging() {
+    console.log('stopping purging');
+    clearInterval(this.purgeInterval);
+  }
+
+  private purge2() {
+    console.log('incomingDeltaRecord', this.incomingDeltaRecord);
+    let purgeRecord: any = [];
+    for (const socketRecord of this.incomingDeltaRecord) {
+      const lastDelta = socketRecord.deltas[socketRecord.deltas.length - 1];
+      if (lastDelta.localRecord) {
+        for (const record of lastDelta.localRecord) {
+          if (record.socketId !== this.socketId) {
+            const purgeIndex = purgeRecord.findIndex((record_i: any) => record_i.socketId === record.socketId);
+            if (purgeIndex === -1) { // no purge record for this socket yet
+              const newPurgeRecord = {
+                socketId: record.socketId,
+                deltaId: record.deltaId <= lastDelta.localId ? record.deltaId : 0,
+                count: 1
+              };
+              purgeRecord.push(newPurgeRecord);
+            } else {
+              purgeRecord[purgeIndex].deltaId = record.deltaId <= purgeRecord[purgeIndex].deltaId ? record.deltaId : purgeRecord[purgeIndex].deltaId;
+              purgeRecord[purgeIndex].count++;
+            }
+          }
+        };
+      }
+    };
+    for (const record of purgeRecord) {
+      const sockets = this.incomingDeltaRecord.length;
+      if (record.count === sockets - 1) {
+        const incomingIndex = this.incomingDeltaRecord.findIndex((record_i: DeltaRecord) => record_i.socketId === record.socketId);
+        if (incomingIndex === -1) {
+          console.log('missing socket');
+        } else {
+          const lastDelta = this.incomingDeltaRecord[incomingIndex].deltas[this.incomingDeltaRecord[incomingIndex].deltas.length - 1];
+          if (record.deltaId <= lastDelta.localId) {
+            console.log('splicing', record.deltaId, lastDelta.localId);
+            const deltaIndex = this.incomingDeltaRecord[incomingIndex].deltas.findIndex((delta_i: any) => delta_i.localId === record.deltaId);
+            if (deltaIndex !== -1) {
+              this.incomingDeltaRecord[incomingIndex].deltas.splice(0, deltaIndex);
+            }
+          }
+        }
+      }
+    };
+    console.log('post incoming record', this.incomingDeltaRecord);
+  }
 
   public resetAllDeltas(): void {
     this.outgoingDeltaRecord = [];

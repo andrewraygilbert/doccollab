@@ -267,6 +267,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Initialize a socket if none exists
+    this.deltaService.activatePurging();
     if (!this.coreSocket.socket) {
       this.coreSocket.initializeSocket();
     }
@@ -285,6 +286,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.inEditDoc$.unsubscribe();
     this.getActiveDoc$.unsubscribe();
     this.deltaService.resetAllDeltas();
+    this.deltaService.stopPurging();
   }
 
 }
