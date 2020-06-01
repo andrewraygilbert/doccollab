@@ -148,7 +148,7 @@ export class DeltaService {
           const lastIntDeltaId = socket_i.deltas[socket_i.deltas.length-1].localId;
           console.log({'lastExt': lastExtDeltaId, 'lastInt': lastIntDeltaId});
           if (lastIntDeltaId > lastExtDeltaId) { // if local state has changes that are not present in incoming delta, add to diff deltas array
-            const sliceIndex = socket_i.deltas.findIndex((record_i: any) => record_i.deltaId === lastExtDeltaId);
+            const sliceIndex = socket_i.deltas.findIndex((record_i: DeltaDto) => record_i.localId === lastExtDeltaId);
             console.log('disc slice index', sliceIndex);
             const slice = socket_i.deltas.slice(sliceIndex + 1);
             for (const each of slice) {
