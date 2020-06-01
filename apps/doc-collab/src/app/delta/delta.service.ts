@@ -359,10 +359,12 @@ export class DeltaService {
   // sets the local state based on active doc from another socket
   public setIncomingRecord(activeDoc: any) {
     this.incomingDeltaRecord = activeDoc.incomingRecord;
-    this.incomingDeltaRecord.push({
-      socketId: activeDoc.fromSocketId,
-      deltas: activeDoc.outgoingRecord
-    });
+    if (activeDoc.outgoingRecord.length > 0) {
+      this.incomingDeltaRecord.push({
+        socketId: activeDoc.fromSocketId,
+        deltas: activeDoc.outgoingRecord
+      });
+    }
     console.log({
       localIncoming: this.incomingDeltaRecord,
       localOutgoing: this.outgoingDeltaRecord
