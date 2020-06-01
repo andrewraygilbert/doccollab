@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CoreSocketService } from '../socket/core-socket.service';
-import { DeltaDto, BaseDelta, DeltaDtoRecord, DeltaRecord } from '@doccollab/api-interfaces';
+import { DeltaDto, BaseDelta, DeltaDtoRecord, DeltaRecord, PurgeRecord } from '@doccollab/api-interfaces';
+import { last } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class DeltaService {
   private socketId: string;
   private localDeltaTracker = 0;
   private outgoingDeltaRecord: BaseDelta[] = [];
-  private incomingDeltaRecord: any = [];
+  private incomingDeltaRecord: DeltaRecord[] = [];
   private purgeInterval: any;
 
   constructor(
@@ -268,7 +269,7 @@ export class DeltaService {
 
   public activatePurging() {
     console.log('activating purging');
-    this.purgeInterval = setInterval(() => this.purge2(), 15000);
+    this.purgeInterval = setInterval(() => this.buildPurgeList(), 60000);
   }
 
   public stopPurging() {
@@ -276,49 +277,57 @@ export class DeltaService {
     clearInterval(this.purgeInterval);
   }
 
-  private purge2() {
-    console.log('incomingDeltaRecord', this.incomingDeltaRecord);
-    let purgeRecord: any = [];
+  private buildPurgeList() {
+    let purgeRecord: PurgeRecord[] = [];
     for (const socketRecord of this.incomingDeltaRecord) {
-      const lastDelta = socketRecord.deltas[socketRecord.deltas.length - 1];
+      const lastDelta: DeltaDto = socketRecord.deltas[socketRecord.deltas.length - 1];
       if (lastDelta.localRecord) {
-        for (const record of lastDelta.localRecord) {
-          if (record.socketId !== this.socketId) {
-            const purgeIndex = purgeRecord.findIndex((record_i: any) => record_i.socketId === record.socketId);
-            if (purgeIndex === -1) { // no purge record for this socket yet
-              const newPurgeRecord = {
-                socketId: record.socketId,
-                deltaId: record.deltaId <= lastDelta.localId ? record.deltaId : 0,
-                count: 1
-              };
-              purgeRecord.push(newPurgeRecord);
-            } else {
-              purgeRecord[purgeIndex].deltaId = record.deltaId <= purgeRecord[purgeIndex].deltaId ? record.deltaId : purgeRecord[purgeIndex].deltaId;
-              purgeRecord[purgeIndex].count++;
+        for (const stateRecord of lastDelta.localRecord) {
+          if (stateRecord.socketId !== this.socketId) {
+            const purgeIndex = purgeRecord.findIndex((record: PurgeRecord) => record.socketId === stateRecord.socketId);
+            const localRecordIndex = this.incomingDeltaRecord.findIndex((record_i: DeltaRecord) => record_i.socketId === stateRecord.socketId);
+            if (localRecordIndex !== -1) {
+              const lastDeltaRecord = this.incomingDeltaRecord[localRecordIndex].deltas[this.incomingDeltaRecord[localRecordIndex].deltas.length - 1];
+              if (purgeIndex === -1) {
+                const newPurgeRecord: PurgeRecord = {
+                  socketId: stateRecord.socketId,
+                  deltaId: stateRecord.deltaId <= lastDeltaRecord.localId ? stateRecord.deltaId : 0,
+                  count: 1
+                };
+                purgeRecord.push(newPurgeRecord);
+              } else {
+                if (stateRecord.deltaId <= purgeRecord[purgeIndex].deltaId) {
+                  purgeRecord[purgeIndex].deltaId = stateRecord.deltaId;
+                }
+                purgeRecord[purgeIndex].count++;
+              }
             }
           }
         };
       }
     };
-    for (const record of purgeRecord) {
+    console.log('purgeRecord post build', purgeRecord);
+    this.purgeDeltas(purgeRecord);
+  }
+
+  private purgeDeltas(purgeList: PurgeRecord[]) {
+    for (const purgeRecord of purgeList) {
       const sockets = this.incomingDeltaRecord.length;
-      if (record.count === sockets - 1) {
-        const incomingIndex = this.incomingDeltaRecord.findIndex((record_i: DeltaRecord) => record_i.socketId === record.socketId);
-        if (incomingIndex === -1) {
-          console.log('missing socket');
-        } else {
-          const lastDelta = this.incomingDeltaRecord[incomingIndex].deltas[this.incomingDeltaRecord[incomingIndex].deltas.length - 1];
-          if (record.deltaId <= lastDelta.localId) {
-            console.log('splicing', record.deltaId, lastDelta.localId);
-            const deltaIndex = this.incomingDeltaRecord[incomingIndex].deltas.findIndex((delta_i: any) => delta_i.localId === record.deltaId);
+      if (purgeRecord.count === sockets - 1) {
+        const localIndex = this.incomingDeltaRecord.findIndex((record: DeltaRecord) => record.socketId === purgeRecord.socketId);
+        if (localIndex !== -1) {
+          const firstDelta = this.incomingDeltaRecord[localIndex].deltas[0];
+          if (firstDelta && firstDelta.localId < purgeRecord.deltaId) {
+            const deltaIndex = this.incomingDeltaRecord[localIndex].deltas.findIndex((delta_i: DeltaDto) => delta_i.localId === purgeRecord.deltaId);
             if (deltaIndex !== -1) {
-              this.incomingDeltaRecord[incomingIndex].deltas.splice(0, deltaIndex);
+              console.log('slicing', deltaIndex);
+              this.incomingDeltaRecord[localIndex].deltas.splice(0, deltaIndex);
             }
           }
         }
       }
     };
-    console.log('post incoming record', this.incomingDeltaRecord);
+    console.log('incomingIndex post', this.incomingDeltaRecord);
   }
 
   public resetAllDeltas(): void {
@@ -327,7 +336,7 @@ export class DeltaService {
   }
 
   // retrieves a socket record from local state
-  private getIntSocketRecord(socketId: string): DeltaRecord {
+  private getIntSocketRecord(socketId: string): DeltaRecord | undefined {
     return this.incomingDeltaRecord.find((socket_i: DeltaRecord) => {
       return socket_i.socketId === socketId;
     });

@@ -81,4 +81,10 @@ export interface DeltaDto extends BaseDelta {
   localRecord: DeltaDtoRecord[];
 }
 
+export interface PurgeRecord {
+  socketId: string,
+  deltaId: number,
+  count: number
+}
+
 
