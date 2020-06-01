@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CoreSocketService } from '../socket/core-socket.service';
 import { DeltaDto, BaseDelta, DeltaDtoRecord, DeltaRecord, PurgeRecord } from '@doccollab/api-interfaces';
-import { last } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -273,7 +272,7 @@ export class DeltaService {
 
   public activatePurging() {
     console.log('activating purging');
-    this.purgeInterval = setInterval(() => this.buildPurgeList(), 60000);
+    this.purgeInterval = setInterval(() => this.buildPurgeList(), 15000);
   }
 
   public stopPurging() {
@@ -365,10 +364,6 @@ export class DeltaService {
         deltas: activeDoc.outgoingRecord
       });
     }
-    console.log({
-      localIncoming: this.incomingDeltaRecord,
-      localOutgoing: this.outgoingDeltaRecord
-    });
   }
 
 }
