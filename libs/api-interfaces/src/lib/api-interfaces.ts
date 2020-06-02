@@ -79,6 +79,7 @@ export interface DeltaDto extends BaseDelta {
   socketId: string;
   localId: number;
   localRecord: DeltaDtoRecord[];
+  precedenceAdj?: number;
 }
 
 export interface PurgeRecord {

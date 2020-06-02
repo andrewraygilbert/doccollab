@@ -192,8 +192,10 @@ export class DeltaService {
   private reconciler(delta: DeltaDto, diffDeltas: DeltaDto[]): DeltaDto {
     let netIndexChange = 0;
     const incomingIndex = this.getIncomingIndex(delta);
+    console.log('incomingIndex', incomingIndex);
     for (const delta_i of diffDeltas) { // for each discrepant delta
       if (delta_i.ops[0].retain < incomingIndex) { // if local change occurred at i before incoming delta
+        console.log('standard reconciler');
         for (const op of delta_i.ops) {
           // increase the incoming index for each insertion operation
           if (op.insert) {
@@ -203,6 +205,41 @@ export class DeltaService {
           if (op.delete) {
             netIndexChange = netIndexChange - op.delete;
           }
+        }
+      } else if (delta_i.ops[0].retain === incomingIndex) {
+        const precedence = delta.socketId.localeCompare(delta_i.socketId);
+        if (precedence === -1) {
+          console.log('INdelta precedent');
+          // INdelta gets precedence over DIFFdelta; revise DIFFdelta index position accordingly
+          let netChangeDiffDelta = 0;
+          for (const op of delta.ops) {
+            if (op.insert) {
+              netChangeDiffDelta = netChangeDiffDelta + op.insert.length;
+            }
+            if (op.delete) {
+              netChangeDiffDelta = netChangeDiffDelta - op.delete;
+            }
+          };
+          console.log('netChangeDiffDelta', netChangeDiffDelta);
+          delta_i.ops[0].retain = delta_i.ops[0].retain + netChangeDiffDelta;
+          console.log('delta_i', delta_i);
+        } else if (precedence === 1) {
+          console.log('DIFFdelta precedent');
+          // DIFFdelta gets precedence over the INdelta; track netchanges in INdelta position
+          let netChangeDeltaIndex = 0;
+          for (const op of delta_i.ops) {
+            if (op.insert) {
+              netChangeDeltaIndex = netChangeDeltaIndex + op.insert.length;
+            }
+            if (op.delete) {
+              netChangeDeltaIndex = netChangeDeltaIndex - op.delete;
+            }
+          };
+          console.log('netChangeDeltaIndex', netChangeDeltaIndex);
+          delta.ops[0].retain = delta.ops[0].retain + netChangeDeltaIndex;
+          console.log('delta', delta);
+        } else {
+          console.log('socket IDs identical');
         }
       }
     };
