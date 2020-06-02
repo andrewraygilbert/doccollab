@@ -210,7 +210,9 @@ export class DeltaService {
         }
       } else if (delta_i.ops[0].retain === incomingIndex) {
         console.log('in equal index positions');
+        console.log({'delta.socketId': delta.socketId, 'delta_i.socketId': delta_i.socketId});
         const precedence = delta.socketId.localeCompare(delta_i.socketId);
+        console.log('precedence', precedence);
         if (precedence === -1) {
           console.log('INdelta precedent');
           // INdelta gets precedence over DIFFdelta; revise DIFFdelta index position accordingly
