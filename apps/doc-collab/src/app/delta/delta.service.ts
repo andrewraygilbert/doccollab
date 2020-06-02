@@ -190,10 +190,12 @@ export class DeltaService {
 
   // reconcile an incoming delta
   private reconciler(delta: DeltaDto, diffDeltas: DeltaDto[]): DeltaDto {
+    console.log('in reconciler', diffDeltas);
     let netIndexChange = 0;
     const incomingIndex = this.getIncomingIndex(delta);
     console.log('incomingIndex', incomingIndex);
     for (const delta_i of diffDeltas) { // for each discrepant delta
+      console.log('delta_i', delta_i);
       if (delta_i.ops[0].retain < incomingIndex) { // if local change occurred at i before incoming delta
         console.log('standard reconciler');
         for (const op of delta_i.ops) {
@@ -207,6 +209,7 @@ export class DeltaService {
           }
         }
       } else if (delta_i.ops[0].retain === incomingIndex) {
+        console.log('in equal index positions');
         const precedence = delta.socketId.localeCompare(delta_i.socketId);
         if (precedence === -1) {
           console.log('INdelta precedent');
