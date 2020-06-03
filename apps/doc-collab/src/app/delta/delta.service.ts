@@ -192,7 +192,7 @@ export class DeltaService {
   private reconciler(delta: DeltaDto, diffDeltas: DeltaDto[]): DeltaDto {
     console.log('in reconciler', diffDeltas);
     let netIndexChange = 0;
-    const incomingIndex = this.getIncomingIndex(delta);
+    let incomingIndex = this.getIncomingIndex(delta);
     console.log('incomingIndex', incomingIndex);
     for (const delta_i of diffDeltas) { // for each discrepant delta
       console.log('delta_i', delta_i);
@@ -227,6 +227,7 @@ export class DeltaService {
           };
           console.log('netChangeDiffDelta', netChangeDiffDelta);
           delta_i.ops[0].retain = delta_i.ops[0].retain + netChangeDiffDelta;
+          incomingIndex = incomingIndex + netChangeDiffDelta;
           console.log('delta_i', delta_i);
         } else if (precedence === 1) {
           console.log('DIFFdelta precedent');
