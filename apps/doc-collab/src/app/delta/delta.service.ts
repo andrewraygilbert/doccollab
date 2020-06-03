@@ -227,7 +227,6 @@ export class DeltaService {
           };
           console.log('netChangeDiffDelta', netChangeDiffDelta);
           delta_i.ops[0].retain = delta_i.ops[0].retain + netChangeDiffDelta;
-          incomingIndex = incomingIndex + netChangeDiffDelta;
           console.log('delta_i', delta_i);
         } else if (precedence === 1) {
           console.log('DIFFdelta precedent');
@@ -243,6 +242,7 @@ export class DeltaService {
           };
           console.log('netChangeDeltaIndex', netChangeDeltaIndex);
           delta.ops[0].retain = delta.ops[0].retain + netChangeDeltaIndex;
+          incomingIndex = incomingIndex + netChangeDeltaIndex;
           console.log('delta', delta);
         } else {
           console.log('socket IDs identical');
