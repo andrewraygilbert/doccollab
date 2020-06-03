@@ -188,6 +188,19 @@ export class DeltaService {
     return delta;
   }
 
+  private netOpChange(deltaOps: any[]): number {
+    let netChange = 0;
+    for (const op of deltaOps) {
+      if (op.insert) {
+        netChange = netChange + op.insert.length;
+      }
+      if (op.delete) {
+        netChange = netChange - op.delete;
+      }
+    };
+    return netChange;
+  }
+
   // reconcile an incoming delta
   private reconciler(delta: DeltaDto, diffDeltas: DeltaDto[]): DeltaDto {
     console.log('in reconciler', diffDeltas);
@@ -198,6 +211,8 @@ export class DeltaService {
       console.log('delta_i', delta_i);
       if (delta_i.ops[0].retain < incomingIndex) { // if local change occurred at i before incoming delta
         console.log('standard reconciler');
+        netIndexChange = netIndexChange + this.netOpChange(delta_i.ops);
+        /*
         for (const op of delta_i.ops) {
           // increase the incoming index for each insertion operation
           if (op.insert) {
@@ -208,6 +223,7 @@ export class DeltaService {
             netIndexChange = netIndexChange - op.delete;
           }
         }
+        */
       } else if (delta_i.ops[0].retain === incomingIndex) {
         console.log('in equal index positions');
         console.log({'delta.socketId': delta.socketId, 'delta_i.socketId': delta_i.socketId});
@@ -217,6 +233,8 @@ export class DeltaService {
           console.log('INdelta precedent');
           // INdelta gets precedence over DIFFdelta; revise DIFFdelta index position accordingly
           let netChangeDiffDelta = 0;
+          netChangeDiffDelta = netChangeDiffDelta + this.netOpChange(delta.ops);
+          /*
           for (const op of delta.ops) {
             if (op.insert) {
               netChangeDiffDelta = netChangeDiffDelta + op.insert.length;
@@ -225,6 +243,7 @@ export class DeltaService {
               netChangeDiffDelta = netChangeDiffDelta - op.delete;
             }
           };
+          */
           console.log('netChangeDiffDelta', netChangeDiffDelta);
           delta_i.ops[0].retain = delta_i.ops[0].retain + netChangeDiffDelta;
           console.log('delta_i', delta_i);
@@ -232,6 +251,8 @@ export class DeltaService {
           console.log('DIFFdelta precedent');
           // DIFFdelta gets precedence over the INdelta; track netchanges in INdelta position
           let netChangeDeltaIndex = 0;
+          netChangeDeltaIndex = netChangeDeltaIndex + this.netOpChange(delta_i.ops);
+          /*
           for (const op of delta_i.ops) {
             if (op.insert) {
               netChangeDeltaIndex = netChangeDeltaIndex + op.insert.length;
@@ -240,6 +261,7 @@ export class DeltaService {
               netChangeDeltaIndex = netChangeDeltaIndex - op.delete;
             }
           };
+          */
           console.log('netChangeDeltaIndex', netChangeDeltaIndex);
           delta.ops[0].retain = delta.ops[0].retain + netChangeDeltaIndex;
           incomingIndex = incomingIndex + netChangeDeltaIndex;

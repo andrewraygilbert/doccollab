@@ -2,9 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import * as io from 'socket.io-client'; // must install @types/socket.io-client to work
 import { Observable, fromEvent, Subscription } from 'rxjs';
 import { AuthService } from './../auth/auth.service';
-import { Socket } from 'socket.io';
 import { environment } from './../../environments/environment';
-
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +33,18 @@ export class CoreSocketService implements OnDestroy {
 
   public onDisconnect(): Observable<any> {
     return fromEvent(this.socket.on(), 'disconnect');
+  }
+
+  public onReconnect(): Observable<any> {
+    return fromEvent(this.socket.on(), 'reconnect');
+  }
+
+  public onReconnectFailure(): Observable<any> {
+    return fromEvent(this.socket.on(), 'reconnect_failed');
+  }
+
+  public onReconnecting(): Observable<any> {
+    return fromEvent(this.socket.on(), 'reconnecting');
   }
 
   public onError(): Observable<any> {
