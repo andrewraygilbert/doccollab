@@ -238,10 +238,7 @@ export class DeltaService {
         if (deltaIndex === -1) {
           console.log('could not find delta');
         } else {
-          for (let i = deltaIndex; deltaIndex < this.incomingDeltaRecord[recordIndex].deltas.length - 1; i++) {
-            this.incomingDeltaRecord[recordIndex].deltas[deltaIndex].ops[0].retain = this.incomingDeltaRecord[recordIndex].deltas[deltaIndex].ops[0].retain + netChange;
-          }
-          // this.incomingDeltaRecord[recordIndex].deltas[deltaIndex].ops[0].retain = this.incomingDeltaRecord[recordIndex].deltas[deltaIndex].ops[0].retain + netChange;
+          this.incomingDeltaRecord[recordIndex].deltas[deltaIndex].ops[0].retain = this.incomingDeltaRecord[recordIndex].deltas[deltaIndex].ops[0].retain + netChange;
         }
       }
     } else {
