@@ -204,7 +204,8 @@ export class DeltaService {
           // INdelta gets precedence over DIFFdelta; revise DIFFdelta index position accordingly
           let netChangeDiffDelta = 0;
           netChangeDiffDelta = netChangeDiffDelta + this.netOpChange(delta.ops);
-          delta_i.ops[0].retain = delta_i.ops[0].retain + netChangeDiffDelta;
+          // delta_i.ops[0].retain = delta_i.ops[0].retain + netChangeDiffDelta;
+          this.reviseDeltaRecord(delta_i, netChangeDiffDelta);
           console.log('INdelta precedence', {'netChangeDiffDelta': netChangeDiffDelta});
         } else if (precedence === 1) {
           // DIFFdelta gets precedence over the INdelta; track netchanges in INdelta position
@@ -224,6 +225,21 @@ export class DeltaService {
       delta.ops[0].retain = delta.ops[0].retain + netIndexChange;
     }
     return delta;
+  }
+
+  private reviseDeltaRecord(deltaDto: DeltaDto, netChange: number) {
+    console.log('revising delta record')
+    const recordIndex = this.incomingDeltaRecord.findIndex((record: DeltaRecord) => record.socketId === deltaDto.socketId);
+    if (recordIndex === -1) {
+      console.log('could not find record');
+    } else {
+      const deltaIndex = this.incomingDeltaRecord[recordIndex].deltas.findIndex((delta: DeltaDto) => delta.localId === deltaDto.localId);
+      if (deltaIndex === -1) {
+        console.log('could not find delta');
+      } else {
+        this.incomingDeltaRecord[recordIndex].deltas[deltaIndex].ops[0].retain = this.incomingDeltaRecord[recordIndex].deltas[deltaIndex].ops[0].retain + netChange;
+      }
+    }
   }
 
   // return the starting index for the delta
