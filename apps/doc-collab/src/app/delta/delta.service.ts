@@ -97,6 +97,7 @@ export class DeltaService {
     }
     const reconciled = this.identifyDiscrepancies(delta);
     if (reconciled.precedenceAdj) {
+      console.log('record reconciled delta instead');
       this.recordIncomingDeltas(reconciled);
     } else {
       this.recordIncomingDeltas(delta);
@@ -191,16 +192,20 @@ export class DeltaService {
   private reconciler(delta: DeltaDto, diffDeltas: DeltaDto[]): DeltaDto {
     let netIndexChange = 0;
     let incomingIndex = this.getIncomingIndex(delta);
+    console.log({'diffDeltas': diffDeltas, 'incomingIndex': incomingIndex});
     for (const delta_i of diffDeltas) { // for each discrepant delta
       if (delta_i.ops[0].retain < incomingIndex) { // if local change occurred at i before incoming delta
+        console.log('standard reconcile', delta_i);
         netIndexChange = netIndexChange + this.netOpChange(delta_i.ops);
       } else if (delta_i.ops[0].retain === incomingIndex) { // if changes occurred at same i
+        console.log('equal i reconcile', delta_i);
         const precedence = delta.socketId.localeCompare(delta_i.socketId);
         if (precedence === -1) {
           // INdelta gets precedence over DIFFdelta; revise DIFFdelta index position accordingly
           let netChangeDiffDelta = 0;
           netChangeDiffDelta = netChangeDiffDelta + this.netOpChange(delta.ops);
           delta_i.ops[0].retain = delta_i.ops[0].retain + netChangeDiffDelta;
+          console.log('INdelta precedence', {'netChangeDiffDelta': netChangeDiffDelta});
         } else if (precedence === 1) {
           // DIFFdelta gets precedence over the INdelta; track netchanges in INdelta position
           let netChangeDeltaIndex = 0;
@@ -208,6 +213,7 @@ export class DeltaService {
           delta.ops[0].retain = delta.ops[0].retain + netChangeDeltaIndex;
           delta.precedenceAdj = true;
           incomingIndex = incomingIndex + netChangeDeltaIndex;
+          console.log('DIFFdelta precedence', {'netChangeDeltaIndex': netChangeDeltaIndex});
         } else {
           console.log('socket IDs identical');
         }
