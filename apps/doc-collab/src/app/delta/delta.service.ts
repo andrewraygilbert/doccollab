@@ -96,7 +96,11 @@ export class DeltaService {
       return null;
     }
     const reconciled = this.identifyDiscrepancies(delta);
-    this.recordIncomingDeltas(delta);
+    if (reconciled.precedenceAdj) {
+      this.recordIncomingDeltas(reconciled);
+    } else {
+      this.recordIncomingDeltas(delta);
+    }
     return reconciled;
   }
 
@@ -138,17 +142,14 @@ export class DeltaService {
       if (socket_i.socketId !== delta.socketId) { // do not check the socket that originated this delta
         const extSocketRecord = delta.localRecord.find(extSocket_i => extSocket_i.socketId === socket_i.socketId);
         if (!extSocketRecord) {
-          console.log('no socket record push all deltas'); // no record for this socket in incoming delta; all discrepant
           for (const eachDelta of socket_i.deltas) {
             diffDeltas.push(eachDelta);
           }
         } else { // record exists in incoming delta -> check delta ids
           const lastExtDeltaId = extSocketRecord.deltaId; // get the last delta id for this socket
           const lastIntDeltaId = socket_i.deltas[socket_i.deltas.length-1].localId;
-          console.log({'lastExt': lastExtDeltaId, 'lastInt': lastIntDeltaId});
           if (lastIntDeltaId > lastExtDeltaId) { // if local state has changes that are not present in incoming delta, add to diff deltas array
             const sliceIndex = socket_i.deltas.findIndex((record_i: DeltaDto) => record_i.localId === lastExtDeltaId);
-            console.log('disc slice index', sliceIndex);
             const slice = socket_i.deltas.slice(sliceIndex + 1);
             for (const each of slice) {
               diffDeltas.push(each);
@@ -179,93 +180,34 @@ export class DeltaService {
   // check for discrepancies in delta states
   private identifyDiscrepancies(delta: DeltaDto): DeltaDto {
     let diffDeltas = this.checkExtDiscrepancies(delta);
-    console.log('diffDeltas post ext', diffDeltas);
     diffDeltas = this.checkIntDiscrepancies(delta, diffDeltas);
-    console.log('diffDeltas post all', diffDeltas);
     if (diffDeltas.length > 0) { // if discrepancies, reconcile
       return this.reconciler(delta, diffDeltas);
     }
     return delta;
   }
 
-  private netOpChange(deltaOps: any[]): number {
-    let netChange = 0;
-    for (const op of deltaOps) {
-      if (op.insert) {
-        netChange = netChange + op.insert.length;
-      }
-      if (op.delete) {
-        netChange = netChange - op.delete;
-      }
-    };
-    return netChange;
-  }
-
   // reconcile an incoming delta
   private reconciler(delta: DeltaDto, diffDeltas: DeltaDto[]): DeltaDto {
-    console.log('in reconciler', diffDeltas);
     let netIndexChange = 0;
     let incomingIndex = this.getIncomingIndex(delta);
-    console.log('incomingIndex', incomingIndex);
     for (const delta_i of diffDeltas) { // for each discrepant delta
-      console.log('delta_i', delta_i);
       if (delta_i.ops[0].retain < incomingIndex) { // if local change occurred at i before incoming delta
-        console.log('standard reconciler');
         netIndexChange = netIndexChange + this.netOpChange(delta_i.ops);
-        /*
-        for (const op of delta_i.ops) {
-          // increase the incoming index for each insertion operation
-          if (op.insert) {
-            netIndexChange = netIndexChange + op.insert.length;
-          }
-          // reduce the incoming index for each deletion operation
-          if (op.delete) {
-            netIndexChange = netIndexChange - op.delete;
-          }
-        }
-        */
-      } else if (delta_i.ops[0].retain === incomingIndex) {
-        console.log('in equal index positions');
-        console.log({'delta.socketId': delta.socketId, 'delta_i.socketId': delta_i.socketId});
+      } else if (delta_i.ops[0].retain === incomingIndex) { // if changes occurred at same i
         const precedence = delta.socketId.localeCompare(delta_i.socketId);
-        console.log('precedence', precedence);
         if (precedence === -1) {
-          console.log('INdelta precedent');
           // INdelta gets precedence over DIFFdelta; revise DIFFdelta index position accordingly
           let netChangeDiffDelta = 0;
           netChangeDiffDelta = netChangeDiffDelta + this.netOpChange(delta.ops);
-          /*
-          for (const op of delta.ops) {
-            if (op.insert) {
-              netChangeDiffDelta = netChangeDiffDelta + op.insert.length;
-            }
-            if (op.delete) {
-              netChangeDiffDelta = netChangeDiffDelta - op.delete;
-            }
-          };
-          */
-          console.log('netChangeDiffDelta', netChangeDiffDelta);
           delta_i.ops[0].retain = delta_i.ops[0].retain + netChangeDiffDelta;
-          console.log('delta_i', delta_i);
         } else if (precedence === 1) {
-          console.log('DIFFdelta precedent');
           // DIFFdelta gets precedence over the INdelta; track netchanges in INdelta position
           let netChangeDeltaIndex = 0;
           netChangeDeltaIndex = netChangeDeltaIndex + this.netOpChange(delta_i.ops);
-          /*
-          for (const op of delta_i.ops) {
-            if (op.insert) {
-              netChangeDeltaIndex = netChangeDeltaIndex + op.insert.length;
-            }
-            if (op.delete) {
-              netChangeDeltaIndex = netChangeDeltaIndex - op.delete;
-            }
-          };
-          */
-          console.log('netChangeDeltaIndex', netChangeDeltaIndex);
           delta.ops[0].retain = delta.ops[0].retain + netChangeDeltaIndex;
+          delta.precedenceAdj = true;
           incomingIndex = incomingIndex + netChangeDeltaIndex;
-          console.log('delta', delta);
         } else {
           console.log('socket IDs identical');
         }
@@ -287,6 +229,20 @@ export class DeltaService {
       return delta.ops[0].retain;
     }
     return 0;
+  }
+
+  // calculates net change in index due to ops array
+  private netOpChange(deltaOps: any[]): number {
+    let netChange = 0;
+    for (const op of deltaOps) {
+      if (op.insert) {
+        netChange = netChange + op.insert.length;
+      }
+      if (op.delete) {
+        netChange = netChange - op.delete;
+      }
+    };
+    return netChange;
   }
 
   // retrieve the index of a record for a socket
