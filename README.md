@@ -35,4 +35,5 @@ This repo contains an in progress **prototype** of a document collaboration appl
   * Users can remove collaborators from documents | **NOT Functional**
 * Optimization
   * Delta records are purged regularly to minimize memory load | **Functional**
+  * App maintains consistent state across clients when users type in the exact same spot at the same time | **Partially Functional**
 
