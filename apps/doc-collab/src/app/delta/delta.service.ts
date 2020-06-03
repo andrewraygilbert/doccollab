@@ -303,6 +303,7 @@ export class DeltaService {
     const newDelta = {
       localId: this.localDeltaTracker,
       ops: delta.ops,
+      socketId: this.socketId
     };
     this.outgoingDeltaRecord.push(newDelta);
     this.localDeltaTracker++;
