@@ -9,7 +9,7 @@ export class DeltaService {
 
   private socketId: string;
   private localDeltaTracker = 0;
-  private outgoingDeltaRecord: BaseDelta[] = [];
+  private outgoingDeltaRecord: DeltaDto[] = [];
   private incomingDeltaRecord: DeltaRecord[] = [];
   private purgeInterval: any;
 
@@ -229,17 +229,22 @@ export class DeltaService {
 
   private reviseDeltaRecord(deltaDto: DeltaDto, netChange: number) {
     console.log('revising delta record')
-    const recordIndex = this.incomingDeltaRecord.findIndex((record: DeltaRecord) => record.socketId === deltaDto.socketId);
-    if (recordIndex === -1) {
-      console.log('could not find record');
-    } else {
-      const deltaIndex = this.incomingDeltaRecord[recordIndex].deltas.findIndex((delta: DeltaDto) => delta.localId === deltaDto.localId);
-      if (deltaIndex === -1) {
-        console.log('could not find delta');
+    if (deltaDto.socketId !== this.socketId) {
+      const recordIndex = this.incomingDeltaRecord.findIndex((record: DeltaRecord) => record.socketId === deltaDto.socketId);
+      if (recordIndex === -1) {
+        console.log('could not find record');
       } else {
-        this.incomingDeltaRecord[recordIndex].deltas[deltaIndex].ops[0].retain = this.incomingDeltaRecord[recordIndex].deltas[deltaIndex].ops[0].retain + netChange;
+        const deltaIndex = this.incomingDeltaRecord[recordIndex].deltas.findIndex((delta: DeltaDto) => delta.localId === deltaDto.localId);
+        if (deltaIndex === -1) {
+          console.log('could not find delta');
+        } else {
+          this.incomingDeltaRecord[recordIndex].deltas[deltaIndex].ops[0].retain = this.incomingDeltaRecord[recordIndex].deltas[deltaIndex].ops[0].retain + netChange;
+        }
       }
+    } else {
+      this.outgoingDeltaRecord[deltaDto.localId].ops[0].retain = this.outgoingDeltaRecord[deltaDto.localId].ops[0].retain + netChange;
     }
+
   }
 
   // return the starting index for the delta
@@ -304,7 +309,8 @@ export class DeltaService {
     const newDelta = {
       localId: this.localDeltaTracker,
       ops: delta.ops,
-      socketId: this.socketId
+      socketId: this.socketId,
+      localRecord: []
     };
     this.outgoingDeltaRecord.push(newDelta);
     this.localDeltaTracker++;
