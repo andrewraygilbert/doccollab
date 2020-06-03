@@ -146,7 +146,7 @@
             {
               "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
               "ext": ".ts",
-              "mtime": 1591120496916.6116
+              "mtime": 1591194472835.5056
             },
             {
               "file": "libs/api-interfaces/tsconfig.json",
@@ -457,7 +457,7 @@
             {
               "file": "apps/doc-collab/src/app/delta/delta.service.ts",
               "ext": ".ts",
-              "mtime": 1591139450576.3564
+              "mtime": 1591215290198.6516
             },
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
@@ -502,7 +502,7 @@
             {
               "file": "apps/doc-collab/src/app/socket/core-socket.service.ts",
               "ext": ".ts",
-              "mtime": 1589204971276.5808
+              "mtime": 1591190961622.9758
             },
             {
               "file": "apps/doc-collab/src/app/socket/socket.module.ts",
@@ -1733,7 +1733,7 @@
       {
         "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
         "ext": ".ts",
-        "mtime": 1591120496916.6116
+        "mtime": 1591194472835.5056
       },
       {
         "file": "libs/api-interfaces/tsconfig.json",
@@ -1940,7 +1940,7 @@
       {
         "file": "apps/doc-collab/src/app/delta/delta.service.ts",
         "ext": ".ts",
-        "mtime": 1591139450576.3564
+        "mtime": 1591215290198.6516
       },
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
@@ -1985,7 +1985,7 @@
       {
         "file": "apps/doc-collab/src/app/socket/core-socket.service.ts",
         "ext": ".ts",
-        "mtime": 1589204971276.5808
+        "mtime": 1591190961622.9758
       },
       {
         "file": "apps/doc-collab/src/app/socket/socket.module.ts",

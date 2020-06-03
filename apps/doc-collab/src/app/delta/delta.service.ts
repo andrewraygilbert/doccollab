@@ -334,33 +334,35 @@ export class DeltaService {
     let purgeRecord: PurgeRecord[] = [];
     for (const socketRecord of this.incomingDeltaRecord) {
       const lastDelta: DeltaDto = socketRecord.deltas[socketRecord.deltas.length - 1];
-      if (lastDelta.localRecord) {
-        for (const stateRecord of lastDelta.localRecord) {
-          if (stateRecord.socketId !== this.socketId) {
-            const purgeIndex = purgeRecord.findIndex((record: PurgeRecord) => record.socketId === stateRecord.socketId);
-            const localRecordIndex = this.incomingDeltaRecord.findIndex((record_i: DeltaRecord) => record_i.socketId === stateRecord.socketId);
-            if (localRecordIndex !== -1) {
-              const lastDeltaRecord = this.incomingDeltaRecord[localRecordIndex].deltas[this.incomingDeltaRecord[localRecordIndex].deltas.length - 1];
-              if (purgeIndex === -1) {
-                const newPurgeRecord: PurgeRecord = {
-                  socketId: stateRecord.socketId,
-                  deltaId: stateRecord.deltaId <= lastDeltaRecord.localId ? stateRecord.deltaId : 0,
-                  count: 1
-                };
-                purgeRecord.push(newPurgeRecord);
-              } else {
-                if (stateRecord.deltaId <= purgeRecord[purgeIndex].deltaId) {
-                  purgeRecord[purgeIndex].deltaId = stateRecord.deltaId;
-                }
-                purgeRecord[purgeIndex].count++;
+      for (const stateRecord of lastDelta.localRecord) {
+        if (stateRecord.socketId !== this.socketId) { // skip purging for context socket
+          const purgeIndex = purgeRecord.findIndex((record: PurgeRecord) => record.socketId === stateRecord.socketId);
+          const localRecordIndex = this.incomingDeltaRecord.findIndex((record_i: DeltaRecord) => record_i.socketId === stateRecord.socketId);
+          if (localRecordIndex !== -1) { // no record exists locally for this socket
+            const lastDeltaRecord = this.incomingDeltaRecord[localRecordIndex].deltas[this.incomingDeltaRecord[localRecordIndex].deltas.length - 1];
+            if (purgeIndex === -1) { // no purge record exists yet for this socket
+              purgeRecord.push(this.buildPurgeRecord(stateRecord, lastDeltaRecord));
+            } else { // update the purge record
+              if (stateRecord.deltaId <= purgeRecord[purgeIndex].deltaId) {
+                purgeRecord[purgeIndex].deltaId = stateRecord.deltaId;
               }
+              purgeRecord[purgeIndex].count++;
             }
           }
-        };
-      }
+        }
+      };
     };
     console.log('purgeRecord post build', purgeRecord);
     this.purgeDeltas(purgeRecord);
+  }
+
+  // builds a new purge record
+  private buildPurgeRecord(stateRecord: DeltaDtoRecord, lastDeltaRecord: DeltaDto): PurgeRecord {
+    return {
+      socketId: stateRecord.socketId,
+      deltaId: stateRecord.deltaId <= lastDeltaRecord.localId ? stateRecord.deltaId : 0,
+      count: 1
+    };
   }
 
   private purgeDeltas(purgeList: PurgeRecord[]) {
