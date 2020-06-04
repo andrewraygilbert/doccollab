@@ -143,24 +143,6 @@ export class DeltaService {
       if (socketRecord.socketId !== delta.socketId) { // do not check the socket that originated this delta
         const disc = this.buildExtDiscrepancies(delta, socketRecord);
         diffDeltas = diffDeltas.concat(disc);
-        /*
-        const extSocketRecord = delta.localRecord.find(extSocket_i => extSocket_i.socketId === socket_i.socketId);
-        if (!extSocketRecord) { // no record for socket in incoming delta; all discrepant
-          for (const eachDelta of socket_i.deltas) {
-            diffDeltas.push(eachDelta);
-          }
-        } else { // record exists in incoming delta -> check delta ids
-          const lastExtDeltaId = extSocketRecord.deltaId; // get the last delta id for this socket in incoming delta record
-          const lastIntDeltaId = socket_i.deltas[socket_i.deltas.length-1].localId; // get last delta id for this socket in internal record
-          if (lastIntDeltaId > lastExtDeltaId) { // if local state has changes that are not present in incoming delta, add to diff deltas array
-            const sliceIndex = socket_i.deltas.findIndex((record_i: DeltaDto) => record_i.localId === lastExtDeltaId);
-            const slice = socket_i.deltas.slice(sliceIndex + 1);
-            for (const each of slice) {
-              diffDeltas.push(each);
-            };
-          }
-        }
-        */
       }
     }
     return diffDeltas;
@@ -176,17 +158,6 @@ export class DeltaService {
     } else { // record exists in incoming delta -> check for discrepancies
       const slice = this.sliceDeltas(incomingSocketRecord, socketRecord);
       diffDeltas = diffDeltas.concat(slice);
-      /*
-      const lastExtDeltaId = incomingSocketRecord.deltaId;
-      const lastIntDeltaId = socketRecord.deltas[socketRecord.deltas.length-1].localId;
-      if (lastIntDeltaId > lastExtDeltaId) {
-        const sliceIndex = socketRecord.deltas.findIndex((deltaRecord: DeltaDto) => deltaRecord.localId === lastExtDeltaId);
-        const slice = socketRecord.deltas.slice(sliceIndex + 1);
-        for (const each of slice) {
-          diffDeltas.push(each);
-        }
-      }
-      */
     }
     return diffDeltas;
   }
@@ -382,7 +353,7 @@ export class DeltaService {
         if (stateRecord.socketId !== this.socketId) { // skip purging for context socket
           const purgeIndex = purgeRecord.findIndex((record: PurgeRecord) => record.socketId === stateRecord.socketId);
           const localRecordIndex = this.incomingDeltaRecord.findIndex((record_i: DeltaRecord) => record_i.socketId === stateRecord.socketId);
-          if (localRecordIndex !== -1) { // no record exists locally for this socket
+          if (localRecordIndex !== -1) { // confirm record exists locally for this socket
             const lastDeltaRecord = this.incomingDeltaRecord[localRecordIndex].deltas[this.incomingDeltaRecord[localRecordIndex].deltas.length - 1];
             if (purgeIndex === -1) { // no purge record exists yet for this socket
               purgeRecord.push(this.buildPurgeRecord(stateRecord, lastDeltaRecord));
