@@ -138,17 +138,20 @@ export class DeltaService {
 
   // checks for discrepancies in third party sockets
   private checkExtDiscrepancies(delta: DeltaDto) {
-    let diffDeltas: any = [];
-    for (const socket_i of this.incomingDeltaRecord) {
-      if (socket_i.socketId !== delta.socketId) { // do not check the socket that originated this delta
+    let diffDeltas: DeltaDto[] = [];
+    for (const socketRecord of this.incomingDeltaRecord) {
+      if (socketRecord.socketId !== delta.socketId) { // do not check the socket that originated this delta
+        const disc = this.buildExtDiscrepancies(delta, socketRecord);
+        diffDeltas = diffDeltas.concat(disc);
+        /*
         const extSocketRecord = delta.localRecord.find(extSocket_i => extSocket_i.socketId === socket_i.socketId);
-        if (!extSocketRecord) {
+        if (!extSocketRecord) { // no record for socket in incoming delta; all discrepant
           for (const eachDelta of socket_i.deltas) {
             diffDeltas.push(eachDelta);
           }
         } else { // record exists in incoming delta -> check delta ids
-          const lastExtDeltaId = extSocketRecord.deltaId; // get the last delta id for this socket
-          const lastIntDeltaId = socket_i.deltas[socket_i.deltas.length-1].localId;
+          const lastExtDeltaId = extSocketRecord.deltaId; // get the last delta id for this socket in incoming delta record
+          const lastIntDeltaId = socket_i.deltas[socket_i.deltas.length-1].localId; // get last delta id for this socket in internal record
           if (lastIntDeltaId > lastExtDeltaId) { // if local state has changes that are not present in incoming delta, add to diff deltas array
             const sliceIndex = socket_i.deltas.findIndex((record_i: DeltaDto) => record_i.localId === lastExtDeltaId);
             const slice = socket_i.deltas.slice(sliceIndex + 1);
@@ -157,6 +160,46 @@ export class DeltaService {
             };
           }
         }
+        */
+      }
+    }
+    return diffDeltas;
+  }
+
+  private buildExtDiscrepancies(delta: DeltaDto, socketRecord: DeltaRecord): DeltaDto[] {
+    let diffDeltas: DeltaDto[] = [];
+    const incomingSocketRecord = delta.localRecord.find((record: DeltaDtoRecord) => record.socketId === socketRecord.socketId);
+    if (!incomingSocketRecord) { // no record for socket in incoming delta; all discrepant
+      for (const eachDelta of socketRecord.deltas) {
+        diffDeltas.push(eachDelta);
+      };
+    } else { // record exists in incoming delta -> check for discrepancies
+      const slice = this.sliceDeltas(incomingSocketRecord, socketRecord);
+      diffDeltas = diffDeltas.concat(slice);
+      /*
+      const lastExtDeltaId = incomingSocketRecord.deltaId;
+      const lastIntDeltaId = socketRecord.deltas[socketRecord.deltas.length-1].localId;
+      if (lastIntDeltaId > lastExtDeltaId) {
+        const sliceIndex = socketRecord.deltas.findIndex((deltaRecord: DeltaDto) => deltaRecord.localId === lastExtDeltaId);
+        const slice = socketRecord.deltas.slice(sliceIndex + 1);
+        for (const each of slice) {
+          diffDeltas.push(each);
+        }
+      }
+      */
+    }
+    return diffDeltas;
+  }
+
+  private sliceDeltas(incomingSocketRecord: DeltaDtoRecord, socketRecord: DeltaRecord) {
+    const diffDeltas: DeltaDto[] = [];
+    const lastExtDeltaId = incomingSocketRecord.deltaId;
+    const lastIntDeltaId = socketRecord.deltas[socketRecord.deltas.length-1].localId;
+    if (lastIntDeltaId > lastExtDeltaId) {
+      const sliceIndex = socketRecord.deltas.findIndex((deltaRecord: DeltaDto) => deltaRecord.localId === lastExtDeltaId);
+      const slice = socketRecord.deltas.slice(sliceIndex + 1);
+      for (const each of slice) {
+        diffDeltas.push(each);
       }
     }
     return diffDeltas;
@@ -227,6 +270,7 @@ export class DeltaService {
     return delta;
   }
 
+  // revises a local delta record due to precedence adjustments
   private reviseDeltaRecord(deltaDto: DeltaDto, netChange: number) {
     console.log('revising delta record')
     if (deltaDto.socketId !== this.socketId) {
@@ -322,7 +366,7 @@ export class DeltaService {
 
   public activatePurging() {
     console.log('activating purging');
-    this.purgeInterval = setInterval(() => this.buildPurgeList(), 15000);
+    this.purgeInterval = setInterval(() => this.buildPurgeList(), 60000);
   }
 
   public stopPurging() {

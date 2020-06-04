@@ -457,7 +457,7 @@
             {
               "file": "apps/doc-collab/src/app/delta/delta.service.ts",
               "ext": ".ts",
-              "mtime": 1591215290198.6516
+              "mtime": 1591278675391.8804
             },
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
@@ -1940,7 +1940,7 @@
       {
         "file": "apps/doc-collab/src/app/delta/delta.service.ts",
         "ext": ".ts",
-        "mtime": 1591215290198.6516
+        "mtime": 1591278675391.8804
       },
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
