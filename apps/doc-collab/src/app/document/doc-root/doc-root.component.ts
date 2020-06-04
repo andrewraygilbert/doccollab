@@ -16,16 +16,21 @@ export class DocRootComponent implements OnInit, OnDestroy {
   public editorContent: any;
   public documentId: string;
   public activeDocument: any;
+  public editorInstance: any;
+  private socketId: string;
+  public collabDoc: boolean;
+  public collabReady: boolean = false;
+  private dbDoc: any;
+  private collabTimeout: any;
+  public disconnected: boolean;
+
+  // SUBSCRIPTIONS
   private resDocument$: Subscription;
   private inEditDoc$: Subscription;
   private getActiveDoc$: Subscription;
   private sendActiveDoc$: Subscription;
-  public editorInstance: any;
-  private socketId: string;
-  private collabDoc: boolean;
-  private collabReady: boolean = false;
-  private dbDoc: any;
-  private collabTimeout: any;
+  private disconnection$: Subscription;
+  private reconnection$: Subscription;
 
   private nullAttributes = {
     bold: false,
@@ -227,6 +232,14 @@ export class DocRootComponent implements OnInit, OnDestroy {
     clearTimeout(this.collabTimeout);
   }
 
+  private onDisconnection() {
+    this.disconnected = true;
+  }
+
+  private onReconnection() {
+    this.disconnected = false;
+  }
+
   /**
    * INITIALIZATION HELPERS
    */
@@ -250,6 +263,16 @@ export class DocRootComponent implements OnInit, OnDestroy {
         console.log('INCOMING DELTA', delta);
         this.readyForReconcile(delta);
       });
+    this.disconnection$ = this.coreSocket.onDisconnect()
+      .subscribe(event => {
+        console.log('disconnection');
+        this.onDisconnection();
+      })
+    this.reconnection$ = this.coreSocket.onReconnect()
+      .subscribe(event => {
+        console.log('reconnection');
+        this.onReconnection();
+      })
   }
 
   private setSocketId() {

@@ -402,7 +402,7 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
               "ext": ".html",
-              "mtime": 1590513332462.3772
+              "mtime": 1591284544653.0322
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
@@ -457,7 +457,7 @@
             {
               "file": "apps/doc-collab/src/app/delta/delta.service.ts",
               "ext": ".ts",
-              "mtime": 1591278675391.8804
+              "mtime": 1591280179538.2559
             },
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
@@ -467,7 +467,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.html",
               "ext": ".html",
-              "mtime": 1590511660347.6736
+              "mtime": 1591284254484.6138
             },
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.spec.ts",
@@ -477,7 +477,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
               "ext": ".ts",
-              "mtime": 1590866193734.4287
+              "mtime": 1591284219157.319
             },
             {
               "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
@@ -1885,7 +1885,7 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
         "ext": ".html",
-        "mtime": 1590513332462.3772
+        "mtime": 1591284544653.0322
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
@@ -1940,7 +1940,7 @@
       {
         "file": "apps/doc-collab/src/app/delta/delta.service.ts",
         "ext": ".ts",
-        "mtime": 1591278675391.8804
+        "mtime": 1591280179538.2559
       },
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
@@ -1950,7 +1950,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.html",
         "ext": ".html",
-        "mtime": 1590511660347.6736
+        "mtime": 1591284254484.6138
       },
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.spec.ts",
@@ -1960,7 +1960,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
         "ext": ".ts",
-        "mtime": 1590866193734.4287
+        "mtime": 1591284219157.319
       },
       {
         "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
