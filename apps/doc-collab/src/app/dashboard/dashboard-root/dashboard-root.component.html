@@ -4,10 +4,14 @@
       <div class='row justify-content-center' style='margin-top: 16px;'>
         <h1>Dashboard</h1>
       </div>
-      <div class='row justify-content-end'>
-        <button class='btn btn-info' (click)='createDocModal.open()'>Create Doc</button>&nbsp;
-        <button class='btn btn-secondary' (click)='logout()' data-cy='logout-btn'>Logout</button>
-
+      <div class='row' style='padding-bottom: 16px;'>
+        <div class='col'>
+          <span *ngIf='userInfo' style='font-weight: bold; font-size: 17px;'>{{userInfo.username}}</span>
+        </div>
+        <div class='col-auto'>
+          <button class='btn btn-info' (click)='createDocModal.open()'>Create Doc</button>&nbsp;
+          <button class='btn btn-secondary' (click)='logout()' data-cy='logout-btn'>Logout</button>
+        </div>
       </div>
       <div class='row'>
         <div class='col-12'>

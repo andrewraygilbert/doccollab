@@ -327,7 +327,7 @@
             {
               "file": "apps/doc-collab/src/app/auth/auth.service.ts",
               "ext": ".ts",
-              "mtime": 1590419938070.4192
+              "mtime": 1591372035887.3494
             },
             {
               "file": "apps/doc-collab/src/app/auth/login/login.component.css",
@@ -402,7 +402,7 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
               "ext": ".html",
-              "mtime": 1591366389439.2856
+              "mtime": 1591372889387.8901
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
@@ -412,7 +412,7 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.ts",
               "ext": ".ts",
-              "mtime": 1590505580215.9712
+              "mtime": 1591372300877.4473
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard.module.ts",
@@ -467,7 +467,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.html",
               "ext": ".html",
-              "mtime": 1591285949468.7346
+              "mtime": 1591373327235.2725
             },
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.spec.ts",
@@ -477,7 +477,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
               "ext": ".ts",
-              "mtime": 1591284219157.319
+              "mtime": 1591373085658.604
             },
             {
               "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
@@ -572,7 +572,7 @@
             {
               "file": "apps/doc-collab/src/assets/stylesheets/quill.snow.css",
               "ext": ".css",
-              "mtime": 1589238604108.7285
+              "mtime": 1591367960957.917
             },
             {
               "file": "apps/doc-collab/src/assets/stylesheets/scripts/bootstrap.min.js",
@@ -1810,7 +1810,7 @@
       {
         "file": "apps/doc-collab/src/app/auth/auth.service.ts",
         "ext": ".ts",
-        "mtime": 1590419938070.4192
+        "mtime": 1591372035887.3494
       },
       {
         "file": "apps/doc-collab/src/app/auth/login/login.component.css",
@@ -1885,7 +1885,7 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
         "ext": ".html",
-        "mtime": 1591366389439.2856
+        "mtime": 1591372889387.8901
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
@@ -1895,7 +1895,7 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.ts",
         "ext": ".ts",
-        "mtime": 1590505580215.9712
+        "mtime": 1591372300877.4473
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard.module.ts",
@@ -1950,7 +1950,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.html",
         "ext": ".html",
-        "mtime": 1591285949468.7346
+        "mtime": 1591373327235.2725
       },
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.spec.ts",
@@ -1960,7 +1960,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
         "ext": ".ts",
-        "mtime": 1591284219157.319
+        "mtime": 1591373085658.604
       },
       {
         "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
@@ -2055,7 +2055,7 @@
       {
         "file": "apps/doc-collab/src/assets/stylesheets/quill.snow.css",
         "ext": ".css",
-        "mtime": 1589238604108.7285
+        "mtime": 1591367960957.917
       },
       {
         "file": "apps/doc-collab/src/assets/stylesheets/scripts/bootstrap.min.js",

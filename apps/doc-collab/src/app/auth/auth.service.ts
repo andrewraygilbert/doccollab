@@ -35,6 +35,16 @@ export class AuthService {
       });
   }
 
+  public getUserInfo() {
+    const token = this.getToken();
+    let userInfo: any;
+    if (token) {
+      userInfo = JSON.parse(atob(token.split('.')[1]));
+    }
+    console.log('userInfo', userInfo);
+    return userInfo;
+  }
+
   public async logout(): Promise<void> {
     this.localStorage.removeItem('access_token');
   }

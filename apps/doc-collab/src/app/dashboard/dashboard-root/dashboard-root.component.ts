@@ -18,6 +18,7 @@ export class DashboardRootComponent implements OnInit, OnDestroy {
   private returnDocuments$: any;
   public myDocuments: AppDocument[] = [];
   public collabDocs: AppDocument[] = [];
+  public userInfo: any;
 
   constructor(
     private authService: AuthService,
@@ -37,6 +38,10 @@ export class DashboardRootComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl('login');
       })
       .catch(err => console.log(err));
+  }
+
+  public getUserInfo() {
+    this.userInfo = this.authService.getUserInfo();
   }
 
   public createDoc(newDoc: CreateDocDto) {
@@ -88,6 +93,7 @@ export class DashboardRootComponent implements OnInit, OnDestroy {
       if (!this.coreSocket.socket) {
         this.coreSocket.initializeSocket();
       }
+      this.getUserInfo();
       this.initializeSubscriptions();
       this.getDocuments();
     }

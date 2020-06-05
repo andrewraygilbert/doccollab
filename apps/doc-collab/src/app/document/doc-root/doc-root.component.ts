@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { CoreSocketService } from '../../socket/core-socket.service';
 import { DeltaService } from '../../delta/delta.service';
 import { DeltaDto } from '@doccollab/api-interfaces';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'doccollab-doc-root',
@@ -23,6 +24,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
   private dbDoc: any;
   private collabTimeout: any;
   public disconnected: boolean;
+  public userInfo: any;
 
   // SUBSCRIPTIONS
   private resDocument$: Subscription;
@@ -51,6 +53,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private authService: AuthService,
     private route: ActivatedRoute,
     private docService: DocService,
     private coreSocket: CoreSocketService,
@@ -74,6 +77,10 @@ export class DocRootComponent implements OnInit, OnDestroy {
     };
     console.log('SAVING -> dto', dto);
     this.docService.saveDocument(dto);
+  }
+
+  public getUserInfo() {
+    this.userInfo = this.authService.getUserInfo();
   }
 
   /**
@@ -302,6 +309,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     // subscribe to socket event observables
     this.initializeSubscriptions();
     this.setSocketId();
+    this.getUserInfo();
   }
 
   ngOnDestroy(): void {
