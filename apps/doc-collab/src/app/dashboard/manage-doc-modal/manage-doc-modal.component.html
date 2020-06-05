@@ -1,7 +1,12 @@
 <ng-template #manageDocModal let-manageDocModal>
   <div class='container-fluid' style='padding: 24px;'>
     <div class='row justify-content-end'>
-      <span class='modal-close' (click)='manageDocModal.close()'>&times;</span>
+      <div class='col-auto' style='color: #bbb; font-size: 42px; cursor: pointer; margin-right: 16px;' aria-label="Close" (click)="manageDocModal.close('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </div>
+    </div>
+    <div class='row justify-content-center' style='margin-bottom: 16px;'>
+      <h2>Manage Document</h2>
     </div>
     <div class='row justify-content-center'>
       <div class='col-8'>
@@ -14,14 +19,15 @@
         </form>
       </div>
     </div>
-    <div class='row justify-content-center' style='padding-top: 16px;'>
+    <div class='row justify-content-center' style='margin-top: 36px;'>
       <div class='col-8'>
         <h4>Collaborators</h4>
-        <ul>
+        <ol *ngIf='doc.collaborators.length > 0'>
           <li *ngFor='let collaborator of doc.collaborators'>
             {{ collaborator.firstName }}
           </li>
-        </ul>
+        </ol>
+        <span *ngIf='doc.collaborators.length === 0' style='color: #909090; font-style: italic;'>No Collaborators</span>
       </div>
     </div>
   </div>

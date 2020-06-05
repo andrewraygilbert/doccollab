@@ -1,7 +1,7 @@
 <div class='container-fluid'>
   <div class='row justify-content-center'>
     <div class='col-8'>
-      <div class='row justify-content-center'>
+      <div class='row justify-content-center' style='margin-top: 16px;'>
         <h1>Dashboard</h1>
       </div>
       <div class='row justify-content-end'>
@@ -11,24 +11,26 @@
       </div>
       <div class='row'>
         <div class='col-12'>
-          <div class='row'>
+          <div class='row' style='padding-bottom: 24px;'>
             <div class='col-12'>
               <h3>My Docs</h3>
-              <ul>
+              <ol *ngIf='myDocuments.length > 0'>
                 <li *ngFor='let doc of myDocuments'>
                   <span (click)='openDocument(doc._id)' style='cursor: pointer;'>{{ doc.title }} &nbsp; </span><span style='font-style: italic; font-size: 13px; color: #aaa; cursor: pointer;' (click)='manageDocModal.open(doc)'>Manage</span>
                 </li>
-              </ul>
+              </ol>
+              <span class='create-doc-btn' style='margin-left: 22px;' (click)='createDocModal.open()'>Create a Document</span>
             </div>
           </div>
           <div class='row'>
             <div class='col-12'>
               <h3>Collaboration Docs</h3>
-              <ul>
+              <ol *ngIf='collabDocs.length > 0'>
                 <li *ngFor='let doc of collabDocs'>
                   <span (click)='openDocument(doc._id)' style='cursor: pointer;'>{{ doc.title }} &nbsp; </span>
                 </li>
-              </ul>
+              </ol>
+              <span *ngIf='collabDocs.length === 0' style='font-style: italic; color: #aaa;'>No Collaboration Documents</span>
             </div>
           </div>
         </div>

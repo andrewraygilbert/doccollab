@@ -382,7 +382,7 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/create-doc-modal/create-doc-modal.component.html",
               "ext": ".html",
-              "mtime": 1589223202873.0903
+              "mtime": 1591364944269.9514
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/create-doc-modal/create-doc-modal.component.spec.ts",
@@ -397,12 +397,12 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.css",
               "ext": ".css",
-              "mtime": 1588707647562.7393
+              "mtime": 1591365254433.3218
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
               "ext": ".html",
-              "mtime": 1591284544653.0322
+              "mtime": 1591366389439.2856
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
@@ -437,7 +437,7 @@
             {
               "file": "apps/doc-collab/src/app/dashboard/manage-doc-modal/manage-doc-modal.component.html",
               "ext": ".html",
-              "mtime": 1590504387026.8745
+              "mtime": 1591364752138.566
             },
             {
               "file": "apps/doc-collab/src/app/dashboard/manage-doc-modal/manage-doc-modal.component.spec.ts",
@@ -467,7 +467,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.html",
               "ext": ".html",
-              "mtime": 1591284254484.6138
+              "mtime": 1591285949468.7346
             },
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.spec.ts",
@@ -1865,7 +1865,7 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/create-doc-modal/create-doc-modal.component.html",
         "ext": ".html",
-        "mtime": 1589223202873.0903
+        "mtime": 1591364944269.9514
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/create-doc-modal/create-doc-modal.component.spec.ts",
@@ -1880,12 +1880,12 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.css",
         "ext": ".css",
-        "mtime": 1588707647562.7393
+        "mtime": 1591365254433.3218
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.html",
         "ext": ".html",
-        "mtime": 1591284544653.0322
+        "mtime": 1591366389439.2856
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/dashboard-root/dashboard-root.component.spec.ts",
@@ -1920,7 +1920,7 @@
       {
         "file": "apps/doc-collab/src/app/dashboard/manage-doc-modal/manage-doc-modal.component.html",
         "ext": ".html",
-        "mtime": 1590504387026.8745
+        "mtime": 1591364752138.566
       },
       {
         "file": "apps/doc-collab/src/app/dashboard/manage-doc-modal/manage-doc-modal.component.spec.ts",
@@ -1950,7 +1950,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.html",
         "ext": ".html",
-        "mtime": 1591284254484.6138
+        "mtime": 1591285949468.7346
       },
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.spec.ts",

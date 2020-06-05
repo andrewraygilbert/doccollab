@@ -1,0 +1,8 @@
+.create-doc-btn {
+  color: rgb(127, 191, 243);
+  cursor: pointer;
+}
+
+.create-doc-btn:hover {
+  color: rgb(28, 127, 207);
+}
