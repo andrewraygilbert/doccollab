@@ -33,6 +33,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
   private sendActiveDoc$: Subscription;
   private disconnection$: Subscription;
   private reconnection$: Subscription;
+  private receiveActiveDoc$: Subscription;
 
   private nullAttributes = {
     bold: false,
@@ -285,11 +286,11 @@ export class DocRootComponent implements OnInit, OnDestroy {
         console.log('unsubscribing from getActiveDoc');
         this.getActiveDoc$.unsubscribe();
       }
-      if (this.sendActiveDoc$) {
+      if (this.receiveActiveDoc$) {
         console.log('unsubscribing from sendActiveDoc');
-        this.sendActiveDoc$.unsubscribe();
+        this.receiveActiveDoc$.unsubscribe();
       }
-      this.sendActiveDoc$ = this.docService.receiveActiveDoc$()
+      this.receiveActiveDoc$ = this.docService.receiveActiveDoc$()
         .subscribe(res => {
           this.receiveActiveDocReconnect(res);
         })
@@ -317,7 +318,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
       .subscribe((req) => {
         this.sendActiveDoc(req);
       });
-    this.sendActiveDoc$ = this.docService.receiveActiveDoc$()
+    this.receiveActiveDoc$ = this.docService.receiveActiveDoc$()
       .subscribe((activeDoc) => {
         this.receiveActiveDoc(activeDoc);
       });
