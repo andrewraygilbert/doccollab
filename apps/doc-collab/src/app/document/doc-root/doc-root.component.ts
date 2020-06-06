@@ -261,12 +261,6 @@ export class DocRootComponent implements OnInit, OnDestroy {
   }
 
   private onReconnection() {
-    // is doc collaborative?
-      // no -> just continue with the last contents of the editor
-      // yes -> need to request from room and db
-        // yes from room -> use from room
-        // no from room -> use last contents of editor
-    this.reqDocument(this.documentId);
     if (this.activeDocument.collaborators.length > 0) {
       this.collabReady = false;
       this.disconnected = false;
@@ -278,6 +272,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
           this.handleDocOnReconnect(res);
         });
     }
+    this.reqDocument(this.documentId);
   }
 
   /**
