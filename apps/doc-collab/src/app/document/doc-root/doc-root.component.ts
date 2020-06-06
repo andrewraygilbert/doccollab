@@ -210,6 +210,22 @@ export class DocRootComponent implements OnInit, OnDestroy {
     }
   }
 
+  private receiveActiveDocReconnect(activeDoc: any) {
+    console.log('receiving from reconnect');
+    if (this.collabTimeout) {
+      this.clearCollabTimeout();
+    }
+    if (this.editorInstance) {
+      this.deltaService.setIncomingRecord(activeDoc);
+      this.editorInstance.setContents(activeDoc.content, 'silent');
+      this.activeDocument = this.dbDoc;
+      this.collabReady = true;
+    } else {
+      console.log('editor instance not ready yet');
+      setTimeout(() => this.receiveActiveDoc(activeDoc), 250);
+    }
+  }
+
   private handleDocIn(res: any) {
     this.collabDoc = res.collab;
     if (res.collab) {
@@ -225,10 +241,11 @@ export class DocRootComponent implements OnInit, OnDestroy {
 
   // sets the editor content after a reconnect event
   private handleDocOnReconnect(res: any) {
+    console.log('handleDocRec res', res);
     if (res.collab) {
       console.log('COLLABORATION -> setting timer to receive doc - RECONNECT');
       this.dbDoc = res.document;
-      this.startReconnectTimeout();
+      this.startCollabReconnectTimeout();
     }
   }
 
@@ -248,7 +265,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.collabTimeout = setTimeout(() => this.useDbDoc(), 5000);
   }
 
-  private startReconnectTimeout() {
+  private startCollabReconnectTimeout() {
     this.collabTimeout = setTimeout(() => this.useLastContent(), 5000);
   }
 
@@ -265,8 +282,17 @@ export class DocRootComponent implements OnInit, OnDestroy {
       this.collabReady = false;
       this.disconnected = false;
       if (this.getActiveDoc$) {
+        console.log('unsubscribing from getActiveDoc');
         this.getActiveDoc$.unsubscribe();
       }
+      if (this.sendActiveDoc$) {
+        console.log('unsubscribing from sendActiveDoc');
+        this.sendActiveDoc$.unsubscribe();
+      }
+      this.sendActiveDoc$ = this.docService.receiveActiveDoc$()
+        .subscribe(res => {
+          this.receiveActiveDocReconnect(res);
+        })
       this.getActiveDoc$ = this.docService.getActiveDoc$()
         .subscribe(res => {
           this.handleDocOnReconnect(res);
@@ -281,8 +307,10 @@ export class DocRootComponent implements OnInit, OnDestroy {
 
   // subscribe to socket event observables
   private initializeSubscriptions() {
+    console.log('re-initializing?');
     this.resDocument$ = this.docService.resDocument$()
       .subscribe(res => {
+        console.log('in original resDoc sub');
         this.handleDocIn(res);
       });
     this.getActiveDoc$ = this.docService.getActiveDoc$()
