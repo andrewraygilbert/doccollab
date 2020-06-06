@@ -282,9 +282,9 @@ export class DocRootComponent implements OnInit, OnDestroy {
     if (this.activeDocument.collaborators.length > 0) {
       this.collabReady = false;
       this.disconnected = false;
-      if (this.getActiveDoc$) {
-        console.log('unsubscribing from getActiveDoc');
-        this.getActiveDoc$.unsubscribe();
+      if (this.resDocument$) {
+        console.log('unsubscribing from resDocument$');
+        this.resDocument$.unsubscribe();
       }
       if (this.receiveActiveDoc$) {
         console.log('unsubscribing from sendActiveDoc');
