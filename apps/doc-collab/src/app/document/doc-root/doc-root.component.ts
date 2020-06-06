@@ -294,7 +294,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
         .subscribe(res => {
           this.receiveActiveDocReconnect(res);
         })
-      this.getActiveDoc$ = this.docService.getActiveDoc$()
+      this.resDocument$ = this.docService.resDocument$()
         .subscribe(res => {
           this.handleDocOnReconnect(res);
         });
