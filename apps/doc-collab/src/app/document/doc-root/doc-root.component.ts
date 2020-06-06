@@ -208,19 +208,27 @@ export class DocRootComponent implements OnInit, OnDestroy {
       console.log('editor instance not ready yet');
       setTimeout(() => this.receiveActiveDoc(activeDoc), 250);
     }
-
   }
 
   private handleDocIn(res: any) {
     this.collabDoc = res.collab;
     if (res.collab) {
-      console.log('COLLABORATION -> setting timer to receive doc');
+      console.log('COLLABORATION -> setting timer to receive doc - INITIAL');
       this.dbDoc = res.document;
       this.startCollabTimeout();
     } else {
-      console.log('NO COLLABORATION -> setting doc from db');
+      console.log('NO COLLABORATION -> setting doc from db - INITIAL');
       this.editorContent = res.document.content;
       this.activeDocument = res.document;
+    }
+  }
+
+  // sets the editor content after a reconnect event
+  private handleDocOnReconnect(res: any) {
+    if (res.collab) {
+      console.log('COLLABORATION -> setting timer to receive doc - RECONNECT');
+      this.dbDoc = res.document;
+      this.startReconnectTimeout();
     }
   }
 
@@ -231,8 +239,17 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.collabReady = true;
   }
 
+  private useLastContent() {
+    console.log('using the last active content');
+    this.collabReady = true;
+  }
+
   private startCollabTimeout() {
-    this.collabTimeout = setTimeout(() => this.useDbDoc(), 3000);
+    this.collabTimeout = setTimeout(() => this.useDbDoc(), 5000);
+  }
+
+  private startReconnectTimeout() {
+    this.collabTimeout = setTimeout(() => this.useLastContent(), 5000);
   }
 
   private clearCollabTimeout() {
@@ -244,7 +261,23 @@ export class DocRootComponent implements OnInit, OnDestroy {
   }
 
   private onReconnection() {
-    this.disconnected = false;
+    // is doc collaborative?
+      // no -> just continue with the last contents of the editor
+      // yes -> need to request from room and db
+        // yes from room -> use from room
+        // no from room -> use last contents of editor
+    this.reqDocument(this.documentId);
+    if (this.activeDocument.collaborators.length > 0) {
+      this.collabReady = false;
+      this.disconnected = false;
+      if (this.getActiveDoc$) {
+        this.getActiveDoc$.unsubscribe();
+      }
+      this.getActiveDoc$ = this.docService.getActiveDoc$()
+        .subscribe(res => {
+          this.handleDocOnReconnect(res);
+        });
+    }
   }
 
   /**
