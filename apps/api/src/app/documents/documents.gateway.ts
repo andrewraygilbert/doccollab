@@ -4,7 +4,6 @@ import { DocumentsService } from './documents.service';
 import { CreateDocDto } from '@doccollab/api-interfaces';
 import { UseGuards } from '@nestjs/common';
 import { WsGuard } from '../auth/ws.guard';
-import { isObject } from 'util';
 
 @WebSocketGateway({"pingTimeout" : 30000})
 export class DocumentsGateway {
@@ -15,12 +14,6 @@ export class DocumentsGateway {
   constructor(
     private docService: DocumentsService,
     ) {}
-
-  @UseGuards(WsGuard)
-  @SubscribeMessage('testing')
-  async testing(@ConnectedSocket() socket: Socket, @MessageBody() body: any) {
-    console.log('received testing event');
-  }
 
   @UseGuards(WsGuard)
   @SubscribeMessage('create.document')
@@ -89,6 +82,15 @@ export class DocumentsGateway {
       socket.emit('add.collaborator.res', collaborator);
     } else {
       throw new WsException('Something went wrong');
+    }
+  }
+
+  @UseGuards(WsGuard)
+  @SubscribeMessage('leave.room')
+  public leaveRoom(socket: Socket) {
+    console.log('leaving the room');
+    if (Object.keys(socket.rooms)[1]) {
+      socket.leave(Object.keys(socket.rooms)[1]);
     }
   }
 

@@ -375,6 +375,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.getActiveDoc$.unsubscribe();
     this.deltaService.resetAllDeltas();
     this.deltaService.stopPurging();
+    this.docService.leaveRoom();
   }
 
 }

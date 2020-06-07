@@ -477,7 +477,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
               "ext": ".ts",
-              "mtime": 1591459018342.3403
+              "mtime": 1591540853504.1304
             },
             {
               "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
@@ -487,7 +487,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc.service.ts",
               "ext": ".ts",
-              "mtime": 1590590213861.4363
+              "mtime": 1591540837466.8916
             },
             {
               "file": "apps/doc-collab/src/app/document/document.module.ts",
@@ -864,7 +864,7 @@
             {
               "file": "apps/api/src/app/documents/documents.gateway.ts",
               "ext": ".ts",
-              "mtime": 1590596264017.833
+              "mtime": 1591540874970.254
             },
             {
               "file": "apps/api/src/app/documents/documents.module.ts",
@@ -1960,7 +1960,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
         "ext": ".ts",
-        "mtime": 1591459018342.3403
+        "mtime": 1591540853504.1304
       },
       {
         "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
@@ -1970,7 +1970,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc.service.ts",
         "ext": ".ts",
-        "mtime": 1590590213861.4363
+        "mtime": 1591540837466.8916
       },
       {
         "file": "apps/doc-collab/src/app/document/document.module.ts",
@@ -2282,7 +2282,7 @@
       {
         "file": "apps/api/src/app/documents/documents.gateway.ts",
         "ext": ".ts",
-        "mtime": 1590596264017.833
+        "mtime": 1591540874970.254
       },
       {
         "file": "apps/api/src/app/documents/documents.module.ts",

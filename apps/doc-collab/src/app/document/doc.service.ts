@@ -39,6 +39,10 @@ export class DocService {
     this.coreSocket.socket.emit('out.edit.doc', delta)
   }
 
+  public leaveRoom() {
+    this.coreSocket.socket.emit('leave.room');
+  }
+
   public inEditDoc$(): Observable<any> {
     return fromEvent(this.coreSocket.socket.on(), 'in.edit.doc');
   }
