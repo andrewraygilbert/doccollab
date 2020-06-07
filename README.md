@@ -27,6 +27,7 @@ This repo contains an in progress **prototype** of a document collaboration appl
   * The app autosaves changes made to documents | **NOT Functional**
   * The app synchronizes changes across active users | **Functional**
   * Users can see which collaborators are actively editing the same document | **NOT Functional**
+  * App maintains synchronized state across users upon disconnection/reconnection events | **Functional**
 * Document Management
   * Users can see a list of their documents | **Functional**
   * Users can create documents | **Functional**
