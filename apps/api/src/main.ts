@@ -6,9 +6,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { RedisIoAdapter } from './app/adapter/redis-adapter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useWebSocketAdapter(new RedisIoAdapter(app));
   if (environment.production === false) {
     app.enableCors({
       origin: ['http://localhost:4200', 'http://10.0.0.168:4200'],

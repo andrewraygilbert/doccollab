@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 38);
+/******/ 	return __webpack_require__(__webpack_require__.s = 41);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1363,13 +1363,47 @@ const DocumentSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__["Schema"]({
 
 /***/ }),
 /* 38 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = __webpack_require__(39);
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RedisIoAdapter; });
+/* harmony import */ var _nestjs_platform_socket_io__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
+/* harmony import */ var _nestjs_platform_socket_io__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_nestjs_platform_socket_io__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var socket_io_redis__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
+/* harmony import */ var socket_io_redis__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(socket_io_redis__WEBPACK_IMPORTED_MODULE_1__);
+
+
+class RedisIoAdapter extends _nestjs_platform_socket_io__WEBPACK_IMPORTED_MODULE_0__["IoAdapter"] {
+    createIOServer(port, options) {
+        const server = super.createIOServer(port, options);
+        const redisAdapter = socket_io_redis__WEBPACK_IMPORTED_MODULE_1__({ host: 'localhost', port: 6379 });
+        server.adapter(redisAdapter);
+        return server;
+    }
+}
 
 
 /***/ }),
 /* 39 */
+/***/ (function(module, exports) {
+
+module.exports = require("@nestjs/platform-socket.io");
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports) {
+
+module.exports = require("socket.io-redis");
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(42);
+
+
+/***/ }),
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1380,6 +1414,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nestjs_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_core__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _app_app_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24);
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(10);
+/* harmony import */ var _app_adapter_redis_adapter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(38);
 /**
  * This is not a production server yet!
  * This is only a minimal backend to get started.
@@ -1388,9 +1423,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 function bootstrap() {
     return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
         const app = yield _nestjs_core__WEBPACK_IMPORTED_MODULE_1__["NestFactory"].create(_app_app_module__WEBPACK_IMPORTED_MODULE_2__[/* AppModule */ "a"]);
+        app.useWebSocketAdapter(new _app_adapter_redis_adapter__WEBPACK_IMPORTED_MODULE_4__[/* RedisIoAdapter */ "a"](app));
         if (_environments_environment__WEBPACK_IMPORTED_MODULE_3__[/* environment */ "a"].production === false) {
             app.enableCors({
                 origin: ['http://localhost:4200', 'http://10.0.0.168:4200'],
