@@ -9,7 +9,8 @@ This repo contains an in progress **prototype** of a document collaboration appl
 * Backend Framework: NestJS
 * Backend Runtime: Node.js
 * Workspace: Nx
-* Real-time Data Library: Socket.io
+* Real-Time Data Library: Socket.io
+* Real-Time Data Store: Redis
 
 ## Core Features
 
@@ -37,4 +38,5 @@ This repo contains an in progress **prototype** of a document collaboration appl
 * Optimization
   * Delta records are purged regularly to minimize memory load | **Functional**
   * App maintains consistent state across clients when users type in the exact same spot at the same time | **Partially Functional**
+  * Websocket gateway uses Redis data store to enable horizontal scaling | **Functional**
 
