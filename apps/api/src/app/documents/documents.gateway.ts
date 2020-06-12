@@ -92,7 +92,7 @@ export class DocumentsGateway {
   public leaveRoom(socket: Socket) {
     console.log('leaving the room');
     if (Object.keys(socket.rooms)[1]) {
-      this.redis.leaveRoom(Object.keys(socket.rooms)[1], socket.id);
+      this.redis.leaveRoom(`room:${Object.keys(socket.rooms)[1]}`, socket.id);
       socket.leave(Object.keys(socket.rooms)[1]);
     }
   }
@@ -102,7 +102,8 @@ export class DocumentsGateway {
       socket.leave(Object.keys(socket.rooms)[1]);
     }
     socket.join(docId);
-    this.redis.joinRoom(docId, socket.id);
+    console.log('join room id: ', docId);
+    this.redis.joinRoom(`room:${docId}`, socket.id);
   }
 
 }

@@ -1,6 +1,7 @@
 import { WebSocketGateway, OnGatewayConnection, OnGatewayDisconnect, ConnectedSocket } from '@nestjs/websockets';
 import { Injectable } from '@nestjs/common';
 import { Socket } from 'socket.io';
+import { RedisCoreService } from '../redis/redis-core/redis-core.service';
 
 @Injectable()
 @WebSocketGateway({"pingTimeout" : 30000})
@@ -8,15 +9,34 @@ export class SocketCoreGateway implements OnGatewayConnection, OnGatewayDisconne
 
   private connectedSockets = 0;
 
+  constructor(
+    private redis: RedisCoreService,
+  ) {}
+
   // called when a new socket connects
-  handleConnection(@ConnectedSocket() socket: Socket) {
+  public handleConnection(@ConnectedSocket() socket: Socket) {
     this.connectedSockets++;
-    console.log(`*** SOCKET CONNECTED [${this.connectedSockets}] ***`);
+    this.redis.linkUserToSocket(socket);
+    console.log(`*** SOCKET CONNECTED [${socket.id}] ***`);
+    socket.on('disconnecting', (reason) => this.gracefulDisconnect(socket));
   }
 
   // called when a socket disconnects
-  handleDisconnect() {
+  public handleDisconnect(@ConnectedSocket() socket: Socket) {
     this.connectedSockets--;
     console.log(`~~~ SOCKET DISCONNECTED [${this.connectedSockets}] ~~~`);
   }
+
+
+  /**
+   * HELPERS
+   */
+
+  private gracefulDisconnect(socket: Socket) {
+    if (Object.keys(socket.rooms)[1]) {
+      this.redis.leaveRoom(Object.keys(socket.rooms)[1], socket.id);
+    }
+    this.redis.unlinkUserFromSocket(socket);
+  }
+
 }
