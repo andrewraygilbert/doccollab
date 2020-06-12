@@ -9,6 +9,7 @@ import { DocumentsModule } from './documents/documents.module';
 import { SocketsModule } from './sockets/sockets.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { environment } from './../environments/environment';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { environment } from './../environments/environment';
     AuthModule,
     UsersModule,
     DocumentsModule,
-    SocketsModule
+    SocketsModule,
+    RedisModule
   ],
   controllers: [AppController],
   providers: [AppService]

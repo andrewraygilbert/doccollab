@@ -869,12 +869,12 @@
             {
               "file": "apps/api/src/app/documents/documents.gateway.ts",
               "ext": ".ts",
-              "mtime": 1591540874970.254
+              "mtime": 1591974677565.94
             },
             {
               "file": "apps/api/src/app/documents/documents.module.ts",
               "ext": ".ts",
-              "mtime": 1589237986263.4163
+              "mtime": 1591974705197.1255
             },
             {
               "file": "apps/api/src/app/documents/documents.service.spec.ts",
@@ -885,6 +885,21 @@
               "file": "apps/api/src/app/documents/documents.service.ts",
               "ext": ".ts",
               "mtime": 1590511886421.2412
+            },
+            {
+              "file": "apps/api/src/app/redis/redis-core.service.spec.ts",
+              "ext": ".ts",
+              "mtime": 1591974067950.8484
+            },
+            {
+              "file": "apps/api/src/app/redis/redis-core.service.ts",
+              "ext": ".ts",
+              "mtime": 1591974655421.5996
+            },
+            {
+              "file": "apps/api/src/app/redis/redis.module.ts",
+              "ext": ".ts",
+              "mtime": 1591974900454.1672
             },
             {
               "file": "apps/api/src/app/sockets/socket-core.gateway.spec.ts",
@@ -1214,6 +1229,14 @@
           "files": []
         }
       },
+      "redis": {
+        "type": "npm",
+        "name": "redis",
+        "data": {
+          "version": "^3.0.2",
+          "files": []
+        }
+      },
       "reflect-metadata": {
         "type": "npm",
         "name": "reflect-metadata",
@@ -1371,6 +1394,14 @@
         "name": "@types/passport-local",
         "data": {
           "version": "^1.0.33",
+          "files": []
+        }
+      },
+      "@types/redis": {
+        "type": "npm",
+        "name": "@types/redis",
+        "data": {
+          "version": "^2.8.22",
           "files": []
         }
       },
@@ -1622,6 +1653,21 @@
         {
           "type": "static",
           "source": "api",
+          "target": "@angular/core"
+        },
+        {
+          "type": "static",
+          "source": "api",
+          "target": "redis"
+        },
+        {
+          "type": "static",
+          "source": "api",
+          "target": "@angular/common"
+        },
+        {
+          "type": "static",
+          "source": "api",
           "target": "@nestjs/core"
         }
       ],
@@ -1655,6 +1701,7 @@
       "passport-jwt": [],
       "passport-local": [],
       "quill": [],
+      "redis": [],
       "reflect-metadata": [],
       "rxjs": [],
       "socket.io-redis": [],
@@ -1675,6 +1722,7 @@
       "@types/node": [],
       "@types/passport-jwt": [],
       "@types/passport-local": [],
+      "@types/redis": [],
       "@types/socket.io-redis": [],
       "codelyzer": [],
       "cypress": [],
@@ -2320,12 +2368,12 @@
       {
         "file": "apps/api/src/app/documents/documents.gateway.ts",
         "ext": ".ts",
-        "mtime": 1591540874970.254
+        "mtime": 1591974677565.94
       },
       {
         "file": "apps/api/src/app/documents/documents.module.ts",
         "ext": ".ts",
-        "mtime": 1589237986263.4163
+        "mtime": 1591974705197.1255
       },
       {
         "file": "apps/api/src/app/documents/documents.service.spec.ts",
@@ -2336,6 +2384,21 @@
         "file": "apps/api/src/app/documents/documents.service.ts",
         "ext": ".ts",
         "mtime": 1590511886421.2412
+      },
+      {
+        "file": "apps/api/src/app/redis/redis-core.service.spec.ts",
+        "ext": ".ts",
+        "mtime": 1591974067950.8484
+      },
+      {
+        "file": "apps/api/src/app/redis/redis-core.service.ts",
+        "ext": ".ts",
+        "mtime": 1591974655421.5996
+      },
+      {
+        "file": "apps/api/src/app/redis/redis.module.ts",
+        "ext": ".ts",
+        "mtime": 1591974900454.1672
       },
       {
         "file": "apps/api/src/app/sockets/socket-core.gateway.spec.ts",

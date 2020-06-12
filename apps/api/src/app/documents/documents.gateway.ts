@@ -4,6 +4,7 @@ import { DocumentsService } from './documents.service';
 import { CreateDocDto } from '@doccollab/api-interfaces';
 import { UseGuards } from '@nestjs/common';
 import { WsGuard } from '../auth/ws.guard';
+import { RedisCoreService } from '../redis/redis-core/redis-core.service';
 
 @WebSocketGateway({"pingTimeout" : 30000})
 export class DocumentsGateway {
@@ -13,6 +14,7 @@ export class DocumentsGateway {
 
   constructor(
     private docService: DocumentsService,
+    private redis: RedisCoreService,
     ) {}
 
   @UseGuards(WsGuard)
@@ -90,6 +92,7 @@ export class DocumentsGateway {
   public leaveRoom(socket: Socket) {
     console.log('leaving the room');
     if (Object.keys(socket.rooms)[1]) {
+      this.redis.leaveRoom(Object.keys(socket.rooms)[1], socket.id);
       socket.leave(Object.keys(socket.rooms)[1]);
     }
   }
@@ -99,7 +102,7 @@ export class DocumentsGateway {
       socket.leave(Object.keys(socket.rooms)[1]);
     }
     socket.join(docId);
-    console.log('joining a room');
+    this.redis.joinRoom(docId, socket.id);
   }
 
 }

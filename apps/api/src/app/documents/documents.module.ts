@@ -8,6 +8,7 @@ import { DocumentSchema } from './document.schema';
 import { AuthModule } from '../auth/auth.module';
 import { UserSchema } from '../users/user.schema';
 import { UsersModule } from '../users/users.module';
+import { RedisModule } from '../redis/redis.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UsersModule } from '../users/users.module';
     ]),
     AuthModule,
     UsersModule,
+    RedisModule
   ],
   controllers: [DocumentsController],
   providers: [DocumentsService, DocumentsGateway]
