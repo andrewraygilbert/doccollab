@@ -19,7 +19,16 @@
     </div>
   </div>
   <div class='row justify-content-center' style='height: 400px; padding-top: 24px;'>
-    <div class='col-10'>
+    <div class='col-3'>
+      <h5>Active Users</h5>
+      <ul *ngIf='activeUsers && activeUsers.length > 0'>
+        <li *ngFor='let user of activeUsers'>
+          {{user.firstName}}
+        </li>
+      </ul>
+      <span style='color: #aaa; font-style: italic' *ngIf='!activeUsers || activeUsers.length === 0'>None</span>
+    </div>
+    <div class='col-9'>
       <quill-editor #quillEditor [(ngModel)]='editorContent' format='object' placeholder='Start writing here...' (onContentChanged)='contentChange($event)' (onEditorCreated)='editorInstance = $event'></quill-editor>
     </div>
   </div>

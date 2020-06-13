@@ -25,6 +25,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
   private collabTimeout: any;
   public disconnected: boolean;
   public userInfo: any;
+  public activeUsers: any;
 
   // SUBSCRIPTIONS
   private resDocument$: Subscription;
@@ -34,6 +35,8 @@ export class DocRootComponent implements OnInit, OnDestroy {
   private disconnection$: Subscription;
   private reconnection$: Subscription;
   private receiveActiveDoc$: Subscription;
+  private newActiveCollab$: Subscription;
+  private removeActiveCollab$: Subscription;
 
   private nullAttributes = {
     bold: false,
@@ -232,6 +235,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     if (res.collab) {
       console.log('COLLABORATION -> setting timer to receive doc - INITIAL');
       this.dbDoc = res.document;
+      this.activeUsers = res.activeUsers;
       this.startCollabTimeout();
     } else {
       console.log('NO COLLABORATION -> setting doc from db - INITIAL');
@@ -246,6 +250,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     if (res.collab) {
       console.log('COLLABORATION -> setting timer to receive doc - RECONNECT');
       this.dbDoc = res.document;
+      this.activeUsers = res.activeUsers;
       this.startCollabReconnectTimeout();
     }
   }
@@ -331,11 +336,21 @@ export class DocRootComponent implements OnInit, OnDestroy {
       .subscribe(event => {
         console.log('disconnection');
         this.onDisconnection();
-      })
+      });
     this.reconnection$ = this.coreSocket.onReconnect()
       .subscribe(event => {
         console.log('reconnection');
         this.onReconnection();
+      });
+    this.newActiveCollab$ = this.docService.newActiveCollab$()
+      .subscribe(user => {
+        console.log('new collaborator', user);
+        this.addActiveCollab(user);
+      });
+    this.removeActiveCollab$ = this.docService.removeActiveCollab$()
+      .subscribe(user => {
+        console.log('remove collaborator', user);
+        this.removeActiveCollab(user);
       })
   }
 
@@ -346,6 +361,17 @@ export class DocRootComponent implements OnInit, OnDestroy {
 
   private reqDocument(docId: string) {
     this.docService.reqDocument(docId);
+  }
+
+  private addActiveCollab(user: any) {
+    this.activeUsers.push(user);
+  }
+
+  private removeActiveCollab(user: any) {
+    const index = this.activeUsers.findIndex((user_i: any) => user_i._id === user._id);
+    if (index !== -1) {
+      this.activeUsers.splice(index, 1);
+    }
   }
 
   /**

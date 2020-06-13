@@ -52,4 +52,12 @@ export class DocService {
     return activeDoc.pipe(first());
   }
 
+  public newActiveCollab$(): Observable<any> {
+    return fromEvent(this.coreSocket.socket.on(), 'new.active.collab');
+  }
+
+  public removeActiveCollab$(): Observable<any> {
+    return fromEvent(this.coreSocket.socket.on(), 'remove.active.collab');
+  }
+
 }

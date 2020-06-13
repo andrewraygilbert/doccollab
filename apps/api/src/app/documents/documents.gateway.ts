@@ -52,13 +52,25 @@ export class DocumentsGateway {
   async getDocument(@ConnectedSocket() socket: Socket, @MessageBody() body: any) {
     const document = await this.docService.getDocument(socket, body);
     if (document.collaborators.length > 0) {
-      // ask any sockets in the room to send the active document and state
-      this.server.to(document._id).emit('get.document.active', { 'socketId' : socket.id });
-      const docOut = {
+      let docOut: any = {
         document: document,
-        collab: true
+        collab: true,
+        activeSockets: false,
+        activeUsers: []
       };
-      socket.emit('res.document', docOut);
+      const sockets = await this.redis.checkActiveCollabs(body._id);
+      if (sockets.length > 0) {
+        console.log('ACTIVE SOCKETS')
+        const users = await this.redis.getActiveUsers(sockets);
+        console.log('active users info', users);
+        docOut.activeSockets = true;
+        docOut.activeUsers = users;
+        this.server.to(document._id).emit('get.document.active', { 'socketId' : socket.id });
+        socket.emit('res.document', docOut);
+      } else {
+        console.log('NO ACTIVE SOCKETS');
+        socket.emit('res.document', docOut);
+      }
       this.joinDocRoom(socket, document._id);
     } else {
       const docOut = {
@@ -89,21 +101,26 @@ export class DocumentsGateway {
 
   @UseGuards(WsGuard)
   @SubscribeMessage('leave.room')
-  public leaveRoom(socket: Socket) {
+  public async leaveRoom(socket: Socket) {
     console.log('leaving the room');
     if (Object.keys(socket.rooms)[1]) {
-      this.redis.leaveRoom(`room:${Object.keys(socket.rooms)[1]}`, socket.id);
+      const roomId = Object.keys(socket.rooms)[1];
+      this.redis.leaveRoom(roomId, socket.id);
+      const user = await this.redis.getUser(socket.id);
+      socket.broadcast.to(roomId).emit('remove.active.collab', user);
       socket.leave(Object.keys(socket.rooms)[1]);
     }
   }
 
-  private joinDocRoom(socket: Socket, docId: string) {
+  private async joinDocRoom(socket: Socket, docId: string) {
     if (Object.keys(socket.rooms)[1]) {
       socket.leave(Object.keys(socket.rooms)[1]);
     }
     socket.join(docId);
     console.log('join room id: ', docId);
-    this.redis.joinRoom(`room:${docId}`, socket.id);
+    const user = await this.redis.getUser(socket.id);
+    socket.broadcast.to(docId).emit('new.active.collab', user);
+    this.redis.joinRoom(docId, socket.id);
   }
 
 }
