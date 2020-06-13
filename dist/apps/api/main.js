@@ -895,7 +895,10 @@ let SocketCoreGateway = class SocketCoreGateway {
      */
     gracefulDisconnect(socket) {
         if (Object.keys(socket.rooms)[1]) {
-            this.redis.leaveRoom(Object.keys(socket.rooms)[1], socket.id);
+            const roomId = Object.keys(socket.rooms)[1];
+            this.redis.leaveRoom(roomId, socket.id);
+            const user = this.redis.getUser(socket.id);
+            socket.broadcast.to(roomId).emit('remove.active.collab', user);
         }
         this.redis.unlinkUserFromSocket(socket);
     }

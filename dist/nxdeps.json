@@ -909,7 +909,7 @@
             {
               "file": "apps/api/src/app/sockets/socket-core.gateway.ts",
               "ext": ".ts",
-              "mtime": 1591992601437.5757
+              "mtime": 1592070950650.6711
             },
             {
               "file": "apps/api/src/app/sockets/sockets.module.ts",
@@ -2398,7 +2398,7 @@
       {
         "file": "apps/api/src/app/sockets/socket-core.gateway.ts",
         "ext": ".ts",
-        "mtime": 1591992601437.5757
+        "mtime": 1592070950650.6711
       },
       {
         "file": "apps/api/src/app/sockets/sockets.module.ts",
