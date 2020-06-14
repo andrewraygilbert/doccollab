@@ -196,6 +196,7 @@ export class DeltaService {
   private identifyDiscrepancies(delta: DeltaDto): DeltaDto {
     let diffDeltas = this.checkExtDiscrepancies(delta);
     diffDeltas = this.checkIntDiscrepancies(delta, diffDeltas);
+    console.log('diffDeltas', diffDeltas);
     if (diffDeltas.length > 0) { // if discrepancies, reconcile
       return this.reconciler(delta, diffDeltas);
     }
@@ -284,6 +285,7 @@ export class DeltaService {
         netChange = netChange - op.delete;
       }
     };
+    console.log('netChange', netChange);
     return netChange;
   }
 
