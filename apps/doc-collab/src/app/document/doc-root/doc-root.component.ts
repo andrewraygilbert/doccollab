@@ -364,7 +364,8 @@ export class DocRootComponent implements OnInit, OnDestroy {
   }
 
   private addActiveCollab(user: any) {
-    if (!this.activeUsers.find((user_i: any) => user_i._id === user._id)) {
+    const index = this.activeUsers.findIndex((user_i: any) => user_i._id === user._id);
+    if (index === -1) {
       this.activeUsers.push(user);
     }
   }

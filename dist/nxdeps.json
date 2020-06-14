@@ -477,7 +477,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
               "ext": ".ts",
-              "mtime": 1592069369814.8394
+              "mtime": 1592141210510.5786
             },
             {
               "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
@@ -2031,7 +2031,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
         "ext": ".ts",
-        "mtime": 1592069369814.8394
+        "mtime": 1592141210510.5786
       },
       {
         "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
