@@ -364,14 +364,14 @@ export class DocRootComponent implements OnInit, OnDestroy {
   }
 
   private addActiveCollab(user: any) {
-    const index = this.activeUsers.findIndex((user_i: any) => user_i._id === user._id);
+    const index = this.activeUsers.findIndex((user_i: any) => user_i.userId === user.userId);
     if (index === -1) {
       this.activeUsers.push(user);
     }
   }
 
   private removeActiveCollab(user: any) {
-    const index = this.activeUsers.findIndex((user_i: any) => user_i._id === user._id);
+    const index = this.activeUsers.findIndex((user_i: any) => user_i.userId === user.userId);
     if (index !== -1) {
       this.activeUsers.splice(index, 1);
     }
