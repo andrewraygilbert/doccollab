@@ -355,6 +355,7 @@ let RedisCoreService = class RedisCoreService {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const userModel = yield this.wsAuth.getUser(socket.handshake.query.token);
             this.client.hmset(`socket:${socket.id}`, [
+                'socketId', socket.id,
                 'userId', userModel._id.toString(),
                 'username', userModel.username,
                 'firstName', userModel.firstName,
@@ -894,11 +895,12 @@ let SocketCoreGateway = class SocketCoreGateway {
      * HELPERS
      */
     gracefulDisconnect(socket) {
+        console.log('gracefully disconnecting', socket.id);
         if (Object.keys(socket.rooms)[1]) {
             const roomId = Object.keys(socket.rooms)[1];
             this.redis.leaveRoom(roomId, socket.id);
-            const user = this.redis.getUser(socket.id);
-            socket.broadcast.to(roomId).emit('remove.active.collab', user);
+            console.log('user gracefully disconnecting from room', socket.id);
+            socket.broadcast.to(roomId).emit('remove.active.collab', { 'socketId': socket.id });
         }
         this.redis.unlinkUserFromSocket(socket);
     }
@@ -1460,8 +1462,7 @@ let DocumentsGateway = class DocumentsGateway {
             if (Object.keys(socket.rooms)[1]) {
                 const roomId = Object.keys(socket.rooms)[1];
                 this.redis.leaveRoom(roomId, socket.id);
-                const user = yield this.redis.getUser(socket.id);
-                socket.broadcast.to(roomId).emit('remove.active.collab', user);
+                socket.broadcast.to(roomId).emit('remove.active.collab', { 'socketId': socket.id });
                 socket.leave(Object.keys(socket.rooms)[1]);
             }
         });

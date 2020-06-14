@@ -370,8 +370,8 @@ export class DocRootComponent implements OnInit, OnDestroy {
     }
   }
 
-  private removeActiveCollab(user: any) {
-    const index = this.activeUsers.findIndex((user_i: any) => user_i.userId === user.userId);
+  private removeActiveCollab(userInfo: any) {
+    const index = this.activeUsers.findIndex((user_i: any) => user_i.socketId === userInfo.socketId);
     if (index !== -1) {
       this.activeUsers.splice(index, 1);
     }

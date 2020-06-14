@@ -106,8 +106,7 @@ export class DocumentsGateway {
     if (Object.keys(socket.rooms)[1]) {
       const roomId = Object.keys(socket.rooms)[1];
       this.redis.leaveRoom(roomId, socket.id);
-      const user = await this.redis.getUser(socket.id);
-      socket.broadcast.to(roomId).emit('remove.active.collab', user);
+      socket.broadcast.to(roomId).emit('remove.active.collab', { 'socketId': socket.id });
       socket.leave(Object.keys(socket.rooms)[1]);
     }
   }

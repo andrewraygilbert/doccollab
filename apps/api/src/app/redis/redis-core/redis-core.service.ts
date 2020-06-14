@@ -26,6 +26,7 @@ export class RedisCoreService {
   public async linkUserToSocket(socket: Socket) {
     const userModel = await this.wsAuth.getUser(socket.handshake.query.token);
     this.client.hmset(`socket:${socket.id}`, [
+      'socketId', socket.id,
       'userId', userModel._id.toString(),
       'username', userModel.username,
       'firstName', userModel.firstName,
