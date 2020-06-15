@@ -13,7 +13,7 @@ async function bootstrap() {
   app.useWebSocketAdapter(new RedisIoAdapter(app));
   if (environment.production === false) {
     app.enableCors({
-      origin: ['http://localhost:4200', 'http://10.0.0.168:4200'],
+      origin: ['http://localhost:4200', 'http://172.16.101.30:4200'],
       methods: ['GET', 'POST', 'PUT', 'DELETE'],
       allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin']
     });

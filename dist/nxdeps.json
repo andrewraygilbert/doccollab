@@ -287,7 +287,7 @@
             {
               "file": "apps/doc-collab/proxy.conf.json",
               "ext": ".json",
-              "mtime": 1589497115534.229
+              "mtime": 1592171374076.255
             },
             {
               "file": "apps/doc-collab/src/app/app.component.css",
@@ -457,7 +457,7 @@
             {
               "file": "apps/doc-collab/src/app/delta/delta.service.ts",
               "ext": ".ts",
-              "mtime": 1592167968503.855
+              "mtime": 1592225357680.5044
             },
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
@@ -617,7 +617,7 @@
             {
               "file": "apps/doc-collab/src/environments/environment.ts",
               "ext": ".ts",
-              "mtime": 1588877092169.2896
+              "mtime": 1592223446300.3098
             },
             {
               "file": "apps/doc-collab/src/favicon.ico",
@@ -959,12 +959,12 @@
             {
               "file": "apps/api/src/environments/environment.ts",
               "ext": ".ts",
-              "mtime": 1591741383864.7563
+              "mtime": 1592223458182.802
             },
             {
               "file": "apps/api/src/main.ts",
               "ext": ".ts",
-              "mtime": 1591738911508.9185
+              "mtime": 1592223422473.71
             },
             {
               "file": "apps/api/tsconfig.app.json",
@@ -1841,7 +1841,7 @@
       {
         "file": "apps/doc-collab/proxy.conf.json",
         "ext": ".json",
-        "mtime": 1589497115534.229
+        "mtime": 1592171374076.255
       },
       {
         "file": "apps/doc-collab/src/app/app.component.css",
@@ -2011,7 +2011,7 @@
       {
         "file": "apps/doc-collab/src/app/delta/delta.service.ts",
         "ext": ".ts",
-        "mtime": 1592167968503.855
+        "mtime": 1592225357680.5044
       },
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
@@ -2171,7 +2171,7 @@
       {
         "file": "apps/doc-collab/src/environments/environment.ts",
         "ext": ".ts",
-        "mtime": 1588877092169.2896
+        "mtime": 1592223446300.3098
       },
       {
         "file": "apps/doc-collab/src/favicon.ico",
@@ -2448,12 +2448,12 @@
       {
         "file": "apps/api/src/environments/environment.ts",
         "ext": ".ts",
-        "mtime": 1591741383864.7563
+        "mtime": 1592223458182.802
       },
       {
         "file": "apps/api/src/main.ts",
         "ext": ".ts",
-        "mtime": 1591738911508.9185
+        "mtime": 1592223422473.71
       },
       {
         "file": "apps/api/tsconfig.app.json",

@@ -1648,7 +1648,7 @@ function bootstrap() {
         app.useWebSocketAdapter(new _app_adapter_redis_adapter__WEBPACK_IMPORTED_MODULE_4__[/* RedisIoAdapter */ "a"](app));
         if (_environments_environment__WEBPACK_IMPORTED_MODULE_3__[/* environment */ "a"].production === false) {
             app.enableCors({
-                origin: ['http://localhost:4200', 'http://10.0.0.168:4200'],
+                origin: ['http://localhost:4200', 'http://172.16.101.30:4200'],
                 methods: ['GET', 'POST', 'PUT', 'DELETE'],
                 allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin']
             });
