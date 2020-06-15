@@ -27,6 +27,19 @@ export class DocRootComponent implements OnInit, OnDestroy {
   public userInfo: any;
   public activeUsers: any;
 
+  public quillConfig = {
+    toolbar: {
+      container: [
+        ['bold', 'italic', 'underline', 'strike'],
+        [{'list': 'ordered'}, {'list': 'bullet'}],
+        [{'indent': '+1'}, {'indent': '-1'}],
+        [{'size': ['small', false, 'large', 'huge']}],
+        [{'header': [1, 2, 3, 4, 5, 6, false]}],
+        ['clean']
+      ]
+    }
+  }
+
   // SUBSCRIPTIONS
   private resDocument$: Subscription;
   private inEditDoc$: Subscription;
