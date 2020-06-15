@@ -188,7 +188,7 @@ export class DeltaService {
       }
     } else if (lastDeltaForThisSocket && lastDeltaForThisSocket.deltaId < this.localDeltaTracker) { //HERE?
       let adj = 0;
-      if (this.outgoingDeltaRecord[0].localId > 0) { // adjusts for missing outgoing deltas after reconnect event
+      if (this.outgoingDeltaRecord.length > 0 && this.outgoingDeltaRecord[0].localId > 0) { // adjusts for missing outgoing deltas after reconnect event
         adj = this.outgoingDeltaRecord[0].localId;
       }
       const diff = this.outgoingDeltaRecord.slice(lastDeltaForThisSocket.deltaId - adj + 1); // OR HERE?
