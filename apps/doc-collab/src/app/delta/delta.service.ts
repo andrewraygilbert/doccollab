@@ -179,7 +179,7 @@ export class DeltaService {
   // checks for discrepancies with this socket
   private checkIntDiscrepancies(delta: DeltaDto, diffDeltas: any[]) {
     console.log('outgoingRecord', this.outgoingDeltaRecord);
-    const lastDeltaForThisSocket = delta.localRecord.find((socket_i) => socket_i.socketId === this.socketId);
+    let lastDeltaForThisSocket = delta.localRecord.find((socket_i) => socket_i.socketId === this.socketId);
     console.log('lastDeltaForThisSocket', lastDeltaForThisSocket);
     console.log('localDeltaTracker', this.localDeltaTracker);
     if (!lastDeltaForThisSocket && this.localDeltaTracker > 0) {
@@ -187,7 +187,11 @@ export class DeltaService {
         diffDeltas.push(eachDelta);
       }
     } else if (lastDeltaForThisSocket && lastDeltaForThisSocket.deltaId < this.localDeltaTracker) { //HERE?
-      const diff = this.outgoingDeltaRecord.slice(lastDeltaForThisSocket.deltaId + 1); // OR HERE?
+      let adj = 0;
+      if (this.outgoingDeltaRecord[0].localId > 0) { // adjusts for missing outgoing deltas after reconnect event
+        adj = this.outgoingDeltaRecord[0].localId;
+      }
+      const diff = this.outgoingDeltaRecord.slice(lastDeltaForThisSocket.deltaId - adj + 1); // OR HERE?
       for (const eachDelta of diff) {
         diffDeltas.push(eachDelta);
       };
