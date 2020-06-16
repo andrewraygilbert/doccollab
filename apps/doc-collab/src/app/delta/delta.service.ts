@@ -17,6 +17,10 @@ export class DeltaService {
     private coreSocket: CoreSocketService,
   ) { }
 
+  /**
+   * SOCKET ID MANAGERS
+   */
+
   public setSocketId(socketId: string) {
     this.socketId = socketId;
   }
@@ -341,7 +345,7 @@ export class DeltaService {
   }
 
   /**
-   * GENERAL HELPERS
+   * PURGE DELTA RECORDS
    */
 
   public activatePurging() {
@@ -409,6 +413,31 @@ export class DeltaService {
     console.log('incomingIndex post', this.incomingDeltaRecord);
   }
 
+  /**
+   * RECONNECTIONS
+   */
+
+  // sets the local state after a reconnection event using info from another active user
+  public setIncomingRecord(activeDoc: any) {
+    this.incomingDeltaRecord = [];
+    for (let record of activeDoc.incomingRecord) {
+      if (record.socketId !== this.socketId) {
+        this.incomingDeltaRecord.push(record);
+      }
+    };
+    if (activeDoc.outgoingRecord.length > 0) {
+      this.incomingDeltaRecord.push({
+        socketId: activeDoc.fromSocketId,
+        deltas: activeDoc.outgoingRecord
+      });
+    }
+  }
+
+
+  /**
+   * GENERAL HELPERS
+   */
+
   public resetAllDeltas(): void {
     this.outgoingDeltaRecord = [];
     this.incomingDeltaRecord = [];
@@ -429,22 +458,6 @@ export class DeltaService {
   public getOutgoingRecord() {
     console.log('getOutgoingRecord', this.outgoingDeltaRecord);
     return this.outgoingDeltaRecord;
-  }
-
-  // sets the local state based on active doc from another socket
-  public setIncomingRecord(activeDoc: any) {
-    this.incomingDeltaRecord = [];
-    for (let record of activeDoc.incomingRecord) {
-      if (record.socketId !== this.socketId) {
-        this.incomingDeltaRecord.push(record);
-      }
-    };
-    if (activeDoc.outgoingRecord.length > 0) {
-      this.incomingDeltaRecord.push({
-        socketId: activeDoc.fromSocketId,
-        deltas: activeDoc.outgoingRecord
-      });
-    }
   }
 
 }

@@ -1,7 +1,7 @@
 import { SubscribeMessage, WebSocketGateway, ConnectedSocket, MessageBody, WsException, WebSocketServer } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 import { DocumentsService } from './documents.service';
-import { CreateDocDto } from '@doccollab/api-interfaces';
+import { CreateDocDto, DocOutDto } from '@doccollab/api-interfaces';
 import { UseGuards } from '@nestjs/common';
 import { WsGuard } from '../auth/ws.guard';
 import { RedisCoreService } from '../redis/redis-core/redis-core.service';
@@ -51,31 +51,35 @@ export class DocumentsGateway {
   @SubscribeMessage('req.document')
   async getDocument(@ConnectedSocket() socket: Socket, @MessageBody() body: any) {
     const document = await this.docService.getDocument(socket, body);
-    if (document.collaborators.length > 0) {
-      let docOut: any = {
-        document: document,
-        collab: true,
-        activeSockets: false,
-        activeUsers: []
-      };
+    let docOut: DocOutDto;
+    if (document.collaborators.length > 0) { // if doc has collaborators
       const sockets = await this.redis.checkActiveCollabs(body._id);
-      if (sockets.length > 0) {
-        console.log('ACTIVE SOCKETS')
+      if (sockets.length > 0) { // collab and active sockets
         const users = await this.redis.getActiveUsers(sockets);
-        console.log('active users info', users);
-        docOut.activeSockets = true;
-        docOut.activeUsers = users;
-        this.server.to(document._id).emit('get.document.active', { 'socketId' : socket.id });
+        docOut = {
+          document: document,
+          collab: true,
+          activeSockets: true,
+          activeUsers: users
+        };
         socket.emit('res.document', docOut);
-      } else {
-        console.log('NO ACTIVE SOCKETS');
+        this.server.to(document._id).emit('get.document.active', { 'socketId' : socket.id }); // ask active sockets for copy of doc
+      } else { // collaborative but NO active sockets
+        docOut = {
+          document: document,
+          collab: true,
+          activeSockets: false,
+          activeUsers: []
+        };
         socket.emit('res.document', docOut);
       }
       this.joinDocRoom(socket, document._id);
-    } else {
-      const docOut = {
+    } else { // if doc has NO collaborators
+      docOut = {
         document: document,
-        collab: false
+        collab: false,
+        activeSockets: false,
+        activeUsers: []
       };
       socket.emit('res.document', docOut);
       this.joinDocRoom(socket, document._id);

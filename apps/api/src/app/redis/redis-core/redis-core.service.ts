@@ -5,6 +5,7 @@ import { WsAuth } from '../../auth/ws.auth';
 import { Socket } from 'socket.io';
 import { promisify } from 'util';
 import { WsException } from '@nestjs/websockets';
+import { RedisUser } from '@doccollab/api-interfaces';
 
 type redisFn = (key: string) => Promise<any>;
 
@@ -58,15 +59,15 @@ export class RedisCoreService {
     }
   }
 
-  public async checkActiveCollabs(docId: string) {
+  public async checkActiveCollabs(docId: string): Promise<string[]> {
     const docIdString = docId.toString();
     const array = await this.asyncSmembers(`room:${docIdString}`);
     console.log('array from check', array);
     return array;
   }
 
-  public async getActiveUsers(sockets: string[]) {
-    let activeUsers: any = [];
+  public async getActiveUsers(sockets: string[]): Promise<RedisUser[]> {
+    let activeUsers: RedisUser[] = [];
     for (const socket of sockets) {
       const userInfo = await this.asyncHgetall(`socket:${socket}`);
       if (userInfo) {
@@ -76,7 +77,7 @@ export class RedisCoreService {
     return activeUsers;
   }
 
-  public async getUser(socketId: string): Promise<any> {
+  public async getUser(socketId: string): Promise<RedisUser> {
     const user = await this.asyncHgetall(`socket:${socketId}`);
     console.log('user from get user', user);
     if (!user) {

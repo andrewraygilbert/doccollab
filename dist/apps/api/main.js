@@ -1408,33 +1408,37 @@ let DocumentsGateway = class DocumentsGateway {
     getDocument(socket, body) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const document = yield this.docService.getDocument(socket, body);
-            if (document.collaborators.length > 0) {
-                let docOut = {
-                    document: document,
-                    collab: true,
-                    activeSockets: false,
-                    activeUsers: []
-                };
+            let docOut;
+            if (document.collaborators.length > 0) { // if doc has collaborators
                 const sockets = yield this.redis.checkActiveCollabs(body._id);
-                if (sockets.length > 0) {
-                    console.log('ACTIVE SOCKETS');
+                if (sockets.length > 0) { // collab and active sockets
                     const users = yield this.redis.getActiveUsers(sockets);
-                    console.log('active users info', users);
-                    docOut.activeSockets = true;
-                    docOut.activeUsers = users;
-                    this.server.to(document._id).emit('get.document.active', { 'socketId': socket.id });
+                    docOut = {
+                        document: document,
+                        collab: true,
+                        activeSockets: true,
+                        activeUsers: users
+                    };
                     socket.emit('res.document', docOut);
+                    this.server.to(document._id).emit('get.document.active', { 'socketId': socket.id }); // ask active sockets for copy of doc
                 }
-                else {
-                    console.log('NO ACTIVE SOCKETS');
+                else { // collaborative but NO active sockets
+                    docOut = {
+                        document: document,
+                        collab: true,
+                        activeSockets: false,
+                        activeUsers: []
+                    };
                     socket.emit('res.document', docOut);
                 }
                 this.joinDocRoom(socket, document._id);
             }
-            else {
-                const docOut = {
+            else { // if doc has NO collaborators
+                docOut = {
                     document: document,
-                    collab: false
+                    collab: false,
+                    activeSockets: false,
+                    activeUsers: []
                 };
                 socket.emit('res.document', docOut);
                 this.joinDocRoom(socket, document._id);

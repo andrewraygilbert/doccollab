@@ -1,5 +1,9 @@
 import { Document } from 'mongoose';
 
+/**
+ * USER INTERFACES
+ */
+
 export interface UserBase {
   firstName: string;
   lastName: string;
@@ -9,9 +13,12 @@ export interface UserBase {
   viewDocs: string[];
 }
 
-export interface AddCollabDto {
-  username: string;
-  docId: string;
+export interface UserModel extends UserBase, Document {
+  password: string;
+}
+
+export interface User extends UserBase {
+  _id: string;
 }
 
 export interface AuthUser extends User, UserBase {
@@ -26,16 +33,32 @@ export interface Collaborator extends UserBase {
   userId: string;
 }
 
-export interface AppDocBase {
-  title: string;
-  owner: Collaborator;
-  collaborators: [Collaborator];
-  viewers: [Collaborator];
-  content: {};
+export interface AddCollabDto {
+  username: string;
+  docId: string;
 }
+
+export interface RedisUser {
+  socketId: string,
+  userId: string,
+  username: string,
+  firstName: string,
+  lastName: string
+}
+
+/**
+ * DOCUMENT INTERFACES
+ */
 
 export interface CreateDocDto {
   title: string;
+}
+
+export interface AppDocBase extends CreateDocDto {
+  owner: Collaborator;
+  collaborators: Collaborator[];
+  viewers: Collaborator[];
+  content: {};
 }
 
 export interface AppDoc extends AppDocBase {
@@ -44,13 +67,24 @@ export interface AppDoc extends AppDocBase {
 
 export interface AppDocument extends AppDocBase, Document {}
 
-export interface User extends UserBase {
-  _id: string;
+export interface DocOutDto {
+  document: AppDoc,
+  activeUsers: RedisUser[],
+  activeSockets: boolean,
+  collab: boolean
 }
 
-export interface UserModel extends UserBase, Document {
-  password: string;
+export interface ActiveDocDto {
+  content: {},
+  incomingRecord: DeltaRecord[],
+  outgoingRecord: DeltaDto[],
+  fromSocketId: string,
+  toSocketId: string
 }
+
+/**
+ * AUTH INTERFACES
+ */
 
 export interface Credentials {
   username: string;
@@ -60,6 +94,10 @@ export interface Credentials {
 export interface TokenObject {
   access_token: string;
 }
+
+/**
+ * DELTA INTERFACES
+ */
 
 export interface DeltaRecord {
   socketId: string;

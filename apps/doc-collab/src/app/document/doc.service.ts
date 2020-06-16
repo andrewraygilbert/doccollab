@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CoreSocketService } from '../socket/core-socket.service';
 import { Observable, fromEvent } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { ActiveDocDto, DeltaDto } from '@doccollab/api-interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -23,19 +24,19 @@ export class DocService {
     this.coreSocket.socket.emit('save.document.req', dto);
   }
 
-  public resDocument$(): Observable<any> {
+  public receiveDocFromDb$(): Observable<any> {
     return fromEvent(this.coreSocket.socket.on(), 'res.document');
   }
 
-  public getActiveDoc$(): Observable<any> {
+  public sendActiveDoc$(): Observable<any> {
     return fromEvent(this.coreSocket.socket.on(), 'get.document.active');
   }
 
-  public sendActiveDoc(activeDoc: any): void {
+  public sendActiveDoc(activeDoc: ActiveDocDto): void {
     this.coreSocket.socket.emit('send.document.active', activeDoc);
   }
 
-  public outEditDoc(delta: any) {
+  public sendDelta(delta: DeltaDto) {
     this.coreSocket.socket.emit('out.edit.doc', delta)
   }
 
@@ -43,7 +44,7 @@ export class DocService {
     this.coreSocket.socket.emit('leave.room');
   }
 
-  public inEditDoc$(): Observable<any> {
+  public receiveDelta$(): Observable<any> {
     return fromEvent(this.coreSocket.socket.on(), 'in.edit.doc');
   }
 
