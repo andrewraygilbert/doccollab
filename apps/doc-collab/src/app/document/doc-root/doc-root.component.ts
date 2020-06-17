@@ -290,12 +290,12 @@ export class DocRootComponent implements OnInit, OnDestroy {
   private onDisconnection() {
     this.disconnected = true;
     this.disconnectionTime = new Date();
-    this.collabReady = false;
   }
 
   private onReconnection() {
     if (this.activeDocument.collaborators.length > 0) {
       this.disconnected = false;
+      this.collabReady = false;
       this.clearConnectionSubs();
       this.setReconnectionSubs();
     }
