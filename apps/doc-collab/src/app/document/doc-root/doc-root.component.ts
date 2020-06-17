@@ -19,13 +19,14 @@ export class DocRootComponent implements OnInit, OnDestroy {
   public activeDocument: any;
   public editorInstance: any;
   private socketId: string;
-  public collabDoc: boolean;
+  public isCollabDoc: boolean;
   public collabReady: boolean = false;
   private dbDoc: any;
   private collabTimeout: any;
   public disconnected: boolean;
   public userInfo: any;
   public activeUsers: any;
+  private disconnectionTime: Date;
 
   public quillConfig = {
     toolbar: {
@@ -230,26 +231,20 @@ export class DocRootComponent implements OnInit, OnDestroy {
     this.docService.reqDocument(docId);
   }
 
-  // receive the active document from an active collaborator
-  private receiveActiveDoc(activeDoc: ActiveDocDto) {
-    console.log('receiving activeDoc', activeDoc);
-    if (this.collabTimeout) {
-      this.clearCollabTimeout();
-    }
+  // silently sets the content of the editor
+  private setEditorContent(content: any) {
     if (this.editorInstance) {
-      this.deltaService.setIncomingRecord(activeDoc);
-      this.editorInstance.setContents(activeDoc.content, 'silent');
-      this.activeDocument = this.dbDoc;
+      this.editorInstance.setContents(content, 'silent');
       this.collabReady = true;
     } else {
-      console.log('editor instance not ready yet');
-      setTimeout(() => this.receiveActiveDoc(activeDoc), 250);
+      console.log('editor instance not ready to receive doc');
+      setTimeout(() => this.setEditorContent(content), 250);
     }
   }
 
   // receive doc from the database
   private handleDocFromDb(docDto: DocOutDto) {
-    this.collabDoc = docDto.collab;
+    this.isCollabDoc = docDto.collab;
     if (docDto.collab) {
       console.log('COLLABORATION -> setting timer to receive doc - INITIAL');
       this.dbDoc = docDto.document;
@@ -257,17 +252,27 @@ export class DocRootComponent implements OnInit, OnDestroy {
       this.startCollabTimeout();
     } else {
       console.log('NO COLLABORATION -> setting doc from db - INITIAL');
-      this.editorContent = docDto.document.content;
+      this.setEditorContent(docDto.document.content);
       this.activeDocument = docDto.document;
     }
+  }
+
+  // receive the active document from an active collaborator
+  private receiveActiveDoc(activeDoc: ActiveDocDto) {
+    console.log('receiving activeDoc', activeDoc);
+    if (this.collabTimeout) {
+      this.clearCollabTimeout();
+    }
+    this.deltaService.setIncomingRecord(activeDoc);
+    this.activeDocument = this.dbDoc;
+    this.setEditorContent(activeDoc.content);
   }
 
   // uses the doc from the database
   private useDbDoc() {
     console.log('NO COLLAB DOC -> using db doc bc no active doc received');
     this.activeDocument = this.dbDoc;
-    this.editorContent = this.dbDoc.content;
-    this.collabReady = true;
+    this.setEditorContent(this.dbDoc.content);
   }
 
   private startCollabTimeout() {
@@ -284,30 +289,37 @@ export class DocRootComponent implements OnInit, OnDestroy {
 
   private onDisconnection() {
     this.disconnected = true;
+    this.disconnectionTime = new Date();
+    this.collabReady = false;
   }
 
   private onReconnection() {
     if (this.activeDocument.collaborators.length > 0) {
-      this.collabReady = false;
       this.disconnected = false;
-      if (this.receiveDocFromDb$) {
-        console.log('unsubscribing from resDocument$');
-        this.receiveDocFromDb$.unsubscribe();
-      }
-      if (this.receiveActiveDoc$) {
-        console.log('unsubscribing from sendActiveDoc');
-        this.receiveActiveDoc$.unsubscribe();
-      }
-      this.receiveActiveDoc$ = this.docService.receiveActiveDoc$()
-        .subscribe(res => {
-          this.receiveActiveDocReconnect(res);
-        });
-      this.receiveDocFromDb$ = this.docService.receiveDocFromDb$()
-        .subscribe(res => {
-          this.handleDocOnReconnect(res);
-        });
+      this.clearConnectionSubs();
+      this.setReconnectionSubs();
     }
     this.reqDocument(this.documentId);
+  }
+
+  private clearConnectionSubs() {
+    if (this.receiveDocFromDb$) {
+      this.receiveDocFromDb$.unsubscribe();
+    }
+    if (this.receiveActiveDoc$) {
+      this.receiveActiveDoc$.unsubscribe();
+    }
+  }
+
+  private setReconnectionSubs() {
+    this.receiveActiveDoc$ = this.docService.receiveActiveDoc$()
+      .subscribe(res => {
+        this.receiveActiveDocReconnect(res);
+    });
+    this.receiveDocFromDb$ = this.docService.receiveDocFromDb$()
+      .subscribe(res => {
+        this.handleDocOnReconnect(res);
+    });
   }
 
   private startCollabReconnectTimeout() {
@@ -335,21 +347,16 @@ export class DocRootComponent implements OnInit, OnDestroy {
     if (this.collabTimeout) {
       this.clearCollabTimeout();
     }
-    if (this.editorInstance) {
-      this.deltaService.setIncomingRecord(activeDoc);
-      this.editorInstance.setContents(activeDoc.content, 'silent');
-      this.activeDocument = this.dbDoc;
-      this.collabReady = true;
-    } else {
-      console.log('editor instance not ready yet');
-      setTimeout(() => this.receiveActiveDoc(activeDoc), 250);
-    }
+    this.deltaService.setIncomingRecord(activeDoc);
+    this.activeDocument = this.dbDoc;
+    this.setEditorContent(activeDoc.content);
   }
 
   /**
    * ACTIVE USER MANAGEMENT
    */
 
+  // add an active collaborator
   private addActiveCollab(user: RedisUser) {
     const index = this.activeUsers.findIndex((user_i: any) => user_i.userId === user.userId);
     if (index === -1) {
@@ -357,6 +364,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     }
   }
 
+  // remove an active collaborator
   private removeActiveCollab(socket: {socketId: string} ) {
     const index = this.activeUsers.findIndex((user_i: any) => user_i.socketId === socket.socketId);
     if (index !== -1) {
@@ -406,7 +414,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
       .subscribe(user => {
         console.log('remove collaborator', user);
         this.removeActiveCollab(user);
-      })
+      });
   }
 
   private setSocketId() {
