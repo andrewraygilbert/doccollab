@@ -41,6 +41,7 @@ export class DocumentsService {
     if (this.verifyDocAccess(user._id, doc)) {
       console.log('saving doc');
       doc.content = dto.content;
+      doc.savedDate = new Date();
       await doc.save();
       return true;
     }

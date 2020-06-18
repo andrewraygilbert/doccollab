@@ -56,6 +56,7 @@ export interface CreateDocDto {
 
 export interface AppDocBase extends CreateDocDto {
   owner: Collaborator;
+  savedDate: Date;
   collaborators: Collaborator[];
   viewers: Collaborator[];
   content: {};

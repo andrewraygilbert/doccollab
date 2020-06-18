@@ -146,7 +146,7 @@
             {
               "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
               "ext": ".ts",
-              "mtime": 1592327156870.9736
+              "mtime": 1592407582220.7932
             },
             {
               "file": "libs/api-interfaces/tsconfig.json",
@@ -467,7 +467,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.html",
               "ext": ".html",
-              "mtime": 1592236077908.3533
+              "mtime": 1592403697142.8022
             },
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.spec.ts",
@@ -477,7 +477,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
               "ext": ".ts",
-              "mtime": 1592403455749.8867
+              "mtime": 1592408746414.8103
             },
             {
               "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
@@ -849,7 +849,7 @@
             {
               "file": "apps/api/src/app/documents/document.schema.ts",
               "ext": ".ts",
-              "mtime": 1589204971271.8027
+              "mtime": 1592407454258.566
             },
             {
               "file": "apps/api/src/app/documents/documents.controller.spec.ts",
@@ -884,7 +884,7 @@
             {
               "file": "apps/api/src/app/documents/documents.service.ts",
               "ext": ".ts",
-              "mtime": 1590511886421.2412
+              "mtime": 1592407592227.028
             },
             {
               "file": "apps/api/src/app/redis/redis-core/redis-core.service.spec.ts",
@@ -1804,7 +1804,7 @@
       {
         "file": "libs/api-interfaces/src/lib/api-interfaces.ts",
         "ext": ".ts",
-        "mtime": 1592327156870.9736
+        "mtime": 1592407582220.7932
       },
       {
         "file": "libs/api-interfaces/tsconfig.json",
@@ -2021,7 +2021,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.html",
         "ext": ".html",
-        "mtime": 1592236077908.3533
+        "mtime": 1592403697142.8022
       },
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.spec.ts",
@@ -2031,7 +2031,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
         "ext": ".ts",
-        "mtime": 1592403455749.8867
+        "mtime": 1592408746414.8103
       },
       {
         "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
@@ -2338,7 +2338,7 @@
       {
         "file": "apps/api/src/app/documents/document.schema.ts",
         "ext": ".ts",
-        "mtime": 1589204971271.8027
+        "mtime": 1592407454258.566
       },
       {
         "file": "apps/api/src/app/documents/documents.controller.spec.ts",
@@ -2373,7 +2373,7 @@
       {
         "file": "apps/api/src/app/documents/documents.service.ts",
         "ext": ".ts",
-        "mtime": 1590511886421.2412
+        "mtime": 1592407592227.028
       },
       {
         "file": "apps/api/src/app/redis/redis-core/redis-core.service.spec.ts",

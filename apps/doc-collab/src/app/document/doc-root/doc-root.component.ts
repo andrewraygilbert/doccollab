@@ -290,6 +290,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
   private onDisconnection() {
     this.disconnected = true;
     this.disconnectionTime = new Date();
+    console.log('disconnection time: ', this.disconnectionTime);
   }
 
   private onReconnection() {

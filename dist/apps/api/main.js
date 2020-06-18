@@ -691,6 +691,7 @@ let DocumentsService = class DocumentsService {
             if (this.verifyDocAccess(user._id, doc)) {
                 console.log('saving doc');
                 doc.content = dto.content;
+                doc.savedDate = new Date();
                 yield doc.save();
                 return true;
             }
@@ -1574,6 +1575,7 @@ const CollaboratorSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__["Schema"]({
 });
 const DocumentSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__["Schema"]({
     title: String,
+    savedDate: Date,
     owner: CollaboratorSchema,
     collaborators: [CollaboratorSchema],
     viewers: [CollaboratorSchema],

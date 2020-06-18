@@ -9,6 +9,7 @@ const CollaboratorSchema = new mongoose.Schema({
 
 export const DocumentSchema = new mongoose.Schema({
   title: String,
+  savedDate: Date,
   owner: CollaboratorSchema,
   collaborators: [CollaboratorSchema],
   viewers: [CollaboratorSchema],
