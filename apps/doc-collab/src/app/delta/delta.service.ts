@@ -24,13 +24,17 @@ export class DeltaService {
    */
 
   public setSocketId(socketId: string) {
-    this.socketId = socketId;
-    this.socketIdMod = socketId;
+    if (this.socketId !== socketId) {
+      this.socketId = socketId;
+      this.socketIdMod = socketId;
+      this.socketCounter = 0;
+    }
   }
 
   public setSocketIdMod() {
-    this.socketCounter++;
     this.socketIdMod = `${this.socketId}VER${this.socketCounter}`;
+    this.socketCounter++;
+    console.log('setting socketIdMod', this.socketIdMod);
   }
 
   public getSocketId() {
@@ -450,6 +454,7 @@ export class DeltaService {
    */
 
   public resetAllDeltas(): void {
+    console.log('in reset all deltas');
     this.outgoingDeltaRecord = [];
     this.incomingDeltaRecord = [];
     this.localDeltaTracker = 0;
