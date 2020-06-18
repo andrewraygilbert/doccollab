@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DocService } from '../doc.service';
 import { Subscription } from 'rxjs';
 import { CoreSocketService } from '../../socket/core-socket.service';
@@ -291,6 +291,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
   private onDisconnection() {
     this.disconnected = true;
     this.disconnectionTime = new Date();
+    this.deltaService.resetAllDeltas();
     this.clearConnectionSubs();
     console.log('disconnection time: ', this.disconnectionTime);
   }
@@ -301,6 +302,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
       this.disconnected = false;
       this.collabReady = false;
       this.setReconnectionSubs();
+      this.deltaService.setSocketIdMod();
     }
     this.reqDocument(this.documentId);
   }

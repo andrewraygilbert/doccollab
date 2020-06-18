@@ -8,6 +8,8 @@ import { DeltaDto, BaseDelta, DeltaDtoRecord, DeltaRecord, PurgeRecord } from '@
 export class DeltaService {
 
   private socketId: string;
+  private socketIdMod: string;
+  private socketCounter = 0;
   private localDeltaTracker = 0;
   private outgoingDeltaRecord: DeltaDto[] = [];
   private incomingDeltaRecord: DeltaRecord[] = [];
@@ -23,10 +25,20 @@ export class DeltaService {
 
   public setSocketId(socketId: string) {
     this.socketId = socketId;
+    this.socketIdMod = socketId;
+  }
+
+  public setSocketIdMod() {
+    this.socketCounter++;
+    this.socketIdMod = `${this.socketId}VER${this.socketCounter}`;
   }
 
   public getSocketId() {
     return this.socketId;
+  }
+
+  public getSocketIdMod() {
+    return this.socketIdMod;
   }
 
   /**
@@ -47,7 +59,7 @@ export class DeltaService {
   // verifies that the state of the incoming delta exists in context socket
   private matchExternalDeltas(delta: DeltaDto): boolean {
     for (const externalRecord of delta.localRecord) {
-      if (externalRecord.socketId !== this.socketId) { // skip context socket
+      if (externalRecord.socketId !== this.socketIdMod) { // skip context socket
         const matched = this.matchSockets(externalRecord);
         if (!matched) {
           return false; // socket record or delta missing
@@ -183,7 +195,7 @@ export class DeltaService {
   // checks for discrepancies with this socket
   private checkIntDiscrepancies(delta: DeltaDto, diffDeltas: any[]) {
     console.log('outgoingRecord', this.outgoingDeltaRecord);
-    let lastDeltaForThisSocket = delta.localRecord.find((socket_i) => socket_i.socketId === this.socketId);
+    let lastDeltaForThisSocket = delta.localRecord.find((socket_i) => socket_i.socketId === this.socketIdMod);
     console.log('lastDeltaForThisSocket', lastDeltaForThisSocket);
     console.log('localDeltaTracker', this.localDeltaTracker);
     if (!lastDeltaForThisSocket && this.localDeltaTracker > 0) {
@@ -256,7 +268,7 @@ export class DeltaService {
   // revises a local delta record due to precedence adjustments
   private reviseDeltaRecord(deltaDto: DeltaDto, netChange: number) {
     console.log('revising delta record')
-    if (deltaDto.socketId !== this.socketId) {
+    if (deltaDto.socketId !== this.socketIdMod) {
       const recordIndex = this.incomingDeltaRecord.findIndex((record: DeltaRecord) => record.socketId === deltaDto.socketId);
       if (recordIndex === -1) {
         console.log('could not find record');
@@ -311,7 +323,7 @@ export class DeltaService {
 
   public processDeltaOut(delta: BaseDelta): DeltaDto {
     const deltaDto: DeltaDto = {
-      socketId: this.socketId,
+      socketId: this.socketIdMod,
       localId: this.localDeltaTracker,
       ops: delta.ops,
       localRecord: this.buildLocalRecord()
@@ -337,7 +349,7 @@ export class DeltaService {
     const newDelta = {
       localId: this.localDeltaTracker,
       ops: delta.ops,
-      socketId: this.socketId,
+      socketId: this.socketIdMod,
       localRecord: []
     };
     this.outgoingDeltaRecord.push(newDelta);
@@ -363,7 +375,7 @@ export class DeltaService {
     for (const socketRecord of this.incomingDeltaRecord) {
       const lastDelta: DeltaDto = socketRecord.deltas[socketRecord.deltas.length - 1];
       for (const stateRecord of lastDelta.localRecord) {
-        if (stateRecord.socketId !== this.socketId) { // skip purging for context socket
+        if (stateRecord.socketId !== this.socketIdMod) { // skip purging for context socket
           const purgeIndex = purgeRecord.findIndex((record: PurgeRecord) => record.socketId === stateRecord.socketId);
           const localRecordIndex = this.incomingDeltaRecord.findIndex((record_i: DeltaRecord) => record_i.socketId === stateRecord.socketId);
           if (localRecordIndex !== -1) { // confirm record exists locally for this socket
@@ -421,7 +433,7 @@ export class DeltaService {
   public setIncomingRecord(activeDoc: any) {
     this.incomingDeltaRecord = [];
     for (let record of activeDoc.incomingRecord) {
-      if (record.socketId !== this.socketId) {
+      if (record.socketId !== this.socketIdMod) {
         this.incomingDeltaRecord.push(record);
       }
     };
@@ -433,7 +445,6 @@ export class DeltaService {
     }
   }
 
-
   /**
    * GENERAL HELPERS
    */
@@ -441,6 +452,7 @@ export class DeltaService {
   public resetAllDeltas(): void {
     this.outgoingDeltaRecord = [];
     this.incomingDeltaRecord = [];
+    this.localDeltaTracker = 0;
   }
 
   // retrieves a socket record from local state
