@@ -287,22 +287,25 @@ export class DocRootComponent implements OnInit, OnDestroy {
    * DISCONNECTIONS/RECONNECTIONS
    */
 
+  // handle disconnection event
   private onDisconnection() {
     this.disconnected = true;
     this.disconnectionTime = new Date();
+    this.clearConnectionSubs();
     console.log('disconnection time: ', this.disconnectionTime);
   }
 
+  // handle reconnection to server sockets
   private onReconnection() {
     if (this.activeDocument.collaborators.length > 0) {
       this.disconnected = false;
       this.collabReady = false;
-      this.clearConnectionSubs();
       this.setReconnectionSubs();
     }
     this.reqDocument(this.documentId);
   }
 
+  // clear original doc subscriptions
   private clearConnectionSubs() {
     if (this.receiveDocFromDb$) {
       this.receiveDocFromDb$.unsubscribe();
@@ -312,6 +315,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     }
   }
 
+  // set reconnection doc subscriptions
   private setReconnectionSubs() {
     this.receiveActiveDoc$ = this.docService.receiveActiveDoc$()
       .subscribe(res => {
@@ -324,15 +328,20 @@ export class DocRootComponent implements OnInit, OnDestroy {
   }
 
   private startCollabReconnectTimeout() {
-    this.collabTimeout = setTimeout(() => this.useLastContent(), 5000);
+    this.collabTimeout = setTimeout(() => this.compareTimestamps(), 5000);
   }
 
-  private useLastContent() {
-    console.log('using the last active content');
+  // check to see whether saved collab doc is more recent than the disconnection event
+  private compareTimestamps() {
+    if (this.dbDoc.savedDate > this.disconnectionTime) {
+      console.log('saved doc is more recent than last active content -> use DB doc');
+      this.setEditorContent(this.dbDoc.content);
+    }
+    console.log('last active content is more recent than DB doc -> use last active');
     this.collabReady = true;
   }
 
-  // sets the editor content after a reconnect event
+  // receives doc from DB after reconnection event
   private handleDocOnReconnect(docDto: DocOutDto) {
     console.log('handleDocRec res', docDto);
     if (docDto.collab) {
@@ -343,6 +352,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
     }
   }
 
+  // receives active doc from active collaborator
   private receiveActiveDocReconnect(activeDoc: ActiveDocDto) {
     console.log('receiving from reconnect');
     if (this.collabTimeout) {
