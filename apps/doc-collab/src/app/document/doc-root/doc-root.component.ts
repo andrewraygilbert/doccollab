@@ -333,11 +333,13 @@ export class DocRootComponent implements OnInit, OnDestroy {
 
   // check to see whether saved collab doc is more recent than the disconnection event
   private compareTimestamps() {
+    console.log({'savedDate': this.dbDoc.savedDate, 'discTime': this.disconnectionTime});
     if (this.dbDoc.savedDate > this.disconnectionTime) {
       console.log('saved doc is more recent than last active content -> use DB doc');
       this.setEditorContent(this.dbDoc.content);
+    } else {
+      console.log('last active content is more recent than DB doc -> use last active');
     }
-    console.log('last active content is more recent than DB doc -> use last active');
     this.collabReady = true;
   }
 
