@@ -453,6 +453,7 @@ export class DeltaService {
     this.outgoingDeltaRecord = [];
     this.incomingDeltaRecord = [];
     this.localDeltaTracker = 0;
+    this.setSocketIdMod();
   }
 
   // retrieves a socket record from local state

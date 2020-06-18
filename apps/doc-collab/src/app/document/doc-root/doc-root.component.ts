@@ -302,7 +302,6 @@ export class DocRootComponent implements OnInit, OnDestroy {
       this.disconnected = false;
       this.collabReady = false;
       this.setReconnectionSubs();
-      this.deltaService.setSocketIdMod();
     }
     this.reqDocument(this.documentId);
   }
