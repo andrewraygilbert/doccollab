@@ -52,6 +52,7 @@ export class DeltaService {
 
   // verify that incoming delta can be reconciled
   public reconciliable(delta: DeltaDto): boolean {
+    console.log('incomingDeltaRecord', this.incomingDeltaRecord);
     if (!this.matchOriginDeltas(delta)) { // match deltas from origin socket
       return false;
     }
@@ -80,7 +81,7 @@ export class DeltaService {
     if (originRecord && originRecord.deltas.length > 0) { // deltas exist locally
       const lastDeltaId = originRecord.deltas[originRecord.deltas.length - 1].localId;
       if (delta.localId > lastDeltaId + 1) {
-        console.log('!Reconcile -> missing previous deltas');
+        console.log('!Reconcile -> missing previous deltas', delta.localId, lastDeltaId + 1);
         return false; // delta is too far ahead of local state to reconcile
       }
     }
@@ -91,6 +92,7 @@ export class DeltaService {
   private matchSockets(extRecord: DeltaDtoRecord): boolean {
     const internalIndex = this.incomingDeltaRecord.findIndex((intRecord: any) => intRecord.socketId === extRecord.socketId);
     if (internalIndex === -1) { // incoming delta contains sockets that do not exist locally
+      console.log('missing socket', extRecord.socketId);
       return false;
     } else {
       return this.matchDeltas(extRecord.deltaId, this.incomingDeltaRecord[internalIndex].deltas);
