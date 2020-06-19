@@ -41,6 +41,7 @@ export class DeltaService {
     return this.socketId;
   }
 
+
   public getSocketIdMod() {
     return this.socketIdMod;
   }
