@@ -215,7 +215,7 @@ export class DocRootComponent implements OnInit, OnDestroy {
       content: this.editorInstance.getContents(),
       incomingRecord: this.deltaService.getIncomingRecord(),
       outgoingRecord: this.deltaService.getOutgoingRecord(),
-      fromSocketId: this.deltaService.getSocketId(),
+      fromSocketId: this.deltaService.getSocketIdMod(),
       toSocketId: req.socketId
     };
     console.log('outgoing activeDoc', activeDoc);
