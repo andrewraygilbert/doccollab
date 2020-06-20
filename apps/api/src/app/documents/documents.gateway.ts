@@ -6,7 +6,7 @@ import { UseGuards } from '@nestjs/common';
 import { WsGuard } from '../auth/ws.guard';
 import { RedisCoreService } from '../redis/redis-core/redis-core.service';
 
-@WebSocketGateway({"pingTimeout" : 30000})
+@WebSocketGateway({"pingTimeout" : 25000})
 export class DocumentsGateway {
 
   @WebSocketServer()

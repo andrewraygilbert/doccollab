@@ -4,7 +4,7 @@ import { Socket } from 'socket.io';
 import { RedisCoreService } from '../redis/redis-core/redis-core.service';
 
 @Injectable()
-@WebSocketGateway({"pingTimeout" : 30000})
+@WebSocketGateway({"pingTimeout" : 25000})
 export class SocketCoreGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   private connectedSockets = 0;

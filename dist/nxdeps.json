@@ -457,7 +457,7 @@
             {
               "file": "apps/doc-collab/src/app/delta/delta.service.ts",
               "ext": ".ts",
-              "mtime": 1592578371274.9487
+              "mtime": 1592580531233.453
             },
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
@@ -477,7 +477,7 @@
             {
               "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
               "ext": ".ts",
-              "mtime": 1592517643771.0642
+              "mtime": 1592581616870.006
             },
             {
               "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
@@ -869,7 +869,7 @@
             {
               "file": "apps/api/src/app/documents/documents.gateway.ts",
               "ext": ".ts",
-              "mtime": 1592321498264.9265
+              "mtime": 1592662975534.085
             },
             {
               "file": "apps/api/src/app/documents/documents.module.ts",
@@ -909,7 +909,7 @@
             {
               "file": "apps/api/src/app/sockets/socket-core.gateway.ts",
               "ext": ".ts",
-              "mtime": 1592151427821.527
+              "mtime": 1592662986680.944
             },
             {
               "file": "apps/api/src/app/sockets/sockets.module.ts",
@@ -2011,7 +2011,7 @@
       {
         "file": "apps/doc-collab/src/app/delta/delta.service.ts",
         "ext": ".ts",
-        "mtime": 1592578371274.9487
+        "mtime": 1592580531233.453
       },
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.css",
@@ -2031,7 +2031,7 @@
       {
         "file": "apps/doc-collab/src/app/document/doc-root/doc-root.component.ts",
         "ext": ".ts",
-        "mtime": 1592517643771.0642
+        "mtime": 1592581616870.006
       },
       {
         "file": "apps/doc-collab/src/app/document/doc.service.spec.ts",
@@ -2358,7 +2358,7 @@
       {
         "file": "apps/api/src/app/documents/documents.gateway.ts",
         "ext": ".ts",
-        "mtime": 1592321498264.9265
+        "mtime": 1592662975534.085
       },
       {
         "file": "apps/api/src/app/documents/documents.module.ts",
@@ -2398,7 +2398,7 @@
       {
         "file": "apps/api/src/app/sockets/socket-core.gateway.ts",
         "ext": ".ts",
-        "mtime": 1592151427821.527
+        "mtime": 1592662986680.944
       },
       {
         "file": "apps/api/src/app/sockets/sockets.module.ts",

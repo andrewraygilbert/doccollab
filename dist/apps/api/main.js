@@ -920,7 +920,7 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 ], SocketCoreGateway.prototype, "handleDisconnect", null);
 SocketCoreGateway = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
-    Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__["WebSocketGateway"])({ "pingTimeout": 30000 }),
+    Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__["WebSocketGateway"])({ "pingTimeout": 25000 }),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_c = typeof _redis_redis_core_redis_core_service__WEBPACK_IMPORTED_MODULE_4__[/* RedisCoreService */ "a"] !== "undefined" && _redis_redis_core_redis_core_service__WEBPACK_IMPORTED_MODULE_4__[/* RedisCoreService */ "a"]) === "function" ? _c : Object])
 ], SocketCoreGateway);
 
@@ -1552,7 +1552,7 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", Promise)
 ], DocumentsGateway.prototype, "leaveRoom", null);
 DocumentsGateway = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__["WebSocketGateway"])({ "pingTimeout": 30000 }),
+    Object(_nestjs_websockets__WEBPACK_IMPORTED_MODULE_1__["WebSocketGateway"])({ "pingTimeout": 25000 }),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_m = typeof _documents_service__WEBPACK_IMPORTED_MODULE_3__[/* DocumentsService */ "a"] !== "undefined" && _documents_service__WEBPACK_IMPORTED_MODULE_3__[/* DocumentsService */ "a"]) === "function" ? _m : Object, typeof (_o = typeof _redis_redis_core_redis_core_service__WEBPACK_IMPORTED_MODULE_7__[/* RedisCoreService */ "a"] !== "undefined" && _redis_redis_core_redis_core_service__WEBPACK_IMPORTED_MODULE_7__[/* RedisCoreService */ "a"]) === "function" ? _o : Object])
 ], DocumentsGateway);
 
